@@ -247,11 +247,15 @@ F 3 "" H 3250 3400 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	1800 2200 1800 2800
+	1800 2200 1800 2350
+Wire Wire Line
+	1800 2350 1800 2800
 Wire Wire Line
 	2150 2200 2150 3250
 Wire Wire Line
-	1800 3100 1800 3250
+	1800 3100 1800 3150
+Wire Wire Line
+	1800 3150 1800 3250
 Wire Wire Line
 	2150 3550 2150 3900
 Wire Wire Line
@@ -263,11 +267,15 @@ Wire Wire Line
 Wire Wire Line
 	2600 2200 2600 2400
 Wire Wire Line
-	2600 2700 2600 3100
+	2600 2700 2600 3000
+Wire Wire Line
+	2600 3000 2600 3100
 Wire Wire Line
 	3250 2200 3250 2400
 Wire Wire Line
-	3250 2700 3250 3100
+	3250 2700 3250 2800
+Wire Wire Line
+	3250 2800 3250 3100
 Wire Wire Line
 	3250 3100 3350 3100
 Wire Wire Line
@@ -276,7 +284,9 @@ Connection ~ 3250 2800
 Wire Wire Line
 	4450 2500 4000 2500
 Wire Wire Line
-	4000 2500 4000 3000
+	4000 2500 4000 2800
+Wire Wire Line
+	4000 2800 4000 3000
 Wire Wire Line
 	4000 3000 2600 3000
 Connection ~ 2600 3000
@@ -354,7 +364,9 @@ F 3 "" H 6750 2950 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	6250 2700 6600 2700
+	6250 2700 6500 2700
+Wire Wire Line
+	6500 2700 6600 2700
 $Comp
 L GND #PWR012
 U 1 1 59EF6E0B
@@ -394,7 +406,9 @@ Wire Wire Line
 	6500 2600 6500 2700
 Connection ~ 6500 2700
 Wire Wire Line
-	6900 2200 6900 2400
+	6900 2200 6900 2300
+Wire Wire Line
+	6900 2300 6900 2400
 Wire Wire Line
 	6900 2300 6500 2300
 Connection ~ 6900 2300
@@ -479,7 +493,9 @@ Wire Wire Line
 Wire Wire Line
 	1500 3850 1800 3850
 Wire Wire Line
-	1800 3800 1800 3900
+	1800 3800 1800 3850
+Wire Wire Line
+	1800 3850 1800 3900
 Wire Wire Line
 	1350 3650 1800 3650
 Wire Wire Line
@@ -509,4 +525,15 @@ F 3 "" H 1800 3800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Connection ~ 1800 3850
+$Comp
+L DHT11 U?
+U 1 1 5A95886B
+P 7650 2700
+F 0 "U?" H 7800 2950 50  0000 C CNN
+F 1 "DHT11" H 7750 2450 50  0000 C CNN
+F 2 "" H 7800 2950 50  0001 C CNN
+F 3 "" H 7800 2950 50  0001 C CNN
+	1    7650 2700
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC
