@@ -1,6 +1,6 @@
 # Long Term Environment Logger Project
 
-Das Ziel dieses Projektes ist es, die Temperatur und andere Umweltdaten in den Räumen eines Gebäudes über einen sehr langen Zeitraum (> 6 Monate) zu messen, speichern, auszuwerten und darzustellen. Dazu wird eine einfache Schaltung um den Mikroprozessor ESP8266 benutzt. Im Wesentlichen besteht diese Schaltung aus einem Lithium-Ionen Akku, einer Diode zur Spannungsabsenkung, einem oder mehreren Sensoren, einem Mikrocontroller, sowie einigen zusätzlichen mechanischen und elektronischen Bauteilen.
+Test Das Ziel dieses Projektes ist es, die Temperatur und andere Umweltdaten in den Räumen eines Gebäudes über einen sehr langen Zeitraum (> 6 Monate) zu messen, speichern, auszuwerten und darzustellen. Dazu wird eine einfache Schaltung um den Mikroprozessor ESP8266 benutzt. Im Wesentlichen besteht diese Schaltung aus einem Lithium-Ionen Akku, einer Diode zur Spannungsabsenkung, einem oder mehreren Sensoren, einem Mikrocontroller, sowie einigen zusätzlichen mechanischen und elektronischen Bauteilen.
 
 Dieses Projekt ist, wenn man es sich im Detail durchdenkt, nicht ganz so trivial, wie es zunächst den Anschein hat. Zu bedenken sind unter anderem:
 
