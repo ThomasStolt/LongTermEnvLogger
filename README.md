@@ -16,6 +16,12 @@ Dieses Projekt ist, wenn man es sich im Detail durchdenkt, nicht ganz so trivial
 	* Wie kann man sicherstellen, dass der LiIon Akku nicht überladen werden kann?
 	* Wie kann ich die Spannung der Stromversorung (des LiIo Akkus) überwachen um rechtzeitig den Akku auszutauschen oder zu laden?
 
+## Überblick
+
+Zunächst ein kurzes Schaubild für den Überblick:
+
+![alt text](https://github.com/Crayfish68/LongTermEnvogger/blob/master/images/Solution Overview.png)
+
 Das Projekt besteht somit aus mehreren Teilprojekten:
 
 1. Der Logger (Hardware)
