@@ -20,7 +20,7 @@ Dieses Projekt ist, wenn man es sich im Detail durchdenkt, nicht ganz so trivial
 
 Zunächst ein kurzes Schaubild für den Überblick:
 
-![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/Solution%20Architecture%2020200317.png)
+![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/Solution%20Architecture%2020200317.png>)
 
 Das Projekt besteht somit aus mehreren Teilprojekten:
 
