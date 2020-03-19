@@ -22,6 +22,8 @@ Zunächst ein kurzes Schaubild für den Überblick:
 
 ![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/Solution%20Architecture%2020200317.png>)
 
+Bei mir läuft diese Lösung momentan in der Alternative 1. Da iobroker relativ hohe Anforderungen an das System stellt, könnte sicherlich auch NodeRED zum Einsatz kommen. Dadurch dürften sich die Anforderungen etwas verbessern.
+
 Das Projekt besteht somit aus mehreren Teilprojekten:
 
 1. Der Logger (Hardware)

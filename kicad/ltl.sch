@@ -179,28 +179,6 @@ F 3 "" H 3550 2800 50  0001 C CNN
 	1    3550 2800
 	0    1    1    0   
 $EndComp
-$Comp
-L ltl-rescue:SW_DIP_x02 SW1
-U 1 1 59EEEDEE
-P 2600 3400
-F 0 "SW1" H 2600 3650 50  0000 C CNN
-F 1 "SW_DIP_x02" H 2600 3250 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_PUSH_6mm_H5mm" H 2600 3400 50  0001 C CNN
-F 3 "" H 2600 3400 50  0001 C CNN
-	1    2600 3400
-	0    1    1    0   
-$EndComp
-$Comp
-L ltl-rescue:SW_DIP_x02 SW2
-U 1 1 59EEEE4D
-P 3250 3400
-F 0 "SW2" H 3250 3650 50  0000 C CNN
-F 1 "SW_DIP_x02" H 3250 3250 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_PUSH_6mm_H5mm" H 3250 3400 50  0001 C CNN
-F 3 "" H 3250 3400 50  0001 C CNN
-	1    3250 3400
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	1800 2200 1800 2350
 Wire Wire Line
@@ -237,7 +215,7 @@ Wire Wire Line
 	3400 2800 3250 2800
 Connection ~ 3250 2800
 Wire Wire Line
-	4850 2500 4000 2500
+	4850 2500 4750 2500
 Wire Wire Line
 	4000 3000 2600 3000
 Connection ~ 2600 3000
@@ -382,9 +360,9 @@ Wire Wire Line
 	7650 1850 7600 1850
 Wire Wire Line
 	7600 1850 7600 3900
-Text Label 7500 1650 0    60   ~ 0
-TxD
 Text Label 7500 1750 0    60   ~ 0
+TxD
+Text Label 7500 1650 0    60   ~ 0
 RxD
 Text Label 7500 1850 0    60   ~ 0
 GND
@@ -435,7 +413,6 @@ Wire Wire Line
 Wire Wire Line
 	1800 3650 1800 3550
 NoConn ~ 4850 2600
-NoConn ~ 4850 2700
 NoConn ~ 4850 2900
 NoConn ~ 4850 3000
 NoConn ~ 4850 3100
@@ -532,4 +509,37 @@ F 3 "http://l0l.org.uk/2014/12/esp8266-modules-hardware-guide-gotta-catch-em-all
 	1    5750 2800
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	4850 2700 4750 2700
+Wire Wire Line
+	4750 2700 4750 2500
+Connection ~ 4750 2500
+Wire Wire Line
+	4750 2500 4000 2500
+$Comp
+L LTL:SW_DIP_x02_LTL RESET1
+U 1 1 5E7676F5
+P 2650 3400
+F 0 "RESET1" H 2400 3650 60  0000 L CNN
+F 1 "SW_DIP_x02_LTL" H 2750 3650 60  0000 L CNN
+F 2 "Button_Switch_THT:SW_PUSH_6mm" H 2650 3400 60  0001 C CNN
+F 3 "" H 2650 3400 60  0001 C CNN
+	1    2650 3400
+	0    1    1    0   
+$EndComp
+Connection ~ 2600 3100
+Connection ~ 2600 3700
+$Comp
+L LTL:SW_DIP_x02_LTL FLASH1
+U 1 1 5E769C54
+P 3300 3400
+F 0 "FLASH1" H 3000 3650 60  0000 L CNN
+F 1 "SW_DIP_x02_LTL" H 3350 3650 60  0000 L CNN
+F 2 "Button_Switch_THT:SW_PUSH_6mm" H 3300 3400 60  0001 C CNN
+F 3 "" H 3300 3400 60  0001 C CNN
+	1    3300 3400
+	0    1    1    0   
+$EndComp
+Connection ~ 3250 3100
+Connection ~ 3250 3700
 $EndSCHEMATC
