@@ -35,18 +35,16 @@ Das Projekt besteht somit aus mehreren Teilprojekten:
 
 ## 1. Temperatur Logger
 Bestehend aus:
-1 x ESP8266 als Mikroprozessor
-1 x Gehäuse / Schachtel
-2 x Taster (Reset & Flash)
-1 x LiIon 18650 Akku
-1 x 100µA Kondensator
-1 x Diode (zur Spannungsabsenkung)
-1 x Temperatursensor DS18B20
-diverse Widerstände
-1 x Ladebuchse
-1 x 3-Pin-Buchse für seriellen Port
-
-1 x "Stop-Schalter" mit PullUp Widerstand
+* 1 x ESP8266 als Mikroprozessor
+* 1 x Gehäuse / Schachtel
+* 2 x Taster (Reset & Flash)
+* 1 x LiIon 18650 Akku
+* 1 x 1000µA Elektrolytkondensator
+* 1 x Diode (zur Spannungsabsenkung)
+* 1 x Temperatursensor DS18B20
+* diverse Widerstände
+* 1 x TP4605 Lade/Entladeschutzmodul
+* 1 x 3-Pin-Buchse (JST-XH) für seriellen Port
 
 Die Schaltung findet sich [hier](https://github.com/Crayfish68/LongTermEnvLogger/blob/master/kicad/PDF/LTEL_Schaltplan.pdf).
 

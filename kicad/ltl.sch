@@ -5,7 +5,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Long Term Environment Logger (LTEL)"
-Date "2020-03-20"
+Date "2020-03-26"
 Rev "1.2"
 Comp "HCG Berlin"
 Comment1 "Thomas Stolt"
