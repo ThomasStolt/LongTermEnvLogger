@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 332)
+    (start_pass_no 372)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -64,9 +64,9 @@
   )
   (class "kicad_default"
     "Net-(BT1-Pad1)" GND +3V3 /RxD /TxD "Net-(R3-Pad1)" "Net-(R4-Pad2)" "Net-(R5-Pad2)"
-    "Net-(U1-Pad2)" "Net-(U1-Pad5)" "Net-(U1-Pad6)" "Net-(U1-Pad7)" "Net-(U1-Pad11)" "Net-(U1-Pad13)" "Net-(U1-Pad17)" "Net-(U1-Pad18)"
-    "Net-(U1-Pad19)" "Net-(U1-Pad21)" "Net-(U1-Pad22)" "Net-(BT1-Pad2)" "Net-(JP1-Pad1)" "Net-(R6-Pad2)" "Net-(R7-Pad2)" "Net-(JP1-Pad2)"
-    "Net-(U1-Pad20)" "Net-(FLASH1-Pad1)"
+    "Net-(U1-Pad2)" "Net-(BT1-Pad2)" "Net-(R6-Pad2)" "Net-(R7-Pad2)" "Net-(R1-Pad2)" "Net-(D1-Pad2)" "Net-(Flash1-Pad1)" "Net-(U1-Pad1)"
+    "Net-(U2-Pad2)" "Net-(U2-Pad5)" "Net-(U2-Pad6)" "Net-(U2-Pad7)" "Net-(U2-Pad11)" "Net-(U2-Pad13)" "Net-(U2-Pad17)" "Net-(U2-Pad18)"
+    "Net-(U2-Pad19)" "Net-(U2-Pad20)" "Net-(U2-Pad21)" "Net-(U2-Pad22)"
     (clearance_class "kicad_default")
     (via_rule kicad_default)
     (rule

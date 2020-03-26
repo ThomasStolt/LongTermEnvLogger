@@ -1,6 +1,13 @@
-16945886037374096
+16950641284366495
 18650
 18650
+
+
+0
+2
+2
+18650
+18650_small
 
 
 0
@@ -46094,6 +46101,13 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+ESP32-DevKitC
+ESP32-DevKitC
+
+
+0
+38
+38
 ESP8266
 ESP-01
 Module, ESP-8266, ESP-01, 8 pin
@@ -70153,6 +70167,13 @@ Logo WEEE
 0
 0
 0
+TP4506
+TP4056
+
+
+0
+6
+6
 TerminalBlock
 TerminalBlock_Altech_AK300-2_P5.00mm
 Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
