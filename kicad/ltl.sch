@@ -235,7 +235,7 @@ Wire Wire Line
 Wire Wire Line
 	8600 4100 8600 4800
 Wire Wire Line
-	6450 3100 6450 4100
+	6450 3100 6450 3600
 $Comp
 L ltl-rescue:R R5
 U 1 1 59EF68EB
@@ -308,7 +308,7 @@ L ltl-rescue:R R4
 U 1 1 59EF6E96
 P 8600 3350
 F 0 "R4" V 8680 3350 50  0000 C CNN
-F 1 "2,2k" V 8600 3350 50  0000 C CNN
+F 1 "4,7k" V 8600 3350 50  0000 C CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 8530 3350 50  0001 C CNN
 F 3 "" H 8600 3350 50  0001 C CNN
 	1    8600 3350
@@ -335,8 +335,6 @@ F 3 "" H 9650 2650 50  0001 C CNN
 	1    9650 2650
 	1    0    0    1   
 $EndComp
-Wire Wire Line
-	8450 3400 8450 2650
 $Comp
 L power:GND #PWR014
 U 1 1 59EF7331
@@ -353,9 +351,9 @@ Wire Wire Line
 Wire Wire Line
 	9400 2750 9400 4800
 Text Label 9300 2650 0    60   ~ 0
-TxD
-Text Label 9300 2550 0    60   ~ 0
 RxD
+Text Label 9300 2550 0    60   ~ 0
+TxD
 Text Label 9300 2750 0    60   ~ 0
 GND
 NoConn ~ 6650 3500
@@ -372,8 +370,6 @@ NoConn ~ 8450 3700
 NoConn ~ 7600 4600
 Wire Wire Line
 	8450 3500 8500 3500
-Wire Wire Line
-	8500 3500 8500 2550
 Wire Wire Line
 	6450 4100 6650 4100
 Wire Wire Line
@@ -408,10 +404,6 @@ Wire Wire Line
 	9450 2550 9050 2550
 Wire Wire Line
 	9450 2650 9050 2650
-Wire Wire Line
-	8750 2650 8450 2650
-Wire Wire Line
-	8500 2550 8750 2550
 $Comp
 L ESP8266:ESP-12E U2
 U 1 1 5E6E4A20
@@ -423,18 +415,14 @@ F 3 "http://l0l.org.uk/2014/12/esp8266-modules-hardware-guide-gotta-catch-em-all
 	1    7550 3700
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	6650 3600 6550 3600
-Wire Wire Line
-	6550 3600 6550 3400
 Connection ~ 6550 3400
 Wire Wire Line
 	6550 3400 5800 3400
 $Comp
-L LTL:SW_DIP_x02_LTL Reset
+L LTL:SW_DIP_x02_LTL Reset1
 U 1 1 5E7676F5
 P 4450 4300
-F 0 "Reset" H 4200 4550 60  0000 L CNN
+F 0 "Reset1" H 4200 4550 60  0000 L CNN
 F 1 "Reset" H 4550 4550 60  0000 L CNN
 F 2 "Button_Switch_THT:SW_PUSH_6mm" H 4450 4300 60  0001 C CNN
 F 3 "" H 4450 4300 60  0001 C CNN
@@ -444,10 +432,10 @@ $EndComp
 Connection ~ 4400 4000
 Connection ~ 4400 4600
 $Comp
-L LTL:SW_DIP_x02_LTL Flash
+L LTL:SW_DIP_x02_LTL Flash1
 U 1 1 5E769C54
 P 5100 4300
-F 0 "Flash" H 4800 4550 60  0000 L CNN
+F 0 "Flash1" H 4800 4550 60  0000 L CNN
 F 1 "Flash" H 5150 4550 60  0000 L CNN
 F 2 "Button_Switch_THT:SW_PUSH_6mm" H 5100 4300 60  0001 C CNN
 F 3 "" H 5100 4300 60  0001 C CNN
@@ -459,10 +447,7 @@ Connection ~ 5050 4600
 Wire Wire Line
 	5800 3400 5800 3900
 Wire Wire Line
-	6550 3600 6550 3700
-Wire Wire Line
 	6550 3700 6650 3700
-Connection ~ 6550 3600
 $Comp
 L LTL:TP4056 U1
 U 1 1 5E7F3843
@@ -492,4 +477,19 @@ Wire Wire Line
 	3600 4800 3600 4200
 Wire Wire Line
 	3600 4200 2950 4200
+Wire Wire Line
+	6550 3400 6550 3700
+Wire Wire Line
+	6650 3600 6450 3600
+Connection ~ 6450 3600
+Wire Wire Line
+	6450 3600 6450 4100
+Wire Wire Line
+	8450 3400 8450 2550
+Wire Wire Line
+	8450 2550 8750 2550
+Wire Wire Line
+	8500 3500 8500 2650
+Wire Wire Line
+	8500 2650 8750 2650
 $EndSCHEMATC

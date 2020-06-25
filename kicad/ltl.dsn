@@ -33,6 +33,9 @@
     )
   )
   (placement
+    (component 18650:18650_small
+      (place BT1 124968 -120650 front 0 (PN 18650))
+    )
     (component TP4506:TP4056
       (place U1 106172 -101219 front 0 (PN TP4056))
     )
@@ -44,43 +47,98 @@
       (place MH_2 160782 -93980 front 0 (PN 2))
       (place MH_4 89154 -135890 front 0 (PN 4))
     )
-    (component 18650:18650_small
-      (place BT1 124968 -120650 front 180 (PN 18650))
-    )
     (component "Diode_THT:D_A-405_P7.62mm_Horizontal"
-      (place D1 89662 -108585 front 90 (PN 1N4001))
+      (place D1 96012 -136398 front 0 (PN 1N4001))
     )
     (component Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal
-      (place R4 107442 -136144 front 0 (PN 2,2k))
-      (place R3 107442 -132842 front 0 (PN 2,2k))
-      (place R2 161798 -101092 front 180 (PN 2,2k))
-      (place R1 141732 -108712 front 0 (PN 2,2k))
+      (place R4 107442 -136398 front 0 (PN 4,7k))
+      (place R3 107442 -133096 front 0 (PN 2,2k))
+      (place R2 146050 -136398 front 0 (PN 2,2k))
+      (place R1 146050 -133096 front 0 (PN 2,2k))
       (place R6 133160 -133096 front 0 (PN 1k))
     )
     (component Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal::1
       (place R7 133160 -136398 front 0 (PN 1k))
-      (place R5 104902 -132842 front 180 (PN 2,2k))
+      (place R5 104902 -133096 front 180 (PN 2,2k))
     )
     (component Capacitor_THT:CP_Radial_D6.3mm_P2.50mm
-      (place C1 143637 -94234 front 270 (PN 1000uF))
+      (place C1 143510 -104902 front 270 (PN 1000uF))
     )
     (component "Package_TO_SOT_THT:TO-92"
-      (place U3 151448 -95631 front 0 (PN DS18B20))
+      (place U3 158750 -104902 front 270 (PN DS18B20))
     )
     (component "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
-      (place J1 128080 -135255 front 180 (PN CONN_01X03))
+      (place J1 128080 -134874 front 180 (PN CONN_01X03))
     )
     (component "ESP8266:ESP-12E"
       (place U2 123063 -92837 front 0 (PN "ESP-12E"))
     )
     (component Button_Switch_THT:SW_PUSH_6mm
-      (place Flash 161544 -108712 front 180 (PN Flash))
+      (place Flash 155448 -93980 front 270 (PN Flash))
     )
     (component Button_Switch_THT:SW_PUSH_6mm::1
-      (place Reset 148844 -105410 front 180 (PN Reset))
+      (place Reset 146558 -93980 front 270 (PN Reset))
     )
   )
   (library
+    (image 18650:18650_small
+      (outline (path signal 120  37592 9144  37592 7112))
+      (outline (path signal 120  37592 -7112  37592 -9144))
+      (outline (path signal 120  37592 6350  37592 -6350))
+      (outline (path signal 120  36576 6350  37592 6350))
+      (outline (path signal 120  36576 6350  36576 7112))
+      (outline (path signal 120  37592 7112  36576 7112))
+      (outline (path signal 120  36576 -7112  37592 -7112))
+      (outline (path signal 120  37592 -6350  36576 -6350))
+      (outline (path signal 120  36576 -7112  36576 -6350))
+      (outline (path signal 120  38608 10160  38608 8636))
+      (outline (path signal 120  38354 8636  38608 8636))
+      (outline (path signal 120  38354 8636  38354 4318))
+      (outline (path signal 120  38354 4318  38608 4318))
+      (outline (path signal 120  38608 -4318  38608 4318))
+      (outline (path signal 120  38354 -4318  38354 -8636))
+      (outline (path signal 120  38354 -4318  38608 -4318))
+      (outline (path signal 120  38354 -8636  38608 -8636))
+      (outline (path signal 120  38608 -8636  38608 -10160))
+      (outline (path signal 120  37592 -9144  -37592 -9144))
+      (outline (path signal 120  37592 9144  -37592 9144))
+      (outline (path signal 120  -38354 4318  -38354 8636))
+      (outline (path signal 120  -38354 -4318  -38354 -8636))
+      (outline (path signal 120  -38608 -4318  -38354 -4318))
+      (outline (path signal 120  -38608 4318  -38354 4318))
+      (outline (path signal 120  -38608 -4318  -38608 4318))
+      (outline (path signal 120  -38608 -8636  -38354 -8636))
+      (outline (path signal 120  -38608 -8636  -38608 -10160))
+      (outline (path signal 120  -38608 8636  -38354 8636))
+      (outline (path signal 120  -38608 10160  -38608 8636))
+      (outline (path signal 120  -36576 -6350  -37592 -6350))
+      (outline (path signal 120  -36576 -6350  -36576 -7112))
+      (outline (path signal 120  -37592 -7112  -36576 -7112))
+      (outline (path signal 120  -37592 -7112  -37592 -9144))
+      (outline (path signal 120  -36576 6350  -37592 6350))
+      (outline (path signal 120  -36576 7112  -36576 6350))
+      (outline (path signal 120  -37592 7112  -36576 7112))
+      (outline (path signal 120  -37592 9144  -37592 7112))
+      (outline (path signal 120  -38862 10414  38862 10414))
+      (outline (path signal 120  -38862 -10414  38862 -10414))
+      (outline (path signal 120  -38862 -10414  -38862 10414))
+      (outline (path signal 120  38862 -10414  38862 10414))
+      (outline (path signal 120  -26432 0  -26508.1 -382.683  -26724.9 -707.107  -27049.3 -923.88
+            -27432 -1000  -27814.7 -923.88  -28139.1 -707.107  -28355.9 -382.683
+            -28432 0  -28355.9 382.683  -28139.1 707.107  -27814.7 923.88
+            -27432 1000  -27049.3 923.88  -26724.9 707.107  -26508.1 382.683
+            -26432 0))
+      (outline (path signal 120  28432 0  28355.9 -382.683  28139.1 -707.107  27814.7 -923.88
+            27432 -1000  27049.3 -923.88  26724.9 -707.107  26508.1 -382.683
+            26432 0  26508.1 382.683  26724.9 707.107  27049.3 923.88  27432 1000
+            27814.7 923.88  28139.1 707.107  28355.9 382.683  28432 0))
+      (outline (path signal 120  38608 10160  0 10160))
+      (outline (path signal 120  -38608 -10160  38608 -10160))
+      (outline (path signal 120  -37592 6350  -37592 -6350))
+      (outline (path signal 120  0 10160  -38608 10160))
+      (pin Oval[A]Pad_2262x3262_um 2 36068 0)
+      (pin Rect[A]Pad_3000x3000_um 1 -36068 0)
+    )
     (image TP4506:TP4056
       (outline (path signal 120  -9652 -2540  -13970 -2540))
       (outline (path signal 120  -9652 2540  -9652 -2540))
@@ -143,26 +201,6 @@
       (pin Round[A]Pad_700_um 1@6 -1166.73 1166.73)
       (pin Round[A]Pad_700_um 1@7 0 1650)
       (pin Round[A]Pad_700_um 1@8 1166.73 1166.73)
-    )
-    (image 18650:18650_small
-      (outline (path signal 120  -38862 -10160  -38862 10414))
-      (outline (path signal 120  38862 -10160  38862 10414))
-      (outline (path signal 120  -25924 0  -26000.1 -382.683  -26216.9 -707.107  -26541.3 -923.88
-            -26924 -1000  -27306.7 -923.88  -27631.1 -707.107  -27847.9 -382.683
-            -27924 0  -27847.9 382.683  -27631.1 707.107  -27306.7 923.88
-            -26924 1000  -26541.3 923.88  -26216.9 707.107  -26000.1 382.683
-            -25924 0))
-      (outline (path signal 120  27924 0  27847.9 -382.683  27631.1 -707.107  27306.7 -923.88
-            26924 -1000  26541.3 -923.88  26216.9 -707.107  26000.1 -382.683
-            25924 0  26000.1 382.683  26216.9 707.107  26541.3 923.88  26924 1000
-            27306.7 923.88  27631.1 707.107  27847.9 382.683  27924 0))
-      (outline (path signal 120  38100 10160  0 10160))
-      (outline (path signal 120  38100 -10160  38100 10160))
-      (outline (path signal 120  -38100 -10160  38100 -10160))
-      (outline (path signal 120  -38100 10160  -38100 -10160))
-      (outline (path signal 120  0 10160  -38100 10160))
-      (pin Oval[A]Pad_2262x3262_um 2 35560 0)
-      (pin Rect[A]Pad_3000x3000_um 1 -35560 0)
     )
     (image "Diode_THT:D_A-405_P7.62mm_Horizontal"
       (outline (path signal 50  8770 1600  -1150 1600))
@@ -678,19 +716,19 @@
   )
   (network
     (net "Net-(BT1-Pad1)"
-      (pins U1-4 BT1-1)
+      (pins BT1-1 U1-4)
     )
     (net GND
       (pins U1-6 C1-2 R5-1 U3-1 J1-1 U2-9 Flash-2 Flash-2@1 Reset-2 Reset-2@1)
     )
     (net +3V3
-      (pins D1-1 R4-1 R2-1 R1-1 C1-1 U3-3 U2-8)
+      (pins D1-1 R4-1 R2-1 R1-1 C1-1 U3-3 U2-3 U2-8)
     )
     (net /RxD
-      (pins R6-1 J1-3)
+      (pins R7-1 J1-2)
     )
     (net /TxD
-      (pins R7-1 J1-2)
+      (pins R6-1 J1-3)
     )
     (net "Net-(R3-Pad1)"
       (pins R3-1 U2-12)
@@ -705,16 +743,16 @@
       (pins U1-2)
     )
     (net "Net-(BT1-Pad2)"
-      (pins U1-5 BT1-2)
+      (pins BT1-2 U1-5)
     )
     (net "Net-(R6-Pad2)"
-      (pins R6-2 U2-15)
+      (pins R6-2 U2-16)
     )
     (net "Net-(R7-Pad2)"
-      (pins R7-2 U2-16)
+      (pins R7-2 U2-15)
     )
     (net "Net-(R1-Pad2)"
-      (pins R1-2 U2-1 U2-3 U2-4 Reset-1 Reset-1@1)
+      (pins R1-2 U2-1 U2-4 Reset-1 Reset-1@1)
     )
     (net "Net-(D1-Pad2)"
       (pins U1-3 D1-2)
@@ -762,14 +800,11 @@
       (pins U2-22)
     )
     (class kicad_default "" +3V3 /RxD /TxD GND "Net-(BT1-Pad1)" "Net-(BT1-Pad2)"
-      "Net-(D1-Pad2)" "Net-(FLASH1-Pad1)" "Net-(Flash1-Pad1)" "Net-(R1-Pad2)"
-      "Net-(R3-Pad1)" "Net-(R4-Pad2)" "Net-(R5-Pad2)" "Net-(R6-Pad2)" "Net-(R7-Pad2)"
-      "Net-(U1-Pad1)" "Net-(U1-Pad11)" "Net-(U1-Pad13)" "Net-(U1-Pad17)" "Net-(U1-Pad18)"
-      "Net-(U1-Pad19)" "Net-(U1-Pad2)" "Net-(U1-Pad20)" "Net-(U1-Pad21)" "Net-(U1-Pad22)"
-      "Net-(U1-Pad5)" "Net-(U1-Pad6)" "Net-(U1-Pad7)" "Net-(U2-Pad11)" "Net-(U2-Pad13)"
-      "Net-(U2-Pad17)" "Net-(U2-Pad18)" "Net-(U2-Pad19)" "Net-(U2-Pad2)" "Net-(U2-Pad20)"
-      "Net-(U2-Pad21)" "Net-(U2-Pad22)" "Net-(U2-Pad5)" "Net-(U2-Pad6)" "Net-(U2-Pad7)"
-      "Net-(U3-Pad1)" "Net-(U3-Pad2)"
+      "Net-(D1-Pad2)" "Net-(Flash1-Pad1)" "Net-(R1-Pad2)" "Net-(R3-Pad1)"
+      "Net-(R4-Pad2)" "Net-(R5-Pad2)" "Net-(R6-Pad2)" "Net-(R7-Pad2)" "Net-(U1-Pad1)"
+      "Net-(U1-Pad2)" "Net-(U2-Pad11)" "Net-(U2-Pad13)" "Net-(U2-Pad17)" "Net-(U2-Pad18)"
+      "Net-(U2-Pad19)" "Net-(U2-Pad2)" "Net-(U2-Pad20)" "Net-(U2-Pad21)" "Net-(U2-Pad22)"
+      "Net-(U2-Pad5)" "Net-(U2-Pad6)" "Net-(U2-Pad7)"
       (circuit
         (use_via Via[0-1]_600:400_um)
       )
