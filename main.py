@@ -14,9 +14,9 @@ from umqtt.simple import MQTTClient
 #####################################################
 # Global definitions
 #####################################################
-WLAN_ESSID = "TomiPadPro"
-WLAN_PASSWORD = "Benjamin_04"
-MQTT_URL = "hurrikap.dyndns.org"
+WLAN_ESSID = ""
+WLAN_PASSWORD = ""
+MQTT_URL = ""
 MQTT_PORT = 1884
 MQTT_CLIENT = "LTL_00"
 DS1820_PIN = 5
