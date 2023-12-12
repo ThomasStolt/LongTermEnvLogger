@@ -25,27 +25,24 @@ If you think about it in detail, this project is not quite as trivial as it firs
 	* Is it possible to ensure update capability without having to physically access all LTELs all the time?
 
 * Power supply / battery
-	* Li-ion batteries are a good energy source for this type of project, especially the 18650 type. They are very inexpensive, but also have a high capacity. However, as these batteries are very sensitive to mishandling, it is important to take appropriate precautions
-How can you ensure that the LiIon battery cannot be deep discharged?
-How can I ensure that the LiIon battery cannot be overcharged?
-How can I monitor the voltage of the power supply (of the LiIo battery) in order to replace or charge the battery in good time?
+	* Li-ion batteries are a good energy source for this type of project, especially the 18650 type. They are relatively inexpensive for their capacity. However, as these batteries are very sensitive to mishandling, it is important to take appropriate precautions.
+		* How can you ensure that the LiIon battery cannot be deep discharged?
+		* How can I ensure that the LiIon battery cannot be overcharged?
+		* How can I monitor the voltage of the power supply (of the LiIo battery) in order to replace or charge the battery in good time?
+
+## Overview
+
+First a short diagram for an overview:
 
 
-* Laufzeit - Wie kann man eine lange Laufzeit erreichen?
-	* Wenn die batteriebetriebenen Temperatursensoren in vielen RDiumen in einem Geb??ude verteilt werden sollen, m????chte man eine m????glichst lange Laufzeit der einzelnen Sensoren haben. Hierzu muss der Energiesparmodus ("DeepSleep") des Mikrocontrollers genutzt werden. Allderdings vergisst der ESP8266 alle seine Stati und Variablen. Das muss also bedacht werden.
-* Update OTA
-	* Ist es m????glich, eine Updatef????higkeit gew????hrleisten ohne st????ndig an alle LTELs physisch ran zu m????ssen?
-* Energieversorgung / Batterie
-	* Eine gute Energiequelle f????r diese Art von Projekten sind Li-Ionen-Akkus, insbesondere die Bauform 18650. Sie sind zum einen sehr preiswert, haben zum anderen aber eine hohe Kapazit????t. Da diese Akkus aber gegen Fehlbehandlung sehr empfindlich sind, gilt es entsprechende Vorkehrungen zu treffen
-	* Wie kann man sicherstellen, dass der LiIon Akku nicht tiefentladen werden kann? 
-	* Wie kann man sicherstellen, dass der LiIon Akku nicht ????berladen werden kann?
-	* Wie kann ich die Spannung der Stromversorung (des LiIo Akkus) ????berwachen um rechtzeitig den Akku auszutauschen oder zu laden?
 
-## ????berblick
+![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/PrincipleArchitecture.png>)
 
-Zun????chst ein kurzes Schaubild f????r den ????berblick:
 
-![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/Solution%20Architecture%2020200317.png>)
+
+
+
+
 
 Bei mir l????uft diese L????sung momentan in der Alternative 1. Da iobroker relativ hohe Anforderungen an das System stellt, k????nnte sicherlich auch NodeRED zum Einsatz kommen. Dadurch d????rften sich die Anforderungen etwas verbessern.
 
