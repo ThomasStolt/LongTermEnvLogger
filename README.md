@@ -34,47 +34,6 @@ If you think about it in detail, this project is not quite as trivial as it firs
 
 First a short diagram for an overview:
 
-
-
 ![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/images/PrincipleArchitecture.png>)
 
 
-
-Bei mir l????uft diese L????sung momentan in der Alternative 1. Da iobroker relativ hohe Anforderungen an das System stellt, k????nnte sicherlich auch NodeRED zum Einsatz kommen. Dadurch d????rften sich die Anforderungen etwas verbessern.
-
-Das Projekt besteht somit aus mehreren Teilprojekten:
-
-1. Der Logger (Hardware)
-2. Das Programm - Micropython w????re hier ideal, leider gibt es schlechte Erfahrungen mit MQTT unter MicroPython
-3. MQTT Broker
-4. Logging in eine Datenbank (MariaDB)
-4. Darstellung der Wert in einem Dashboard
-
-
-## 1. Temperatur Logger
-Bestehend aus:
-* 1 x ESP8266 als Mikroprozessor
-* 1 x Geh????use / Schachtel
-* 2 x Taster (Reset & Flash)
-* 1 x LiIon 18650 Akku
-* 1 x 1000????A Elektrolytkondensator
-* 1 x Diode (zur Spannungsabsenkung)
-* 1 x Temperatursensor DS18B20
-* diverse Widerst????nde
-* 1 x TP4605 Lade/Entladeschutzmodul
-* 1 x 3-Pin-Buchse (JST-XH) f????r seriellen Port
-
-Die Schaltung findet sich [hier](https://github.com/Crayfish68/LongTermEnvLogger/blob/master/kicad/PDF/LTEL_Schaltplan.pdf).
-
-## 2. Das Programm
-Hier mit MicroPython geschrieben.
-
-## 3. MQTT Broker
-iobroker hat sich als eine gute L????sung hier ergeben.
-
-
-## 4. Infrastruktur zur Auswertung
-Eine popul????re, einfache und zugleich beeindruckende L????sung bietet sich hier Grafana an.
-
-
-# LongTermEnvLogger
