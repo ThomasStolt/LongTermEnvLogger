@@ -335,8 +335,6 @@ F 3 "" H 9650 2650 50  0001 C CNN
 	1    9650 2650
 	1    0    0    1   
 $EndComp
-Wire Wire Line
-	8450 3400 8450 2650
 $Comp
 L power:GND #PWR014
 U 1 1 59EF7331
@@ -353,9 +351,9 @@ Wire Wire Line
 Wire Wire Line
 	9400 2750 9400 4800
 Text Label 9300 2650 0    60   ~ 0
-TxD
-Text Label 9300 2550 0    60   ~ 0
 RxD
+Text Label 9300 2550 0    60   ~ 0
+TxD
 Text Label 9300 2750 0    60   ~ 0
 GND
 NoConn ~ 6650 3500
@@ -372,8 +370,6 @@ NoConn ~ 8450 3700
 NoConn ~ 7600 4600
 Wire Wire Line
 	8450 3500 8500 3500
-Wire Wire Line
-	8500 3500 8500 2550
 Wire Wire Line
 	6450 4100 6650 4100
 Wire Wire Line
@@ -408,10 +404,6 @@ Wire Wire Line
 	9450 2550 9050 2550
 Wire Wire Line
 	9450 2650 9050 2650
-Wire Wire Line
-	8750 2650 8450 2650
-Wire Wire Line
-	8500 2550 8750 2550
 $Comp
 L ESP8266:ESP-12E U2
 U 1 1 5E6E4A20
@@ -492,4 +484,12 @@ Wire Wire Line
 Connection ~ 6450 3600
 Wire Wire Line
 	6450 3600 6450 4100
+Wire Wire Line
+	8450 3400 8450 2550
+Wire Wire Line
+	8450 2550 8750 2550
+Wire Wire Line
+	8500 3500 8500 2650
+Wire Wire Line
+	8500 2650 8750 2650
 $EndSCHEMATC
