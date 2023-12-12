@@ -36,11 +36,7 @@ First a short diagram for an overview:
 
 
 
-![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/PrincipleArchitecture.png>)
-
-
-
-
+![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/images/PrincipleArchitecture.png>)
 
 
 
