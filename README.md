@@ -1,8 +1,8 @@
 # Long Term Environment Logger
 
-The aim of this project is to measure, store, evaluate and display the temperature in the rooms of a building over as long a period as possible (1 year +). A simple circuit around the ESP8266 microprocessor is used for this purpose. Essentially, this circuit consists of 4 components:
+The aim of this project is to measure, store, evaluate and display the temperature in the rooms of a building over as long a period as possible (> 1 year). Essentially, this circuit consists of 4 components:
 
-1. A low power timer circuit that uses nano-Amps only and wakes up the entire circuit every approx. 5 minutes
+1. A low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes
 
 2. A LDO voltage regulator that regulates the incoming battery voltage from 4.2V nominal to 3.3V
 
@@ -18,7 +18,7 @@ If you think about it in detail, this project is not quite as trivial as it firs
 
 * Runtime - How long does a single battery last?
 
-	* As the battery-operated temperature sensors are to be distributed throughout a building, you want the individual sensors to run for as long as possible. One option is the energy-saving mode ("DeepSleep") of the microcontroller. This would reduce the current draw during deep sleep to about 14uA. However, we want to achieve single digit uA sleep current.
+  * As the battery-operated temperature sensors are to be distributed throughout a building, you want the individual sensors to run for as long as possible, so that you don't have to run around the building changing batteries all the time. One option is the energy-saving mode ("DeepSleep") of the microcontroller. This would reduce the current draw during deep sleep to about 14µA. However, we want to achieve single digit µA sleep current.
 
 * Update OTA
 
