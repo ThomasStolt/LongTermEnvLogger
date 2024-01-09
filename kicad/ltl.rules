@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 1599)
+    (start_pass_no 100000)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -27,10 +27,8 @@
   )
   (rule
     (width 250.0)
-    (clearance 200.2)
-    (clearance 125.0 (type smd_to_turn_gap))
-    (clearance 50.0 (type smd))
-    (clearance 200.2 (type "kicad_default"))
+    (clear 200.2)
+    (clear 125.0 (type smd_to_turn_gap))
   )
   (padstack "Via[0-1]_800:400_um"
     (shape
@@ -64,11 +62,11 @@
     )
   )
   (class "kicad_default"
-    GND +3V3 /RxD /TxD +4V "Net-(U1-DONE)" DTR RESET
-    "Net-(Q3-C)" "Net-(Flash1-Pad1)" "Net-(Q3-B)" "Net-(D1-A)" "Net-(Q1-D)" "Net-(Q2-D)" GPIO0 "Net-(U2-GPIO16)"
-    "Net-(U2-GPIO5)" "Net-(U2-CH_PD)" "Net-(U2-TXD)" "Net-(U2-RXD)" "Net-(U1-DELAY{slash}M_DRV)" DONE "Net-(U1-~{DRV})" DRIVE
-    "BAT_DIV" "unconnected-(U2-GPIO14-Pad5)" "unconnected-(U2-GPIO12-Pad6)" "unconnected-(U2-GPIO13-Pad7)" "unconnected-(U2-GPIO2-Pad11)" "unconnected-(U2-GPIO4-Pad13)" "unconnected-(U2-CS0-Pad17)" "unconnected-(U2-MISO-Pad18)"
-    "unconnected-(U2-GPIO9-Pad19)" "unconnected-(U2-GPIO10-Pad20)" "unconnected-(U2-MOSI-Pad21)" "unconnected-(U2-SCLK-Pad22)" "unconnected-(U4-NR-Pad4)"
+    GND +3V3 "unconnected-(J1-Pin_1-Pad1)" "unconnected-(J1-Pin_3-Pad3)" +4V "Net-(U1-DONE)" DTR RESET
+    "Net-(Flash1-Pad1)" "Net-(Q1-D)" "Net-(Q2-D)" "Net-(CSO1-Pin_1)" /TxD "Net-(U2-CH_PD)" "Net-(U2-TXD)" "Net-(U2-RXD)"
+    DONE "Net-(U1-~{DRV})" DRIVE "BAT_DIV" "Net-(GPIO9-Pin_1)" "Net-(GPIO10-Pin_1)" "Net-(GPIO12-Pin_1)" "Net-(GPIO13-Pin_1)"
+    "Net-(GPIO14-Pin_1)" "Net-(GPIO16-Pin_1)" "Net-(MISO1-Pin_1)" "Net-(MOSI1-Pin_1)" FLASH "Net-(U2-GPIO2)" "Net-(SCL1-Pin_1)" "unconnected-(U4-NR-Pad4)"
+    /RxD "Net-(SCLK1-Pin_1)" "Net-(SDA1-Pin_1)" DELAY "Net-(Q3-C)" "Net-(Q3-B)" "Net-(D1-A)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
