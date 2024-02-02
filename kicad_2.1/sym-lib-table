@@ -1,5 +1,0 @@
-(sym_lib_table
-  (lib (name ltl-rescue)(type Legacy)(uri ${KIPRJMOD}/ltl-rescue.lib)(options "")(descr ""))
-  (lib (name ESP8266)(type Legacy)(uri /home/tstolt/kicad/libraries/kicad-ESP8266/ESP8266.lib)(options "")(descr ""))
-  (lib (name LTL)(type Legacy)(uri ${KIPRJMOD}/LTL.lib)(options "")(descr ""))
-)
