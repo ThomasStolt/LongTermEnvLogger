@@ -4,9 +4,9 @@ The aim of this project is to measure, store, evaluate and display the temperatu
 
 1. A low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes
 
-2. A LDO voltage regulator that regulates the incoming battery voltage from 4.2V nominal to 3.3V
+2. A LDO voltage regulator that regulates the incoming battery voltage from a LiIon battery to 3.3V
 
-3. A battery sensor that sends the battery voltage to the ESP8266 ADC pin with a voltage divider so that the battery voltage can be monitored
+3. A battery voltage sensor that sends the battery voltage to the ESP8266 ADC pin with a voltage divider so that the battery voltage can be monitored
 
 4. The ESP8266 with a DS18B20 temperature sensor 
 
@@ -22,14 +22,18 @@ If you think about it in detail, this project is not quite as trivial as it firs
 
 * Update OTA
 
-	* Is it possible to ensure update capability without having to physically access all LTELs all the time? This would probably affect the runtime as well, because if we check for updates every time the circuit wakes up, it will cost runtime / energy. So, the question here is, whether we really want that.
+	* Is it possible to ensure update capability without having to physically access all sensors all the time? This would probably affect the runtime as well, because if we check for updates every time the circuit wakes up, it will cost runtime / energy. So, the question here is, whether we really want that.
+
+* WiFi Connection Time
+	* When the ESP8266 wakes up and has WiFi switched on, it draws about 70mA, which is a lot. So, all efforts need to be taken to reduce the connection time to be a short as possible.
 
 * Power supply / battery
 
-	* Li-ion batteries are a good energy source for this type of project, especially the 18650 type. They are relatively inexpensive for their capacity. However, as these batteries are very sensitive to mishandling, it is important to take appropriate precautions.
+	* Li-Ion batteries are a good energy source for this type of project, especially the 18650 type. They are relatively inexpensive for their capacity. However, as these batteries are very sensitive to mishandling, it is important to take appropriate precautions.
 		* How can you ensure that the LiIon battery will not be deep discharged?
 		* How can I ensure that the LiIon battery cannot be overcharged?
 		* How can I monitor the voltage of the power supply (of the LiIo battery) in order to replace or charge the battery in good time?
+		* All batteries must be checked regularly for their capacity and possible health issues.
 
 ## Overview
 

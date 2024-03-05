@@ -1,0 +1,74 @@
+2024-02-16 12:41:28.789 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2024-02-16 12:41:28.825 [main] INFO  Settings were loaded from freerouting.json
+2024-02-16 12:41:30.275 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v1.9.0
+2024-02-16 12:41:35.960 [AWT-EventQueue-0] INFO  Opening 'ltl.dsn'...
+2024-02-16 12:41:37.696 [AWT-EventQueue-0] INFO  Opening 'ltl.rules'...
+2024-02-16 12:41:55.531 [Thread-35] INFO  Starting auto-routing...
+2024-02-16 12:41:59.677 [Thread-35] INFO  Auto-routing was completed in 4,14 seconds.
+2024-02-16 12:41:59.780 [Thread-35] INFO  Starting route optimization on 1 thread...
+2024-02-16 12:46:42.046 [Thread-35] INFO  Route optimization was completed in 4 minute(s) 42,26 seconds and it improved the design by ~51,19%.
+2024-02-16 12:59:03.589 [AWT-EventQueue-0] INFO  Saving 'ltl.ses'...
+2024-02-16 12:59:05.360 [AWT-EventQueue-0] INFO  Saving 'ltl.rules'...
+2024-02-16 14:16:38.377 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2024-02-16 14:16:38.414 [main] INFO  Settings were loaded from freerouting.json
+2024-02-16 14:16:39.836 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v1.9.0
+2024-02-16 14:16:50.973 [AWT-EventQueue-0] INFO  Opening 'ltl.dsn'...
+2024-02-16 14:16:52.601 [AWT-EventQueue-0] INFO  Opening 'ltl.rules'...
+2024-02-16 14:17:03.418 [Thread-34] INFO  Starting auto-routing...
+2024-02-16 14:17:10.475 [Thread-34] WARN  There were only 8,10 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:12.021 [Thread-34] WARN  There were only 6,00 changes in the last 40 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:13.547 [Thread-34] WARN  There were only 6,00 changes in the last 60 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:15.076 [Thread-34] WARN  There were only 6,00 changes in the last 80 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:16.598 [Thread-34] WARN  There were only 6,00 changes in the last 100 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:18.106 [Thread-34] WARN  There were only 6,00 changes in the last 120 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:19.609 [Thread-34] WARN  There were only 6,00 changes in the last 140 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:21.105 [Thread-34] WARN  There were only 6,00 changes in the last 160 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:22.613 [Thread-34] WARN  There were only 6,00 changes in the last 180 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:24.103 [Thread-34] WARN  There were only 6,00 changes in the last 200 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 14:17:24.104 [Thread-34] WARN  There was so little change during the recent passes that autorouter will be stopped now.
+2024-02-16 14:17:24.105 [Thread-34] INFO  Auto-routing was completed in 20,69 seconds.
+2024-02-16 14:17:24.207 [Thread-34] INFO  Starting route optimization on 1 thread...
+2024-02-16 14:23:42.161 [Thread-34] INFO  Route optimization was completed in 6 minute(s) 17,95 seconds and it improved the design by ~50,78%.
+2024-02-16 14:24:11.217 [AWT-EventQueue-0] INFO  Saving 'ltl.ses'...
+2024-02-16 14:24:13.298 [AWT-EventQueue-0] INFO  Saving 'ltl.rules'...
+2024-02-16 19:46:38.538 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2024-02-16 19:46:38.578 [main] INFO  Settings were loaded from freerouting.json
+2024-02-16 19:46:39.977 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v1.9.0
+2024-02-16 19:46:46.464 [AWT-EventQueue-0] INFO  Opening 'ltl.dsn'...
+2024-02-16 19:46:48.468 [AWT-EventQueue-0] INFO  Opening 'ltl.rules'...
+2024-02-16 19:47:00.884 [Thread-34] INFO  Starting auto-routing...
+2024-02-16 19:47:25.890 [Thread-34] WARN  There were only 18,80 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:47:46.104 [Thread-34] WARN  There were only 15,12 changes in the last 40 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:48:06.364 [Thread-34] WARN  There were only 14,00 changes in the last 60 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:48:27.686 [Thread-34] WARN  There were only 14,00 changes in the last 80 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:48:47.839 [Thread-34] WARN  There were only 14,00 changes in the last 100 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:49:08.597 [Thread-34] WARN  There were only 14,00 changes in the last 120 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:49:28.301 [Thread-34] WARN  There were only 14,00 changes in the last 140 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:49:47.738 [Thread-34] WARN  There were only 14,00 changes in the last 160 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:50:07.362 [Thread-34] WARN  There were only 14,00 changes in the last 180 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:50:26.724 [Thread-34] WARN  There were only 14,00 changes in the last 200 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:50:26.725 [Thread-34] WARN  There was so little change during the recent passes that autorouter will be stopped now.
+2024-02-16 19:50:26.726 [Thread-34] INFO  Auto-routing was completed in 3 minute(s) 25,84 seconds.
+2024-02-16 19:50:26.832 [Thread-34] INFO  Starting route optimization on 1 thread...
+2024-02-16 19:56:50.239 [Thread-34] INFO  Route optimization was completed in 6 minute(s) 23,41 seconds and it improved the design by ~46,18%.
+2024-02-16 19:58:30.060 [Thread-90] INFO  Starting auto-routing...
+2024-02-16 19:58:30.716 [Thread-90] INFO  Auto-routing was completed in 0,66 seconds.
+2024-02-16 19:58:30.822 [Thread-90] INFO  Starting route optimization on 1 thread...
+2024-02-16 19:58:33.469 [Thread-90] INFO  Route optimization was completed in 2,65 seconds.
+2024-02-16 19:58:49.041 [Thread-101] INFO  Starting auto-routing...
+2024-02-16 19:58:54.556 [Thread-101] WARN  There were only 12,25 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:58:56.113 [Thread-101] WARN  There were only 9,32 changes in the last 40 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:58:57.647 [Thread-101] WARN  There were only 9,47 changes in the last 60 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:58:59.174 [Thread-101] WARN  There were only 9,70 changes in the last 80 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:00.711 [Thread-101] WARN  There were only 9,82 changes in the last 100 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:02.230 [Thread-101] WARN  There were only 9,87 changes in the last 120 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:03.848 [Thread-101] WARN  There were only 9,90 changes in the last 140 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:05.403 [Thread-101] WARN  There were only 9,93 changes in the last 160 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:06.944 [Thread-101] WARN  There were only 9,94 changes in the last 180 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:08.524 [Thread-101] WARN  There were only 9,96 changes in the last 200 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-02-16 19:59:08.525 [Thread-101] WARN  There was so little change during the recent passes that autorouter will be stopped now.
+2024-02-16 19:59:08.526 [Thread-101] INFO  Auto-routing was completed in 19,48 seconds.
+2024-02-16 19:59:08.629 [Thread-101] INFO  Starting route optimization on 1 thread...
+2024-02-16 20:11:06.256 [Thread-101] INFO  Route optimization was completed in 11 minute(s) 57,63 seconds and it improved the design by ~52,54%.
+2024-02-16 21:11:37.613 [AWT-EventQueue-0] INFO  Saving 'ltl.ses'...
+2024-02-16 21:11:41.496 [AWT-EventQueue-0] INFO  Saving 'ltl.rules'...

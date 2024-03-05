@@ -3,20 +3,34 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Network credentials
-const char* ssid = "linksys-n";
-const char* password = "Nadine21";
+// define a 3-digit room number
+const int roomNumber = 208; 
+
+// Network credentials and static IP configuration
+const char* ssid = "N-IOT";
+const char* password = "8TpECLen";
+IPAddress staticIP(192, 168, 100, roomNumber); // Static IP address
+IPAddress gateway(192, 168, 100, 1);    // Gateway (usually your router IP)
+IPAddress subnet(255, 255, 255, 0);     // Subnet mask
+IPAddress dns(192, 168, 100, 1);        // DNS (can be the same as the Gateway)
+
+// Example BSSID of the WiFi network and channel
+const uint8_t wifi_bssid[6] = {0x82, 0x8A, 0x20, 0xD1, 0x77, 0x51};
+const int wifi_channel = 6;
 
 // MQTT Server
 const char* mqtt_server = "192.168.2.53";
 const int mqtt_port = 1883;
-const char* temperature_topic = "home/room/temperature";
-const char* voltage_topic = "home/room/voltage"; // Voltage MQTT topic
 
-// Data wire is connected to GPIO4
-#define ONE_WIRE_BUS 4
-#define DONE 15  // GPIO15
+// Format MQTT topics to include the device number
+char temp_topic[30];
+char volt_topic[30];
 
+// Data wire is plugged into GPIO12
+#define ONE_WIRE_BUS 12
+// GPIO15, to be set HIGH when finished
+#define DONE 15
+// Setup temperature sensor
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
@@ -24,100 +38,50 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setup_wifi() {
-  delay(10);
-  Serial.println("Connecting to WiFi...");
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("WiFi connected");
+  WiFi.forceSleepWake();
+  char hostname[11];
+  sprintf(hostname, "sensor_%03d", roomNumber);
+  WiFi.hostname(hostname);
+  WiFi.config(staticIP, gateway, subnet, dns);
+  WiFi.begin(ssid, password, wifi_channel, wifi_bssid);
+  while (WiFi.status() != WL_CONNECTED) { delay(100); }
 }
 
 void reconnect() {
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    if (client.connect("ESP8266Client")) {
-      client.loop();
-      Serial.println("connected");
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
-    }
-  }
-}
-
-// Function to read and convert ADC value to voltage
-float readVoltage() {
-  int sensorValue = analogRead(A0);
-  float voltage = sensorValue * (1.0 / 1023.0) * 6.052; // Adjust the multiplier for your voltage divider
-  return voltage;
+  char clientId[20];
+  sprintf(clientId, "room_%03d", roomNumber);
+  client.setServer(mqtt_server, mqtt_port);
+  while (!client.connected()) { if (client.connect(clientId)) { } else { delay(100); } }
 }
 
 void setup() {
-  Serial.begin(115200);
-  setup_wifi();
-  client.setServer(mqtt_server, mqtt_port);
-
-  // Ensure MQTT connection
-  if (!client.connected()) {
-    reconnect();
-  }
-
+  WiFi.forceSleepBegin(); // Ensure WiFi starts off to save power
   sensors.begin();
-  sensors.requestTemperatures();
-  yield();
-  float temperature = sensors.getTempCByIndex(0);
-
-  char tempString[8];
-  dtostrf(temperature, 1, 2, tempString);
-
-  if (client.publish(temperature_topic, tempString)) {
-    yield();
-    Serial.println("Temperature published successfully");
-  } else {
-    Serial.println("Failed to publish temperature");
-  }
-
-  // Read and publish the voltage
-  float voltage = readVoltage();
-  char voltageString[8];
-  dtostrf(voltage, 1, 2, voltageString); // Format voltage as a string
-
-  if (client.publish(voltage_topic, voltageString)) {
-    Serial.println("Voltage published successfully");
-  } else {
-    Serial.println("Failed to publish voltage");
-  }
-
-  client.loop();
-  yield();
-
-  Serial.print("Temperature: ");
-  Serial.print(temperature);
-  Serial.println(" °C");
-  Serial.print("Voltage: ");
-  Serial.print(voltage);
-  Serial.println(" V");
-
-  delay(100);
-
-  Serial.println("Setting GPIO15 as output here... ");
-  delay(100);
   pinMode(DONE, OUTPUT);
-  yield();
-  Serial.println("Setting GPIO15 high here... ");
-  delay(100);
-  digitalWrite(DONE, HIGH);
+  // Format the MQTT topics
+  sprintf(temp_topic, "temp_%03d", roomNumber);
+  sprintf(volt_topic, "volt_%03d", roomNumber);
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
+  // Measure temperature and voltage first
+  sensors.requestTemperatures();
+  float temperature = sensors.getTempCByIndex(0);
+  char tempString[8];
+  dtostrf(temperature, 1, 2, tempString);
+  char payload[5];
+  int adcValue = analogRead(A0);
+  snprintf(payload, sizeof(payload), "%d", adcValue);
+  // Then turn on WiFi
+  setup_wifi();
+  // Ensure MQTT connection
+  if (!client.connected()) { reconnect(); }
   client.loop();
+  // Publish temperature and voltage
+  if (!client.publish(temp_topic, tempString)) { }
+  delay(1);
+  if (!client.publish(volt_topic, payload)) { }
+  delay(1);
+  // Switch off circuit
+  digitalWrite(DONE, HIGH);
 }
