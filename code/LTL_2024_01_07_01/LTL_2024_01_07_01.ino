@@ -2,13 +2,12 @@
 #include <PubSubClient.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "credentials.h"
 
 // define a 3-digit room number
 const int roomNumber = 208; 
 
-// Network credentials and static IP configuration
-const char* ssid = "";
-const char* password = "";
+// Static IP configuration
 IPAddress staticIP(192, 168, 100, roomNumber); // Static IP address
 IPAddress gateway(192, 168, 100, 1);    // Gateway (usually your router IP)
 IPAddress subnet(255, 255, 255, 0);     // Subnet mask
