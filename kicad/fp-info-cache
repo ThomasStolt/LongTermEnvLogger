@@ -1,1653 +1,834 @@
-401059345993252
-Package_TO_SOT_THT
-Analog_TO-46-4_ThermalShield
-TO-46-4 with Valox case, based on https://www.analog.com/media/en/technical-documentation/data-sheets/199399fc.pdf
-TO-46-4 LM399
+202229076527558
+Fuse
+Fuse_0402_1005Metric
+Fuse SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
-4
-4
-Package_TO_SOT_THT
-Fairchild_TO-220F-6L
-Fairchild TO-220F-6L, http://www.mouser.com/ds/2/149/FSL136MRT-113334.pdf
-Fairchild TO-220F-6L
-0
-6
-6
-Package_TO_SOT_THT
-Heraeus_TO-92-2
-TO-92 2-pin variant by Heraeus, drill 0.75mm (http://www.produktinfo.conrad.com/datenblaetter/175000-199999/181293-da-01-de-TO92_Temperatursensor_PT1000_32209225.pdf)
-to-92
-0
 2
 2
-Package_TO_SOT_THT
-NEC_Molded_7x4x9mm
-Molded Japan Transistor Package 7x4x9mm^3, http://rtellason.com/transdata/2sb734.pdf
-Japan transistor
-0
-3
-3
-Package_TO_SOT_THT
-PowerIntegrations_TO-220-7C
-Non Isolated Modified TO-220 7pin Package, see http://www.farnell.com/datasheets/5793.pdf
-Power Integration Y Package
-0
-6
-6
-Package_TO_SOT_THT
-SIPAK-1EP_Horizontal_TabDown
-SIPAK, Horizontal, RM 2.286mm
-SIPAK Horizontal RM 2.286mm
-0
-4
-4
-Package_TO_SOT_THT
-SIPAK_Vertical
-SIPAK, Vertical, RM 2.286mm
-SIPAK Vertical RM 2.286mm
-0
-3
-3
-Package_TO_SOT_THT
-SOD-70_P2.54mm
-Plastic near cylindrical package Sod-70 see: https://www.nxp.com/docs/en/data-sheet/KTY81_SER.pdf  [StepUp generated footprint]
-Sod-70
+Fuse
+Fuse_0402_1005Metric_Pad0.77x0.64mm_HandSolder
+Fuse SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-SOD-70_P5.08mm
-Plastic near cylindrical package Sod-70 see: https://www.nxp.com/docs/en/data-sheet/KTY81_SER.pdf  [StepUp generated footprint]
-Sod-70
+Fuse
+Fuse_0603_1608Metric
+Fuse SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-SOT-227
-SOT-227 / SOT-227B / ISOTOP, M4 mounting screws (https://www.vishay.com/docs/95423/sot227g2.pdf, https://www.vishay.com/docs/95793/vs-fc420sa10.pdf)
-sot 227 isotop
-0
-8
-4
-Package_TO_SOT_THT
-TO-3
-Transistor TO-3
-TR TO-3 TO3 TO-204
-0
-4
-3
-Package_TO_SOT_THT
-TO-3P-3_Horizontal_TabDown
-TO-3P-3, Horizontal, RM 5.45mm, , see https://toshiba.semicon-storage.com/ap-en/design-support/package/detail.TO-3P(N).html
-TO-3P-3 Horizontal RM 5.45mm 
-0
-3
-3
-Package_TO_SOT_THT
-TO-3P-3_Horizontal_TabUp
-TO-3P-3, Horizontal, RM 5.45mm, , see https://toshiba.semicon-storage.com/ap-en/design-support/package/detail.TO-3P(N).html
-TO-3P-3 Horizontal RM 5.45mm 
-0
-3
-3
-Package_TO_SOT_THT
-TO-3P-3_Vertical
-TO-3P-3, Vertical, RM 5.45mm, , see https://toshiba.semicon-storage.com/ap-en/design-support/package/detail.TO-3P(N).html
-TO-3P-3 Vertical RM 5.45mm 
+Fuse
+Fuse_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+Fuse SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
-3
-3
-Package_TO_SOT_THT
-TO-3PB-3_Horizontal_TabDown
-TO-3PB-3, Horizontal, RM 5.45mm, , see http://www.onsemi.com/pub/Collateral/340AC.PDF
-TO-3PB-3 Horizontal RM 5.45mm 
-0
-3
-3
-Package_TO_SOT_THT
-TO-3PB-3_Horizontal_TabUp
-TO-3PB-3, Horizontal, RM 5.45mm, , see http://www.onsemi.com/pub/Collateral/340AC.PDF
-TO-3PB-3 Horizontal RM 5.45mm 
-0
-3
-3
-Package_TO_SOT_THT
-TO-3PB-3_Vertical
-TO-3PB-3, Vertical, RM 5.45mm, , see http://www.onsemi.com/pub/Collateral/340AC.PDF
-TO-3PB-3 Vertical RM 5.45mm 
-0
-3
-3
-Package_TO_SOT_THT
-TO-5-2
-TO-5-2
-TO-5-2
-0
 2
 2
-Package_TO_SOT_THT
-TO-5-2_Window
-TO-5-2_Window, Window
-TO-5-2_Window Window
+Fuse
+Fuse_0805_2012Metric
+Fuse SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-TO-5-3
-TO-5-3
-TO-5-3
-0
-3
-3
-Package_TO_SOT_THT
-TO-5-3_Window
-TO-5-3_Window, Window
-TO-5-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-5-4
-TO-5-4
-TO-5-4
-0
-4
-4
-Package_TO_SOT_THT
-TO-5-4_Window
-TO-5-4_Window, Window
-TO-5-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-5-6
-TO-5-6
-TO-5-6
-0
-6
-6
-Package_TO_SOT_THT
-TO-5-6_Window
-TO-5-6_Window, Window
-TO-5-6_Window Window
-0
-6
-6
-Package_TO_SOT_THT
-TO-5-8
-TO-5-8
-TO-5-8
-0
-8
-8
-Package_TO_SOT_THT
-TO-5-8_PD5.08
-TO-5-8_PD5.08
-TO-5-8_PD5.08
-0
-8
-8
-Package_TO_SOT_THT
-TO-5-8_PD5.08_Window
-TO-5-8_PD5.08_Window, Window
-TO-5-8_PD5.08_Window Window
-0
-8
-8
-Package_TO_SOT_THT
-TO-5-8_Window
-TO-5-8_Window, Window
-TO-5-8_Window Window
-0
-8
-8
-Package_TO_SOT_THT
-TO-5-10
-TO-5-10
-TO-5-10
-0
-10
-10
-Package_TO_SOT_THT
-TO-5-10_Window
-TO-5-10_Window, Window
-TO-5-10_Window Window
-0
-10
-10
-Package_TO_SOT_THT
-TO-8-2
-TO-8-2
-TO-8-2
-0
-2
-2
-Package_TO_SOT_THT
-TO-8-2_Window
-TO-8-2_Window, Window
-TO-8-2_Window Window
-0
-2
-2
-Package_TO_SOT_THT
-TO-8-3
-TO-8-3
-TO-8-3
+Fuse
+Fuse_0805_2012Metric_Pad1.15x1.40mm_HandSolder
+Fuse SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator
+fuse handsolder
 0
-3
-3
-Package_TO_SOT_THT
-TO-8-3_Window
-TO-8-3_Window, Window
-TO-8-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-11-2
-TO-11-2
-TO-11-2
-0
 2
 2
-Package_TO_SOT_THT
-TO-11-2_Window
-TO-11-2_Window, Window
-TO-11-2_Window Window
+Fuse
+Fuse_1206_3216Metric
+Fuse SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-TO-11-3
-TO-11-3
-TO-11-3
-0
-3
-3
-Package_TO_SOT_THT
-TO-11-3_Window
-TO-11-3_Window, Window
-TO-11-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-12-4
-TO-12-4
-TO-12-4
-0
-4
-4
-Package_TO_SOT_THT
-TO-12-4_Window
-TO-12-4_Window, Window
-TO-12-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-17-4
-TO-17-4
-TO-17-4
-0
-4
-4
-Package_TO_SOT_THT
-TO-17-4_Window
-TO-17-4_Window, Window
-TO-17-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-18-2
-TO-18-2
-TO-18-2
+Fuse
+Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder
+Fuse SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-18-2_Lens
-TO-18-2_Lens, Lens
-TO-18-2_Lens Lens
+Fuse
+Fuse_1210_3225Metric
+Fuse SMD 1210 (3225 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-TO-18-2_Window
-TO-18-2_Window, Window
-TO-18-2_Window Window
+Fuse
+Fuse_1210_3225Metric_Pad1.42x2.65mm_HandSolder
+Fuse SMD 1210 (3225 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-18-3
-TO-18-3
-TO-18-3
-0
-3
-3
-Package_TO_SOT_THT
-TO-18-3_Lens
-TO-18-3_Lens, Lens
-TO-18-3_Lens Lens
-0
-3
-3
-Package_TO_SOT_THT
-TO-18-3_Window
-TO-18-3_Window, Window
-TO-18-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-18-4
-TO-18-4
-TO-18-4
-0
-4
-4
-Package_TO_SOT_THT
-TO-18-4_Lens
-TO-18-4_Lens, Lens
-TO-18-4_Lens Lens
-0
-4
-4
-Package_TO_SOT_THT
-TO-18-4_Window
-TO-18-4_Window, Window
-TO-18-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-33-4
-TO-33-4
-TO-33-4
-0
-4
-4
-Package_TO_SOT_THT
-TO-33-4_Window
-TO-33-4_Window, Window
-TO-33-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-38-2
-TO-38-2
-TO-38-2
+Fuse
+Fuse_1812_4532Metric
+Fuse SMD 1812 (4532 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://www.nikhef.nl/pub/departments/mt/projects/detectorR_D/dtddice/ERJ2G.pdf), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-TO-38-2_Window
-TO-38-2_Window, Window
-TO-38-2_Window Window
+Fuse
+Fuse_1812_4532Metric_Pad1.30x3.40mm_HandSolder
+Fuse SMD 1812 (4532 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: https://www.nikhef.nl/pub/departments/mt/projects/detectorR_D/dtddice/ERJ2G.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-38-3
-TO-38-3
-TO-38-3
+Fuse
+Fuse_2010_5025Metric
+Fuse SMD 2010 (5025 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
-3
-3
-Package_TO_SOT_THT
-TO-38-3_Window
-TO-38-3_Window, Window
-TO-38-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-39-2
-TO-39-2
-TO-39-2
-0
 2
 2
-Package_TO_SOT_THT
-TO-39-2_Window
-TO-39-2_Window, Window
-TO-39-2_Window Window
+Fuse
+Fuse_2010_5025Metric_Pad1.52x2.65mm_HandSolder
+Fuse SMD 2010 (5025 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-39-3
-TO-39-3
-TO-39-3
-0
-3
-3
-Package_TO_SOT_THT
-TO-39-3_Window
-TO-39-3_Window, Window
-TO-39-3_Window Window
-0
-3
-3
-Package_TO_SOT_THT
-TO-39-4
-TO-39-4
-TO-39-4
+Fuse
+Fuse_2512_6332Metric
+Fuse SMD 2512 (6332 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse
 0
-4
-4
-Package_TO_SOT_THT
-TO-39-4_Window
-TO-39-4_Window, Window
-TO-39-4_Window Window
-0
-4
-4
-Package_TO_SOT_THT
-TO-39-6
-TO-39-6
-TO-39-6
-0
-6
-6
-Package_TO_SOT_THT
-TO-39-6_Window
-TO-39-6_Window, Window
-TO-39-6_Window Window
-0
-6
-6
-Package_TO_SOT_THT
-TO-39-8
-TO-39-8
-TO-39-8
-0
-8
-8
-Package_TO_SOT_THT
-TO-39-8_Window
-TO-39-8_Window, Window
-TO-39-8_Window Window
-0
-8
-8
-Package_TO_SOT_THT
-TO-39-10
-TO-39-10
-TO-39-10
-0
-10
-10
-Package_TO_SOT_THT
-TO-39-10_Window
-TO-39-10_Window, Window
-TO-39-10_Window Window
-0
-10
-10
-Package_TO_SOT_THT
-TO-46-2
-TO-46-2
-TO-46-2
+2
+2
+Fuse
+Fuse_2512_6332Metric_Pad1.52x3.35mm_HandSolder
+Fuse SMD 2512 (6332 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-46-2_Pin2Center
-TO-46-2, Pin2 at center of package, Thorlabs photodiodes
-TO-46-2 Thorlabs
+Fuse
+Fuse_2920_7451Metric
+Fuse SMD 2920 (7451 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size from: http://www.megastar.com/products/fusetronic/polyswitch/PDF/smd2920.pdf), generated with kicad-footprint-generator
+fuse
 0
 2
 2
-Package_TO_SOT_THT
-TO-46-2_Pin2Center_Window
-TO-46-2, Pin2 at center of package, Thorlabs photodiodes
-TO-46-2 Thorlabs
+Fuse
+Fuse_2920_7451Metric_Pad2.10x5.45mm_HandSolder
+Fuse SMD 2920 (7451 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size from: http://www.megastar.com/products/fusetronic/polyswitch/PDF/smd2920.pdf), generated with kicad-footprint-generator
+fuse handsolder
 0
 2
 2
-Package_TO_SOT_THT
-TO-46-2_Window
-TO-46-2_Window, Window
-TO-46-2_Window Window
+Fuse
+Fuse_BelFuse_0ZRE0005FF_L8.3mm_W3.8mm
+Fuse 0ZRE0005FF, BelFuse, Radial Leaded PTC, https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
 2
 2
-Package_TO_SOT_THT
-TO-46-3
-TO-46-3
-TO-46-3
+Fuse
+Fuse_BelFuse_0ZRE0008FF_L8.3mm_W3.8mm
+Fuse 0ZRE0008FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-46-3_Pin2Center
-TO-46-3, Pin2 at center of package, Thorlabs photodiodes, https://www.thorlabs.de/drawings/374b6862eb3b5a04-9360B5F6-5056-2306-D912111C06C3F830/FDGA05-SpecSheet.pdf
-TO-46-3 Thorlabs
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0012FF_L8.3mm_W3.8mm
+Fuse 0ZRE0012FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-46-3_Pin2Center_Window
-TO-46-3, Pin2 at center of package, Thorlabs photodiodes, https://www.thorlabs.de/drawings/374b6862eb3b5a04-9360B5F6-5056-2306-D912111C06C3F830/FDGA05-SpecSheet.pdf
-TO-46-3 Thorlabs
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0016FF_L9.9mm_W3.8mm
+Fuse 0ZRE0016FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-46-3_Window
-TO-46-3_Window, Window
-TO-46-3_Window Window
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0025FF_L9.6mm_W3.8mm
+Fuse 0ZRE0025FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-46-4
-TO-46-4
-TO-46-4
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0033FF_L11.4mm_W3.8mm
+Fuse 0ZRE0033FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-4
-4
-Package_TO_SOT_THT
-TO-46-4_Window
-TO-46-4_Window, Window
-TO-46-4_Window Window
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0040FF_L11.5mm_W3.8mm
+Fuse 0ZRE0040FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-4
-4
-Package_TO_SOT_THT
-TO-52-2
-TO-52-2
-TO-52-2
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0055FF_L14.0mm_W4.1mm
+Fuse 0ZRE0055FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
 2
 2
-Package_TO_SOT_THT
-TO-52-2_Window
-TO-52-2_Window, Window
-TO-52-2_Window Window
+Fuse
+Fuse_BelFuse_0ZRE0075FF_L11.5mm_W4.8mm
+Fuse 0ZRE0075FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
 2
 2
-Package_TO_SOT_THT
-TO-52-3
-TO-52-3
-TO-52-3
+Fuse
+Fuse_BelFuse_0ZRE0100FF_L18.7mm_W5.1mm
+Fuse 0ZRE0100FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-52-3_Window
-TO-52-3_Window, Window
-TO-52-3_Window Window
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0125FF_L21.2mm_W5.3mm
+Fuse 0ZRE0125FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-3
-3
-Package_TO_SOT_THT
-TO-72-4
-TO-72-4
-TO-72-4
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0150FF_L23.4mm_W5.3mm
+Fuse 0ZRE0150FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-4
-4
-Package_TO_SOT_THT
-TO-72-4_Window
-TO-72-4_Window, Window
-TO-72-4_Window Window
+2
+2
+Fuse
+Fuse_BelFuse_0ZRE0200FF_L24.9mm_W6.1mm
+Fuse 0ZRE0200FF, BelFuse, Radial Leaded PTC,https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0zre-series.pdf
+0ZRE BelFuse radial PTC
 0
-4
-4
-Package_TO_SOT_THT
-TO-75-6
-TO-75-6
-TO-75-6
-0
-6
-6
-Package_TO_SOT_THT
-TO-75-6_Window
-TO-75-6_Window, Window
-TO-75-6_Window Window
-0
-6
-6
-Package_TO_SOT_THT
-TO-78-6
-TO-78-6
-TO-78-6
-0
-6
-6
-Package_TO_SOT_THT
-TO-78-6_Window
-TO-78-6_Window, Window
-TO-78-6_Window Window
-0
-6
-6
-Package_TO_SOT_THT
-TO-78-8
-TO-78-8
-TO-78-8
-0
-8
-8
-Package_TO_SOT_THT
-TO-78-8_Window
-TO-78-8_Window, Window
-TO-78-8_Window Window
-0
-8
-8
-Package_TO_SOT_THT
-TO-78-10
-TO-78-10
-TO-78-10
-0
-10
-10
-Package_TO_SOT_THT
-TO-78-10_Window
-TO-78-10_Window, Window
-TO-78-10_Window Window
-0
-10
-10
-Package_TO_SOT_THT
-TO-92
-TO-92 leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Blade_ATO_directSolder
+car blade fuse direct solder
+car blade fuse
 0
-3
-3
-Package_TO_SOT_THT
-TO-92-2
-TO-92 2-pin leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 diode SOD70
+2
+2
+Fuse
+Fuse_Blade_Mini_directSolder
+car blade fuse mini, direct solder
+car blade fuse mini
 0
 2
 2
-Package_TO_SOT_THT
-TO-92-2_Horizontal1
-2-pin TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 temperature sensor diode
+Fuse
+Fuse_Bourns_MF-RG300
+PTC Resettable Fuse, Ihold = 3.0A, Itrip=5.1A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92-2_Horizontal2
-2-pin TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 temperature sensor diode
+Fuse
+Fuse_Bourns_MF-RG400
+PTC Resettable Fuse, Ihold = 4.0A, Itrip=6.8A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92-2_W4.0mm_Horizontal_FlatSideDown
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+Fuse
+Fuse_Bourns_MF-RG500
+PTC Resettable Fuse, Ihold = 5.0A, Itrip=8.5A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92-2_W4.0mm_Horizontal_FlatSideUp
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+Fuse
+Fuse_Bourns_MF-RG600
+PTC Resettable Fuse, Ihold = 6.0A, Itrip=10.2A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92-2_Wide
-TO-92 2-pin leads in-line, wide, drill 0.75mm
-to-92 sc-43 sc-43a sot54 PA33 diode SOD70
+Fuse
+Fuse_Bourns_MF-RG650
+PTC Resettable Fuse, Ihold = 6.5A, Itrip=11.1A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92Flat
-TO-92Flat package, often used for hall sensors, drill 0.75mm (see e.g. http://www.ti.com/lit/ds/symlink/drv5023.pdf)
-to-92Flat hall sensor
+Fuse
+Fuse_Bourns_MF-RG700
+PTC Resettable Fuse, Ihold = 7.0A, Itrip=11.9A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92L
-TO-92L leads in-line (large body variant of TO-92), also known as TO-226, wide, drill 0.75mm (see https://www.diodes.com/assets/Package-Files/TO92L.pdf and http://www.ti.com/lit/an/snoa059/snoa059.pdf)
-TO-92L Molded Narrow transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RG800
+PTC Resettable Fuse, Ihold = 8.0A, Itrip=13.6A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92L_HandSolder
-TO-92L leads in-line (large body variant of TO-92), also known as TO-226, wide, drill 0.75mm, hand-soldering variant with enlarged pads (see https://www.diodes.com/assets/Package-Files/TO92L.pdf and http://www.ti.com/lit/an/snoa059/snoa059.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RG900
+PTC Resettable Fuse, Ihold = 9.0A, Itrip=15.3A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92L_Inline
-TO-92L leads in-line (large body variant of TO-92), also known as TO-226, wide, drill 0.75mm (see https://www.diodes.com/assets/Package-Files/TO92L.pdf and http://www.ti.com/lit/an/snoa059/snoa059.pdf)
-TO-92L Inline Wide transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RG1000
+PTC Resettable Fuse, Ihold = 10.0A, Itrip=17.0A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92L_Inline_Wide
-TO-92L leads in-line (large body variant of TO-92), also known as TO-226, wide, drill 0.75mm (see https://www.diodes.com/assets/Package-Files/TO92L.pdf and http://www.ti.com/lit/an/snoa059/snoa059.pdf)
-TO-92L Inline Wide transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RG1100
+PTC Resettable Fuse, Ihold = 11.0A, Itrip=18.7A, http://www.bourns.com/docs/Product-Datasheets/mfrg.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92L_Wide
-TO-92L leads in-line (large body variant of TO-92), also known as TO-226, wide, drill 0.75mm (see https://www.diodes.com/assets/Package-Files/TO92L.pdf and http://www.ti.com/lit/an/snoa059/snoa059.pdf)
-TO-92L Molded Wide transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT050
+PTC Resettable Fuse, Ihold = 0.5A, Itrip=0.92A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92Mini-2
-TO-92Mini package, drill 0.6mm (https://media.digikey.com/pdf/Data%20Sheets/Infineon%20PDFs/KT,KTY.pdf)
-to-92Mini transistor 
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT070
+PTC Resettable Fuse, Ihold = 0.7A, Itrip=1.4A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92S
-TO-92S package, drill 0.75mm (https://www.diodes.com/assets/Package-Files/TO92S%20(Type%20B).pdf)
-to-92S transistor
+Fuse
+Fuse_Bourns_MF-RHT100
+PTC Resettable Fuse, Ihold = 1.0A, Itrip=1.8A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92S-2
-TO-92S package, 2-pin, drill 0.75mm (https://www.diodes.com/assets/Package-Files/TO92S%20(Type%20B).pdf)
-to-92S transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT200
+PTC Resettable Fuse, Ihold = 2.0A, Itrip=3.8A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
 2
 2
-Package_TO_SOT_THT
-TO-92S_Wide
-TO-92S_Wide package, drill 0.75mm (https://www.diodes.com/assets/Package-Files/TO92S%20(Type%20B).pdf)
-TO-92S_Wide transistor
+Fuse
+Fuse_Bourns_MF-RHT300
+PTC Resettable Fuse, Ihold = 3.0A, Itrip=6.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_HandSolder
-TO-92 leads molded, narrow, drill 0.75mm, handsoldering variant with enlarged pads (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT400
+PTC Resettable Fuse, Ihold = 4.0A, Itrip=7.5A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Horizontal1
-TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT500
+PTC Resettable Fuse, Ihold = 5.0A, Itrip=9.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Horizontal2
-TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT550
+PTC Resettable Fuse, Ihold = 5.5A, Itrip=10.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline
-TO-92 leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT600
+PTC Resettable Fuse, Ihold = 6.0A, Itrip=10.8A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline_Horizontal1
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT650
+PTC Resettable Fuse, Ihold = 6.5A, Itrip=12.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline_Horizontal2
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT700
+PTC Resettable Fuse, Ihold = 7.0A, Itrip=13.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline_W4.0mm_Horizontal_FlatSideDown
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT750
+PTC Resettable Fuse, Ihold = 7.5A, Itrip=13.1A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline_W4.0mm_Horizontal_FlatSideUp
-TO-92 horizontal, leads in-line, narrow, oval pads, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT800
+PTC Resettable Fuse, Ihold = 8.0A, Itrip=15.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Inline_Wide
-TO-92 leads in-line, wide, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT900
+PTC Resettable Fuse, Ihold = 9.0A, Itrip=16.5A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_W4.0mm_StaggerEven_Horizontal_FlatSideDown
-TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT1000
+PTC Resettable Fuse, Ihold = 10.0A, Itrip=18.5A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_W4.0mm_StaggerEven_Horizontal_FlatSideUp
-TO-92 horizontal, leads molded, narrow, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT1100
+PTC Resettable Fuse, Ihold = 11.0A, Itrip=20.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-92_Wide
-TO-92 leads molded, wide, drill 0.75mm (see NXP sot054_po.pdf)
-to-92 sc-43 sc-43a sot54 PA33 transistor
+2
+2
+Fuse
+Fuse_Bourns_MF-RHT1300
+PTC Resettable Fuse, Ihold = 13.0A, Itrip=24.0A, http://www.bourns.com/docs/product-datasheets/mfrht.pdf
+ptc resettable fuse polyfuse THT
 0
-3
-3
-Package_TO_SOT_THT
-TO-99-6
-TO-99-6
-TO-99-6
-0
-6
-6
-Package_TO_SOT_THT
-TO-99-6_Window
-TO-99-6_Window, Window
-TO-99-6_Window Window
-0
-6
-6
-Package_TO_SOT_THT
-TO-99-8
-TO-99-8
-TO-99-8
-0
-8
-8
-Package_TO_SOT_THT
-TO-99-8_Window
-TO-99-8_Window, Window
-TO-99-8_Window Window
-0
-8
-8
-Package_TO_SOT_THT
-TO-100-10
-TO-100-10
-TO-100-10
-0
-10
-10
-Package_TO_SOT_THT
-TO-100-10_Window
-TO-100-10_Window, Window
-TO-100-10_Window Window
-0
-10
-10
-Package_TO_SOT_THT
-TO-126-2_Horizontal_TabDown
-TO-126-2, Horizontal, RM 5.08mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-2 Horizontal RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-126-2_Horizontal_TabUp
-TO-126-2, Horizontal, RM 5.08mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-2 Horizontal RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-126-2_Vertical
-TO-126-2, Vertical, RM 5.08mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-2 Vertical RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-126-3_Horizontal_TabDown
-TO-126-3, Horizontal, RM 2.54mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-3 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuse_Bourns_MF-SM_7.98x5.44mm
+https://www.bourns.com/docs/Product-Datasheets/mfsm.pdf
+bourns ptc resettable fuse polyfuse MF-SM MF-SMHT
 0
-3
-3
-Package_TO_SOT_THT
-TO-126-3_Horizontal_TabUp
-TO-126-3, Horizontal, RM 2.54mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-3 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuse_Bourns_MF-SM_9.5x6.71mm
+https://www.bourns.com/docs/Product-Datasheets/mfsm.pdf
+bourns ptc resettable fuse polyfuse MF-SM MF-SMHT
 0
-3
-3
-Package_TO_SOT_THT
-TO-126-3_Vertical
-TO-126-3, Vertical, RM 2.54mm, see https://www.diodes.com/assets/Package-Files/TO126.pdf
-TO-126-3 Vertical RM 2.54mm
+2
+2
+Fuse
+Fuse_Bourns_TBU-CA
+Bourns TBU-CA Fuse, 2 Pin (https://www.bourns.com/data/global/pdfs/TBU-CA.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
+Bourns Fuse NoLead
 0
 3
 3
-Package_TO_SOT_THT
-TO-218-2_Horizontal_TabDown
-TO-218-2, Horizontal, RM 10.95mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-2 Horizontal RM 10.95mm SOT-93
+Fuse
+Fuse_Littelfuse-LVR100
+Littelfuse, resettable fuse, PTC, polyswitch LVR100, Ih 1A http://www.littelfuse.com/~/media/electronics/datasheets/resettable_ptcs/littelfuse_ptc_lvr_catalog_datasheet.pdf.pdf
+LVR100 PTC resettable polyswitch 
 0
 2
 2
-Package_TO_SOT_THT
-TO-218-2_Horizontal_TabUp
-TO-218-2, Horizontal, RM 10.95mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-2 Horizontal RM 10.95mm SOT-93
+Fuse
+Fuse_Littelfuse-LVR125
+Littelfuse, resettable fuse, PTC, polyswitch LVR125, Ih 1.25A, http://www.littelfuse.com/~/media/electronics/datasheets/resettable_ptcs/littelfuse_ptc_lvr_catalog_datasheet.pdf.pdf
+LVR125 PTC resettable polyswitch 
 0
 2
 2
-Package_TO_SOT_THT
-TO-218-2_Vertical
-TO-218-2, Vertical, RM 10.95mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-2 Vertical RM 10.95mm SOT-93
+Fuse
+Fuse_Littelfuse-LVR200
+Littelfuse, resettable fuse, PTC, polyswitch LVR200, Ih 2A, http://www.littelfuse.com/~/media/electronics/datasheets/resettable_ptcs/littelfuse_ptc_lvr_catalog_datasheet.pdf.pdf
+LVR200 PTC resettable polyswitch 
 0
 2
 2
-Package_TO_SOT_THT
-TO-218-3_Horizontal_TabDown
-TO-218-3, Horizontal, RM 5.475mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-3 Horizontal RM 5.475mm SOT-93
+Fuse
+Fuse_Littelfuse-NANO2-451_453
+Littelfuse NANO2 https://www.littelfuse.com/~/media/electronics/datasheets/fuses/littelfuse_fuse_451_453_datasheet.pdf.pdf
+Fuse Nano2
 0
-3
-3
-Package_TO_SOT_THT
-TO-218-3_Horizontal_TabUp
-TO-218-3, Horizontal, RM 5.475mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-3 Horizontal RM 5.475mm SOT-93
+2
+2
+Fuse
+Fuse_Littelfuse-NANO2-462
+Littelfuse NANO2, 250VAC/VDC, 350VAC/VDC, 10.5 x 4.5 x 4.5mm, https://www.littelfuse.com/media?resourcetype=datasheets&itemid=6201db33-6e55-43f2-b41f-15e38bdd2c99&filename=littelfuse-fuse-462-datasheet
+Fuse Nano2 462
 0
-3
-3
-Package_TO_SOT_THT
-TO-218-3_Vertical
-TO-218-3, Vertical, RM 5.475mm, SOT-93, see https://www.vishay.com/docs/95214/fto218.pdf
-TO-218-3 Vertical RM 5.475mm SOT-93
+2
+2
+Fuse
+Fuse_Littelfuse-NANO2-885
+Littelfuse NANO2, 350VAC, 450/500VDC, 10.86 x 4.78 x 4.78mm, https://www.littelfuse.com/media?resourcetype=datasheets&itemid=888f12ed-ed3b-4b45-b910-06af8854ad76&filename=littelfuse-fuse-885-datasheet
+Fuse Nano2 885
 0
-3
-3
-Package_TO_SOT_THT
-TO-220-2_Horizontal_TabDown
-TO-220-2, Horizontal, RM 5.08mm, see https://www.centralsemi.com/PDFS/CASE/TO-220-2PD.PDF
-TO-220-2 Horizontal RM 5.08mm
+2
+2
+Fuse
+Fuse_Littelfuse_372_D8.50mm
+Fuse, Littelfuse, 372, 8.5x8mm, https://www.littelfuse.com/~/media/electronics/datasheets/fuses/littelfuse_fuse_372_datasheet.pdf.pdf
+fuse tht radial
 0
 2
 2
-Package_TO_SOT_THT
-TO-220-2_Horizontal_TabUp
-TO-220-2, Horizontal, RM 5.08mm, see https://www.centralsemi.com/PDFS/CASE/TO-220-2PD.PDF
-TO-220-2 Horizontal RM 5.08mm
+Fuse
+Fuse_Littelfuse_395Series
+Fuse, TE5, Littelfuse/Wickmann, No. 460, No560,
+Fuse TE5 Littelfuse/Wickmann No. 460 No560 
 0
 2
 2
-Package_TO_SOT_THT
-TO-220-2_Vertical
-TO-220-2, Vertical, RM 5.08mm, see https://www.centralsemi.com/PDFS/CASE/TO-220-2PD.PDF
-TO-220-2 Vertical RM 5.08mm
+Fuse
+Fuse_Schurter_UMT250
+Surface Mount Fuse, 3 x 10.1 mm, Time-Lag T, 250 VAC, 125 VDC (https://us.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_UMT_250.pdf)
+Schurter fuse smd
 0
 2
 2
-Package_TO_SOT_THT
-TO-220-3_Horizontal_TabDown
-TO-220-3, Horizontal, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf
-TO-220-3 Horizontal RM 2.54mm
+Fuse
+Fuse_Schurter_UMZ250
+Surface Mount Fuse with Clip, 4.2 x 11.1 mm, Time-Lag T, 250 VAC, 125 VDC (https://us.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_UMZ_250.pdf)
+fuse smd mount holder
 0
-3
-3
-Package_TO_SOT_THT
-TO-220-3_Horizontal_TabUp
-TO-220-3, Horizontal, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf
-TO-220-3 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuse_SunFuse-6HP
+SunFuse Ceramic Slow Blow Fuse 6H_6HP.PDF
+UL/CSA 6x32mm Ceramic Slow Blow Fuse
 0
-3
-3
-Package_TO_SOT_THT
-TO-220-3_Vertical
-TO-220-3, Vertical, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf
-TO-220-3 Vertical RM 2.54mm
+2
+2
+Fuse
+Fuseholder_Blade_ATO_Littelfuse_Pudenz_2_Pin
+Fuseholder ATO Blade littelfuse Pudenz 2 Pin
+Fuseholder ATO Blade littelfuse Pudenz 2 Pin
 0
-3
-3
-Package_TO_SOT_THT
-TO-220-4_Horizontal_TabDown
-TO-220-4, Horizontal, RM 2.54mm
-TO-220-4 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuseholder_Blade_Mini_Keystone_3568
+fuse holder, car blade fuse mini, http://www.keyelco.com/product-pdf.cfm?p=306
+car blade fuse mini
 0
 4
-4
-Package_TO_SOT_THT
-TO-220-4_Horizontal_TabUp
-TO-220-4, Horizontal, RM 2.54mm
-TO-220-4 Horizontal RM 2.54mm
+2
+Fuse
+Fuseholder_Clip-5x20mm_Bel_FC-203-22_Lateral_P17.80x5.00mm_D1.17mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Lateral, Horizontal, Bel FC-203-22, https://www.belfuse.com/resources/datasheets/circuitprotection/ds-cp-0672-fuse-clips-series.pdf
+fuse clip open
 0
-4
 4
-Package_TO_SOT_THT
-TO-220-4_P5.08x2.54mm_StaggerEven_Lead3.8mm_Vertical
-TO-220-4, Vertical, RM 2.54mm, staggered type-2
-TO-220-4 Vertical RM 2.54mm staggered type-2
+2
+Fuse
+Fuseholder_Clip-5x20mm_Eaton_1A5601-01_Inline_P20.80x6.76mm_D1.70mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Eaton 1A5601-01, https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-1axxxx-pcb-fuse-clips-atc-atm-blade-data-sheet.pdf
+fuse clip open
 0
 4
-4
-Package_TO_SOT_THT
-TO-220-4_P5.08x2.54mm_StaggerEven_Lead5.84mm_TabDown
-TO-220-4, Horizontal, RM 2.54mm, staggered type-2
-TO-220-4 Horizontal RM 2.54mm staggered type-2
+2
+Fuse
+Fuseholder_Clip-5x20mm_Keystone_3512P_Inline_P23.62x7.27mm_D1.02x2.41x1.02x1.57mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Keystone 3512P, http://www.keyelco.com/product-pdf.cfm?p=1386
+fuse clip open
 0
 4
-4
-Package_TO_SOT_THT
-TO-220-4_P5.08x2.54mm_StaggerOdd_Lead3.8mm_Vertical
-TO-220-4, Vertical, RM 2.54mm, staggered type-1
-TO-220-4 Vertical RM 2.54mm staggered type-1
+2
+Fuse
+Fuseholder_Clip-5x20mm_Keystone_3512_Inline_P23.62x7.27mm_D1.02x1.57mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Keystone 3512, http://www.keyelco.com/product-pdf.cfm?p=356
+fuse clip open
 0
-4
 4
-Package_TO_SOT_THT
-TO-220-4_P5.08x2.54mm_StaggerOdd_Lead5.84mm_TabDown
-TO-220-4, Horizontal, RM 2.54mm, staggered type-1
-TO-220-4 Horizontal RM 2.54mm staggered type-1
+2
+Fuse
+Fuseholder_Clip-5x20mm_Keystone_3517_Inline_P23.11x6.76mm_D1.70mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Keystone 3517, http://www.keyelco.com/product-pdf.cfm?p=354
+fuse clip open
 0
 4
-4
-Package_TO_SOT_THT
-TO-220-4_Vertical
-TO-220-4, Vertical, RM 2.54mm
-TO-220-4 Vertical RM 2.54mm
+2
+Fuse
+Fuseholder_Clip-5x20mm_Keystone_3518P_Inline_P23.11x6.76mm_D2.44x1.70mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Keystone 3518P, http://www.keyelco.com/product-pdf.cfm?p=1387
+fuse clip open
 0
 4
-4
-Package_TO_SOT_THT
-TO-220-5_Horizontal_TabDown
-TO-220-5, Horizontal, RM 1.7mm, Pentawatt, Multiwatt-5, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421_straight_lead.pdf
-TO-220-5 Horizontal RM 1.7mm Pentawatt Multiwatt-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_Horizontal_TabUp
-TO-220-5, Horizontal, RM 1.7mm, Pentawatt, Multiwatt-5, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421_straight_lead.pdf
-TO-220-5 Horizontal RM 1.7mm Pentawatt Multiwatt-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_P3.4x3.7mm_StaggerEven_Lead3.8mm_Vertical
-TO-220-5, Vertical, RM 1.7mm, Pentawatt, Multiwatt-5, staggered type-2, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421.pdf?domain=www.linear.com, https://www.diodes.com/assets/Package-Files/TO220-5.pdf
-TO-220-5 Vertical RM 1.7mm Pentawatt Multiwatt-5 staggered type-2
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_P3.4x3.7mm_StaggerOdd_Lead3.8mm_Vertical
-TO-220-5, Vertical, RM 1.7mm, Pentawatt, Multiwatt-5, staggered type-1, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421.pdf?domain=www.linear.com, https://www.diodes.com/assets/Package-Files/TO220-5.pdf
-TO-220-5 Vertical RM 1.7mm Pentawatt Multiwatt-5 staggered type-1
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_P3.4x3.8mm_StaggerEven_Lead7.13mm_TabDown
-TO-220-5, Horizontal, RM 1.7mm, Pentawatt, Multiwatt-5, staggered type-2, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421.pdf?domain=www.linear.com, https://www.diodes.com/assets/Package-Files/TO220-5.pdf
-TO-220-5 Horizontal RM 1.7mm Pentawatt Multiwatt-5 staggered type-2
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_P3.4x3.8mm_StaggerOdd_Lead7.13mm_TabDown
-TO-220-5, Horizontal, RM 1.7mm, Pentawatt, Multiwatt-5, staggered type-1, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421.pdf?domain=www.linear.com, https://www.diodes.com/assets/Package-Files/TO220-5.pdf
-TO-220-5 Horizontal RM 1.7mm Pentawatt Multiwatt-5 staggered type-1
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-5_Vertical
-TO-220-5, Vertical, RM 1.7mm, Pentawatt, Multiwatt-5, see http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421_straight_lead.pdf
-TO-220-5 Vertical RM 1.7mm Pentawatt Multiwatt-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical
-TO-220-7, Vertical, RM 1.27mm, Multiwatt-7, staggered type-2
-TO-220-7 Vertical RM 1.27mm Multiwatt-7 staggered type-2
-0
-7
-7
-Package_TO_SOT_THT
-TO-220-7_P2.54x3.7mm_StaggerOdd_Lead3.8mm_Vertical
-TO-220-7, Vertical, RM 1.27mm, Multiwatt-7, staggered type-1
-TO-220-7 Vertical RM 1.27mm Multiwatt-7 staggered type-1
-0
-7
-7
-Package_TO_SOT_THT
-TO-220-7_P2.54x3.8mm_StaggerEven_Lead5.85mm_TabDown
-TO-220-7, Horizontal, RM 1.27mm, Multiwatt-7, staggered type-2
-TO-220-7 Horizontal RM 1.27mm Multiwatt-7 staggered type-2
-0
-7
-7
-Package_TO_SOT_THT
-TO-220-7_P2.54x3.8mm_StaggerOdd_Lead5.85mm_TabDown
-TO-220-7, Horizontal, RM 1.27mm, Multiwatt-7, staggered type-1
-TO-220-7 Horizontal RM 1.27mm Multiwatt-7 staggered type-1
-0
-7
-7
-Package_TO_SOT_THT
-TO-220-8_Vertical
-TO-220-8 (Multiwatt8), Vertical, 2.54mm Pitch (http://www.st.com/resource/en/datasheet/tda7264.pdf)
-TO-220-9 Vertical 2.54mm Pitch Multiwatt 8
-0
-8
-8
-Package_TO_SOT_THT
-TO-220-9_P1.94x3.7mm_StaggerEven_Lead3.8mm_Vertical
-TO-220-9, Vertical, RM 0.97mm, Multiwatt-9, staggered type-2
-TO-220-9 Vertical RM 0.97mm Multiwatt-9 staggered type-2
-0
-9
-9
-Package_TO_SOT_THT
-TO-220-9_P1.94x3.7mm_StaggerOdd_Lead3.8mm_Vertical
-TO-220-9, Vertical, RM 0.97mm, Multiwatt-9, staggered type-1
-TO-220-9 Vertical RM 0.97mm Multiwatt-9 staggered type-1
-0
-9
-9
-Package_TO_SOT_THT
-TO-220-9_P1.94x3.8mm_StaggerEven_Lead5.85mm_TabDown
-TO-220-9, Horizontal, RM 0.97mm, Multiwatt-9, staggered type-2
-TO-220-9 Horizontal RM 0.97mm Multiwatt-9 staggered type-2
-0
-9
-9
-Package_TO_SOT_THT
-TO-220-9_P1.94x3.8mm_StaggerOdd_Lead5.85mm_TabDown
-TO-220-9, Horizontal, RM 0.97mm, Multiwatt-9, staggered type-1
-TO-220-9 Horizontal RM 0.97mm Multiwatt-9 staggered type-1
-0
-9
-9
-Package_TO_SOT_THT
-TO-220-11_P3.4x2.54mm_StaggerEven_Lead5.84mm_TabDown
-TO-220-11, Horizontal, RM 1.7mm, staggered type-2, see http://www.st.com/resource/en/datasheet/tda7391lv.pdf
-TO-220-11 Horizontal RM 1.7mm staggered type-2
-0
-11
-11
-Package_TO_SOT_THT
-TO-220-11_P3.4x2.54mm_StaggerOdd_Lead5.84mm_TabDown
-TO-220-11, Horizontal, RM 1.7mm, staggered type-1, see http://www.st.com/resource/en/datasheet/tda7391lv.pdf
-TO-220-11 Horizontal RM 1.7mm staggered type-1
-0
-11
-11
-Package_TO_SOT_THT
-TO-220-11_P3.4x5.08mm_StaggerEven_Lead4.58mm_Vertical
-TO-220-11, Vertical, RM 1.7mm, staggered type-2, see http://www.st.com/resource/en/datasheet/tda7391lv.pdf
-TO-220-11 Vertical RM 1.7mm staggered type-2
-0
-11
-11
-Package_TO_SOT_THT
-TO-220-11_P3.4x5.08mm_StaggerOdd_Lead4.85mm_Vertical
-TO-220-11, Vertical, RM 1.7mm, staggered type-1, see http://www.st.com/resource/en/datasheet/tda7391lv.pdf
-TO-220-11 Vertical RM 1.7mm staggered type-1
-0
-11
-11
-Package_TO_SOT_THT
-TO-220-11_P3.4x5.08mm_StaggerOdd_Lead8.45mm_TabDown
-TO-220-11, Horizontal, RM 1.7mm, staggered type-1, see http://www.ti.com/lit/ds/symlink/lmd18200.pdf
-TO-220-11 Horizontal RM 1.7mm staggered type-1
-0
-11
-11
-Package_TO_SOT_THT
-TO-220-15_P2.54x2.54mm_StaggerEven_Lead4.58mm_Vertical
-TO-220-15, Vertical, RM 1.27mm, staggered type-2, see http://www.st.com/resource/en/datasheet/l298.pdf
-TO-220-15 Vertical RM 1.27mm staggered type-2
-0
-15
-15
-Package_TO_SOT_THT
-TO-220-15_P2.54x2.54mm_StaggerEven_Lead5.84mm_TabDown
-TO-220-15, Horizontal, RM 1.27mm, staggered type-2, see http://www.st.com/resource/en/datasheet/l298.pdf
-TO-220-15 Horizontal RM 1.27mm staggered type-2
-0
-15
-15
-Package_TO_SOT_THT
-TO-220-15_P2.54x2.54mm_StaggerOdd_Lead4.58mm_Vertical
-TO-220-15, Vertical, RM 1.27mm, staggered type-1, see http://www.st.com/resource/en/datasheet/l298.pdf
-TO-220-15 Vertical RM 1.27mm staggered type-1
-0
-15
-15
-Package_TO_SOT_THT
-TO-220-15_P2.54x2.54mm_StaggerOdd_Lead5.84mm_TabDown
-TO-220-15, Horizontal, RM 1.27mm, staggered type-1, see http://www.st.com/resource/en/datasheet/l298.pdf
-TO-220-15 Horizontal RM 1.27mm staggered type-1
-0
-15
-15
-Package_TO_SOT_THT
-TO-220F-2_Horizontal_TabDown
-TO-220F-2, Horizontal, RM 5.08mm, see http://www.onsemi.com/pub/Collateral/FFPF10F150S-D.pdf
-TO-220F-2 Horizontal RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-220F-2_Horizontal_TabUp
-TO-220F-2, Horizontal, RM 5.08mm, see http://www.onsemi.com/pub/Collateral/FFPF10F150S-D.pdf
-TO-220F-2 Horizontal RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-220F-2_Vertical
-TO-220F-2, Vertical, RM 5.08mm, see http://www.onsemi.com/pub/Collateral/FFPF10F150S-D.pdf
-TO-220F-2 Vertical RM 5.08mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-220F-3_Horizontal_TabDown
-TO-220F-3, Horizontal, RM 2.54mm, see http://www.st.com/resource/en/datasheet/stp20nm60.pdf
-TO-220F-3 Horizontal RM 2.54mm
-0
-3
-3
-Package_TO_SOT_THT
-TO-220F-3_Horizontal_TabUp
-TO-220F-3, Horizontal, RM 2.54mm, see http://www.st.com/resource/en/datasheet/stp20nm60.pdf
-TO-220F-3 Horizontal RM 2.54mm
-0
-3
-3
-Package_TO_SOT_THT
-TO-220F-3_Vertical
-TO-220F-3, Vertical, RM 2.54mm, see http://www.st.com/resource/en/datasheet/stp20nm60.pdf
-TO-220F-3 Vertical RM 2.54mm
-0
-3
-3
-Package_TO_SOT_THT
-TO-220F-4_Horizontal_TabDown
-TO-220F-4, Horizontal, RM 2.54mm, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Horizontal RM 2.54mm
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_100_Inline_P20.50x4.60mm_D1.30mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 100, https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+fuse clip open
 0
-4
 4
-Package_TO_SOT_THT
-TO-220F-4_Horizontal_TabUp
-TO-220F-4, Horizontal, RM 2.54mm, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Horizontal RM 2.54mm
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_111_Inline_P20.00x5.00mm_D1.05mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 111, https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_111_519_datasheet.pdf.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_111_Lateral_P18.80x5.00mm_D1.17mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 111 (501 and 506), https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_111_datasheet.pdf.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-4_P5.08x2.05mm_StaggerEven_Lead1.85mm_Vertical
-TO-220F-4, Vertical, RM 2.54mm, staggered type-2, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Vertical RM 2.54mm staggered type-2
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_445-030_Inline_P20.50x5.20mm_D1.30mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 445/030, https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_519_Inline_P20.60x5.00mm_D1.00mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 519, https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_111_519_datasheet.pdf.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-4_P5.08x2.05mm_StaggerOdd_Lead1.85mm_Vertical
-TO-220F-4, Vertical, RM 2.54mm, staggered type-1, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Vertical RM 2.54mm staggered type-1
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_520_Inline_P20.50x5.80mm_D1.30mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 520, https://m.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-5x20mm_Littelfuse_521_Lateral_P17.00x5.00mm_D1.30mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 521, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_520_521_102071_datasheet.pdf.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-4_P5.08x3.7mm_StaggerEven_Lead3.5mm_Vertical
-TO-220F-4, Vertical, RM 2.54mm, staggered type-2, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Vertical RM 2.54mm staggered type-2
+2
+Fuse
+Fuseholder_Clip-5x20mm_Schurter_CQM_Inline_P20.60x5.00mm_D1.00mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Schurter CQM (0752), https://www.schurter.com/en/datasheet/typ_CQM.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-5x20mm_Schurter_OG_Lateral_P15.00x5.00mm_D1.3mm_Horizontal
+Fuseholder Clips, 5x20mm Cylinder Fuse, Pins Inline, Horizontal, Schurter OG, https://ch.schurter.com/en/datasheet/typ_OG__Clip__5x20.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-4_P5.08x3.7mm_StaggerOdd_Lead3.5mm_Vertical
-TO-220F-4, Vertical, RM 2.54mm, staggered type-1, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Vertical RM 2.54mm staggered type-1
+2
+Fuse
+Fuseholder_Clip-6.3x32mm_Littelfuse_102_122_Inline_P34.21x7.62mm_D1.98mm_Horizontal
+Fuseholder Clips, 6.3x32mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 102/122 Straight Leads, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_102_122_datasheet.pdf.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-6.3x32mm_Littelfuse_102_Inline_P34.21x7.62mm_D2.54mm_Horizontal
+Fuseholder Clips, 6.3x32mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 102 Bowed Leads, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_102_122_datasheet.pdf.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-4_Vertical
-TO-220F-4, Vertical, RM 2.54mm, see https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf
-TO-220F-4 Vertical RM 2.54mm
+2
+Fuse
+Fuseholder_Clip-6.3x32mm_Littelfuse_122_Inline_P34.21x7.62mm_D2.54mm_Horizontal
+Fuseholder Clips, 6.3x32mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 122 Bowed Leads, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_102_122_datasheet.pdf.pdf
+fuse clip open
 0
 4
+2
+Fuse
+Fuseholder_Clip-6.3x32mm_Littelfuse_102071_Inline_P34.70x7.60mm_D2.00mm_Horizontal
+Fuseholder Clips, 6.3x32mm Cylinder Fuse, Pins Inline, Horizontal, Littelfuse 102071, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_520_521_102071_datasheet.pdf.pdf
+fuse clip open
+0
 4
-Package_TO_SOT_THT
-TO-220F-5_Horizontal_TabDown
-TO-220F-5, Horizontal, RM 1.7mm, PentawattF-, MultiwattF-5
-TO-220F-5 Horizontal RM 1.7mm PentawattF- MultiwattF-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_Horizontal_TabUp
-TO-220F-5, Horizontal, RM 1.7mm, PentawattF-, MultiwattF-5
-TO-220F-5 Horizontal RM 1.7mm PentawattF- MultiwattF-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_P3.4x2.06mm_StaggerEven_Lead1.86mm_Vertical
-TO-220F-5, Vertical, RM 1.7mm, PentawattF-, MultiwattF-5, staggered type-2
-TO-220F-5 Vertical RM 1.7mm PentawattF- MultiwattF-5 staggered type-2
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_P3.4x2.06mm_StaggerOdd_Lead1.86mm_Vertical
-TO-220F-5, Vertical, RM 1.7mm, PentawattF-, MultiwattF-5, staggered type-1
-TO-220F-5 Vertical RM 1.7mm PentawattF- MultiwattF-5 staggered type-1
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_P3.4x3.7mm_StaggerEven_Lead3.5mm_Vertical
-TO-220F-5, Vertical, RM 1.7mm, PentawattF-, MultiwattF-5, staggered type-2
-TO-220F-5 Vertical RM 1.7mm PentawattF- MultiwattF-5 staggered type-2
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_P3.4x3.7mm_StaggerOdd_Lead3.5mm_Vertical
-TO-220F-5, Vertical, RM 1.7mm, PentawattF-, MultiwattF-5, staggered type-1
-TO-220F-5 Vertical RM 1.7mm PentawattF- MultiwattF-5 staggered type-1
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-5_Vertical
-TO-220F-5, Vertical, RM 1.7mm, PentawattF-, MultiwattF-5
-TO-220F-5 Vertical RM 1.7mm PentawattF- MultiwattF-5
-0
-5
-5
-Package_TO_SOT_THT
-TO-220F-7_P2.54x3.7mm_StaggerEven_Lead3.5mm_Vertical
-TO-220F-7, Vertical, RM 1.27mm, staggered type-2
-TO-220F-7 Vertical RM 1.27mm staggered type-2
-0
-7
-7
-Package_TO_SOT_THT
-TO-220F-7_P2.54x3.7mm_StaggerOdd_Lead3.5mm_Vertical
-TO-220F-7, Vertical, RM 1.27mm, staggered type-1
-TO-220F-7 Vertical RM 1.27mm staggered type-1
-0
-7
-7
-Package_TO_SOT_THT
-TO-220F-9_P1.8x3.7mm_StaggerEven_Lead3.5mm_Vertical
-TO-220F-9, Vertical, RM 0.9mm, staggered type-2
-TO-220F-9 Vertical RM 0.9mm staggered type-2
-0
-9
-9
-Package_TO_SOT_THT
-TO-220F-9_P1.8x3.7mm_StaggerOdd_Lead3.5mm_Vertical
-TO-220F-9, Vertical, RM 0.9mm, staggered type-1
-TO-220F-9 Vertical RM 0.9mm staggered type-1
-0
-9
-9
-Package_TO_SOT_THT
-TO-220F-11_P3.4x5.08mm_StaggerEven_Lead5.08mm_Vertical
-TO-220F-11, Vertical, RM 1.7mm, MultiwattF-11, staggered type-2, see http://www.ti.com/lit/ds/symlink/lm3886.pdf
-TO-220F-11 Vertical RM 1.7mm MultiwattF-11 staggered type-2
-0
-11
-11
-Package_TO_SOT_THT
-TO-220F-11_P3.4x5.08mm_StaggerOdd_Lead5.08mm_Vertical
-TO-220F-11, Vertical, RM 1.7mm, MultiwattF-11, staggered type-1, see http://www.ti.com/lit/ds/symlink/lm3886.pdf
-TO-220F-11 Vertical RM 1.7mm MultiwattF-11 staggered type-1
-0
-11
-11
-Package_TO_SOT_THT
-TO-220F-15_P2.54x5.08mm_StaggerEven_Lead5.08mm_Vertical
-TO-220F-15, Vertical, RM 1.27mm, MultiwattF-15, staggered type-2
-TO-220F-15 Vertical RM 1.27mm MultiwattF-15 staggered type-2
-0
-15
-15
-Package_TO_SOT_THT
-TO-220F-15_P2.54x5.08mm_StaggerOdd_Lead5.08mm_Vertical
-TO-220F-15, Vertical, RM 1.27mm, MultiwattF-15, staggered type-1
-TO-220F-15 Vertical RM 1.27mm MultiwattF-15 staggered type-1
-0
-15
-15
-Package_TO_SOT_THT
-TO-247-2_Horizontal_TabDown
-TO-247-2, Horizontal, RM 10.9mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-2 Horizontal RM 10.9mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-247-2_Horizontal_TabUp
-TO-247-2, Horizontal, RM 10.9mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-2 Horizontal RM 10.9mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-247-2_Vertical
-TO-247-2, Vertical, RM 10.9mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-2 Vertical RM 10.9mm
-0
-2
-2
-Package_TO_SOT_THT
-TO-247-3_Horizontal_TabDown
-TO-247-3, Horizontal, RM 5.45mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-3 Horizontal RM 5.45mm
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Bulgin_FX0456_Vertical_Closed
+Fuseholder, 5x20, closed, vertical, Bulgin, FX0456, https://www.bulgin.com/products/pub/media/bulgin/data/Fuseholders.pdf
+Fuseholder 5x20 closed vertical Bulgin FX0456 Sicherungshalter 
 0
-3
-3
-Package_TO_SOT_THT
-TO-247-3_Horizontal_TabUp
-TO-247-3, Horizontal, RM 5.45mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-3 Horizontal RM 5.45mm
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Bulgin_FX0457_Horizontal_Closed
+Fuseholder, 5x20, closed, horizontal, Bulgin, FX0457, Sicherungshalter,
+Fuseholder 5x20 closed horizontal Bulgin FX0457 Sicherungshalter 
 0
-3
-3
-Package_TO_SOT_THT
-TO-247-3_Vertical
-TO-247-3, Vertical, RM 5.45mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-3 Vertical RM 5.45mm
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_EATON_H15-V-1_Vertical_Closed
+PCB fuse holders for 5 mm x 20 mm fuses; 250V; 10A (http://www.cooperindustries.com/content/dam/public/bussmann/Electronics/Resources/product-datasheets/bus-elx-ds-4426-h15.pdf)
+fuse holder vertical 5x20mm
 0
-3
-3
-Package_TO_SOT_THT
-TO-247-4_Horizontal_TabDown
-TO-247-4, Horizontal, RM 2.54mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-4 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_EATON_HBV_Vertical_Closed
+5 mm x 20 mm fuse holders; Vertical w/ Stability Pins; 250V; 6.3-16A (http://www.cooperindustries.com/content/dam/public/bussmann/Electronics/Resources/product-datasheets/Bus_Elx_DS_2118_HB_PCB_Series.pdf)
+fuse holder vertical 5x20mm
 0
-4
-4
-Package_TO_SOT_THT
-TO-247-4_Horizontal_TabUp
-TO-247-4, Horizontal, RM 2.54mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-4 Horizontal RM 2.54mm
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_EATON_HBW_Vertical_Closed
+5 mm x 20 mm fuse holders; Vertical w/o Stability Pins; 250V; 6.3-16A (http://www.cooperindustries.com/content/dam/public/bussmann/Electronics/Resources/product-datasheets/Bus_Elx_DS_2118_HB_PCB_Series.pdf)
+fuse holder vertical 5x20mm
 0
-4
-4
-Package_TO_SOT_THT
-TO-247-4_Vertical
-TO-247-4, Vertical, RM 2.54mm, see https://toshiba.semicon-storage.com/us/product/mosfet/to-247-4l.html
-TO-247-4 Vertical RM 2.54mm
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Schurter_0031_8201_Horizontal_Open
+Fuseholder horizontal open, 5x20mm, 500V, 16A, Schurter 0031.8201, https://us.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_OGN.pdf
+Fuseholder horizontal open 5x20 Schurter 0031.8201
 0
-4
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Schurter_FAB_0031-355x_Horizontal_Closed
+Fuseholder 5x20mm horizontal Shurter model FAB, Suitable for order numbers 0031.3551 and 0031.3558  (https://www.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_FAB.pdf)
+Fuseholder 5x20mm closed horizontal
+0
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Schurter_FPG4_Vertical_Closed
+Shock-Safe Fuseholder, 5 x 20 mm, Slotted Cap/Fingergrip, vertical, IEC 60335-1; 250VAC/10A VDE; 500V/16A UL/CSA (https://us.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_FPG4.pdf)
+fuse holder vertical 5x20mm
+0
 4
-Package_TO_SOT_THT
-TO-247-5_Horizontal_TabDown
-TO-247-5, Horizontal, RM 2.54mm, see http://ww1.microchip.com/downloads/en/DeviceDoc/20005685A.pdf
-TO-247-5 Horizontal RM 2.54mm
-0
-5
-5
-Package_TO_SOT_THT
-TO-247-5_Horizontal_TabUp
-TO-247-5, Horizontal, RM 2.54mm, see http://ww1.microchip.com/downloads/en/DeviceDoc/20005685A.pdf
-TO-247-5 Horizontal RM 2.54mm
-0
-5
-5
-Package_TO_SOT_THT
-TO-247-5_Vertical
-TO-247-5, Vertical, RM 2.54mm, see http://ww1.microchip.com/downloads/en/DeviceDoc/20005685A.pdf
-TO-247-5 Vertical RM 2.54mm
-0
-5
-5
-Package_TO_SOT_THT
-TO-251-2-1EP_Horizontal_TabDown
-TO-251-2, Horizontal, RM 4.58mm, IPAK, see https://www.diodes.com/assets/Package-Files/TO251.pdf
-TO-251-2 Horizontal RM 4.58mm IPAK
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Schurter_FUP_0031.2510_Horizontal_Closed
+Shock-Safe closed Fuseholder, Schurter FUP Series, 5.0 x 20mm, Slotted Cap, horizontal, 500 VAC 4W/16A (VDE), 600V 30A (UL/CSA), order numbers: 0031.2510 (0031.2500 + 0031.2323), http://www.schurter.ch/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_FUP.pdf
+Fuseholder 5x20mm horizontal closed
 0
-3
 3
-Package_TO_SOT_THT
-TO-251-2_Vertical
-TO-251-2, Vertical, RM 4.58mm, IPAK, see https://www.diodes.com/assets/Package-Files/TO251.pdf
-TO-251-2 Vertical RM 4.58mm IPAK
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Schurter_OGN-SMD_Horizontal_Open
+Fuseholder horizontal open, 5x20mm, 500V, 16A (https://us.schurter.com/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_OGN-SMD.pdf)
+Fuseholder horizontal open 5x20 Schurter 0031.8221
 0
 2
 2
-Package_TO_SOT_THT
-TO-251-3-1EP_Horizontal_TabDown
-TO-251-3, Horizontal, RM 2.29mm, IPAK, see https://www.diodes.com/assets/Package-Files/TO251.pdf
-TO-251-3 Horizontal RM 2.29mm IPAK
+Fuse
+Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open
+https://www.tme.eu/en/Document/3b48dbe2b9714a62652c97b08fcd464b/PTF78.pdf
+Fuseholder horizontal open 5x20 Stelvio-Kontek PTF/78
 0
-4
-4
-Package_TO_SOT_THT
-TO-251-3_Vertical
-TO-251-3, Vertical, RM 2.29mm, IPAK, see https://www.diodes.com/assets/Package-Files/TO251.pdf
-TO-251-3 Vertical RM 2.29mm IPAK
+2
+2
+Fuse
+Fuseholder_Cylinder-5x20mm_Wuerth_696103101002-SMD_Horizontal_Open
+Fuseholder horizontal open 5x20mm 250V 10A Würth 696103101002
+Fuseholder horizontal open 5x20mm 250V 10A
 0
-3
+2
+2
+Fuse
+Fuseholder_Cylinder-6.3x32mm_Schurter_0031-8002_Horizontal_Open
+Fuseholder, horizontal, open, 6.3x32, Schurter, 0031.8002, https://www.schurter.com/en/datasheet/typ_OG__Holder__6.3x32.pdf
+Fuseholder horizontal open 6.3x32 Schurter 0031.8002
+0
+2
+2
+Fuse
+Fuseholder_Cylinder-6.3x32mm_Schurter_FUP_0031.2520_Horizontal_Closed
+Shock-Safe closed Fuseholder, Schurter FUP Series, 6.3 x 32 mm, Slotted Cap, horizontal, 500 VAC 4W/16A (VDE), 600V 30A (UL/CSA), order numbers: 0031.2520 (0031.2500 + 0031.2321), http://www.schurter.ch/bundles/snceschurter/epim/_ProdPool_/newDS/en/typ_FUP.pdf
+Fuseholder 6.3x32mm horizontal closed
+0
 3
-Package_TO_SOT_THT
-TO-262-3-1EP_Horizontal_TabDown
-TO-262-3, Horizontal, RM 2.54mm, IIPAK, I2PAK, see http://www.onsemi.com/pub/Collateral/EN8586-D.PDF
-TO-262-3 Horizontal RM 2.54mm IIPAK I2PAK
+2
+Fuse
+Fuseholder_Keystone_3555-2
+Maxi APX ATX Automotive Blade Fuse Clip Holder https://www.keyelco.com/userAssets/file/M65p40.pdf
+Maxi APX ATX Automotive Blade Fuse Clip Holder
 0
 4
+2
+Fuse
+Fuseholder_Littelfuse_100_series_5x20mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
+0
 4
-Package_TO_SOT_THT
-TO-262-3_Vertical
-TO-262-3, Vertical, RM 2.54mm, IIPAK, I2PAK, see http://www.onsemi.com/pub/Collateral/EN8586-D.PDF
-TO-262-3 Vertical RM 2.54mm IIPAK I2PAK
+2
+Fuse
+Fuseholder_Littelfuse_100_series_5x25mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
 0
-3
-3
-Package_TO_SOT_THT
-TO-262-5-1EP_Horizontal_TabDown
-TO-262-5, Horizontal, RM 1.7mm, IIPAK, I2PAK, see http://pdf.datasheetcatalog.com/datasheet/irf/iris4011.pdf
-TO-262-5 Horizontal RM 1.7mm IIPAK I2PAK
+4
+2
+Fuse
+Fuseholder_Littelfuse_100_series_5x30mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
 0
-6
-6
-Package_TO_SOT_THT
-TO-262-5_Vertical
-TO-262-5, Vertical, RM 1.7mm, IIPAK, I2PAK, see http://pdf.datasheetcatalog.com/datasheet/irf/iris4011.pdf
-TO-262-5 Vertical RM 1.7mm IIPAK I2PAK
+4
+2
+Fuse
+Fuseholder_Littelfuse_445_030_series_5x20mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
 0
-5
-5
-Package_TO_SOT_THT
-TO-264-2_Horizontal_TabDown
-TO-264-2, Horizontal, RM 10.9mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-2 Horizontal RM 10.9mm
+4
+2
+Fuse
+Fuseholder_Littelfuse_445_030_series_5x25mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
 0
+4
 2
+Fuse
+Fuseholder_Littelfuse_445_030_series_5x30mm
+Littelfuse clips, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_clips/littelfuse_fuse_clip_100_445_030_520_datasheet.pdf.pdf
+Fuseholder clips
+0
+4
 2
-Package_TO_SOT_THT
-TO-264-2_Horizontal_TabUp
-TO-264-2, Horizontal, RM 10.9mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-2 Horizontal RM 10.9mm
+Fuse
+Fuseholder_Littelfuse_Nano2_154x
+Littelfuse NANO2 holder, https://www.littelfuse.com/~/media/electronics/datasheets/fuses/littelfuse_fuse_154_154t_154l_154tl_datasheet.pdf.pdf
+SMD Nano2 holder
 0
 2
 2
-Package_TO_SOT_THT
-TO-264-2_Vertical
-TO-264-2, Vertical, RM 10.9mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-2 Vertical RM 10.9mm
+Fuse
+Fuseholder_Littelfuse_Nano2_157x
+Littelfuse NANO2 holder, https://www.littelfuse.com/~/media/electronics/datasheets/fuses/littelfuse_fuse_157_datasheet.pdf.pdf
+SMD Nano2 holder
 0
 2
 2
-Package_TO_SOT_THT
-TO-264-3_Horizontal_TabDown
-TO-264-3, Horizontal, RM 5.45mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-3 Horizontal RM 5.45mm
-0
-3
-3
-Package_TO_SOT_THT
-TO-264-3_Horizontal_TabUp
-TO-264-3, Horizontal, RM 5.45mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-3 Horizontal RM 5.45mm
+Fuse
+Fuseholder_TR5_Littelfuse_No560_No460
+Fuse, Fuseholder, TR5, Littelfuse/Wickmann, No. 460, No560, https://www.littelfuse.com/~/media/electronics/datasheets/fuse_holders/littelfuse_fuse_holder_559_560_datasheet.pdf.pdf
+Fuse Fuseholder TR5 Littelfuse/Wickmann No. 460 No560 
 0
-3
-3
-Package_TO_SOT_THT
-TO-264-3_Vertical
-TO-264-3, Vertical, RM 5.45mm, see https://www.fairchildsemi.com/package-drawings/TO/TO264A03.pdf
-TO-264-3 Vertical RM 5.45mm
-0
-3
-3
-Package_TO_SOT_THT
-TO-264-5_Horizontal_TabDown
-TO-264-5, Horizontal, RM 3.81mm, see https://www.onsemi.com/pub/Collateral/NJL3281D-D.PDF
-TO-264-5 Horizontal RM 3.81mm
-0
-5
-5
-Package_TO_SOT_THT
-TO-264-5_Horizontal_TabUp
-TO-264-5, Horizontal, RM 3.81mm, see https://www.onsemi.com/pub/Collateral/NJL3281D-D.PDF
-TO-264-5 Horizontal RM 3.81mm
-0
-5
-5
-Package_TO_SOT_THT
-TO-264-5_Vertical
-TO-264-5, Vertical, RM 3.81mm, see https://www.onsemi.com/pub/Collateral/NJL3281D-D.PDF
-TO-264-5 Vertical RM 3.81mm
-0
-5
-5
+2
+2

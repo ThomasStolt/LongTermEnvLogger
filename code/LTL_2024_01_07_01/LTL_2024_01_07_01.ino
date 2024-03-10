@@ -37,13 +37,25 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setup_wifi() {
+  // we track time to make sure that we stop connecting after 5 seconds, in case WiFi is down
+  unsigned long startAttemptTime = millis();
+
+  // Waking up WiFi modem and connect to WiFi
   WiFi.forceSleepWake();
   char hostname[11];
   sprintf(hostname, "sensor_%03d", roomNumber);
   WiFi.hostname(hostname);
   WiFi.config(staticIP, gateway, subnet, dns);
   WiFi.begin(ssid, password, wifi_channel, wifi_bssid);
-  while (WiFi.status() != WL_CONNECTED) { delay(100); }
+  // Try for 5 seconds to connect to WiFi (should take about 2 seconds)
+  while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 5000) {
+    delay(100);
+  }
+
+  // if no connection, directly switch off circuit until next try
+  if(WiFi.status() != WL_CONNECTED) {
+    digitalWrite(DONE, HIGH);
+  }
 }
 
 void reconnect() {
@@ -54,7 +66,7 @@ void reconnect() {
 }
 
 void setup() {
-  WiFi.forceSleepBegin(); // Ensure WiFi starts off to save power
+  WiFi.forceSleepBegin(); // Ensure WiFi is turned off to save power
   sensors.begin();
   pinMode(DONE, OUTPUT);
   // Format the MQTT topics

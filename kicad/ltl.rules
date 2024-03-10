@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 43987)
+    (start_pass_no 4760)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -74,9 +74,9 @@
   (class "kicad_default"
     "Net-(U1-DONE)" DTR RESET "Net-(Flash1-Pad1)" "Net-(Q2-D)" GPIO16 /TxD "Net-(Q1-B)"
     DONE "Net-(U1-~{DRV})" DRIVE GPIO14 GPIO12 GPIO13 SDA SCL
-    "Net-(J3-Pin_6)" "Net-(J3-Pin_7)" FLASH "Net-(J3-Pin_8)" /RxD "Net-(J3-Pin_9)" "Net-(J3-Pin_14)" DELAY
-    "Net-(D1-A)" "Net-(Q1-C)" "Net-(J3-Pin_15)" "unconnected-(J4-Pin_2-Pad2)" "Net-(Q3-D)" "Net-(U3-CH_PD)" "Net-(U3-TXD)" "Net-(U3-RXD)"
-    "unconnected-(U2-NR-Pad4)" "Net-(D2-A)" "Net-(D3-A)" "unconnected-(J4-Pin_3-Pad3)" GPIO2
+    "Net-(J3-Pin_15)" "Net-(J3-Pin_7)" FLASH "Net-(J3-Pin_8)" /RxD "Net-(J3-Pin_9)" "Net-(J3-Pin_14)" DELAY
+    "Net-(D1-A)" "Net-(Q1-C)" "unconnected-(J4-Pin_2-Pad2)" "Net-(Q3-D)" "Net-(U3-CH_PD)" "Net-(U3-TXD)" "Net-(U3-RXD)" "unconnected-(U2-NR-Pad4)"
+    "unconnected-(J4-Pin_3-Pad3)" GPIO2 "unconnected-(J1-Pin_2-Pad2)" "Net-(J3-Pin_10)" "unconnected-(J3-Pin_2-Pad2)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
@@ -87,7 +87,7 @@
     )
   )
   (class Thick
-    GND +3V3 +4V "BAT_DIV" "Net-(J1-Pin_2)"
+    GND +3V3 +4V "BAT_DIV" "Net-(J1-Pin_3)" "Net-(BT1-PadP)"
     (clearance_class Thick)
     (via_rule Thick)
     (rule

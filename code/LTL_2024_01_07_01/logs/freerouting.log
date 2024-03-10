@@ -1,0 +1,117 @@
+2024-03-06 09:36:02.794 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2024-03-06 09:36:04.252 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v1.9.0
+2024-03-06 09:36:50.754 [AWT-EventQueue-0] INFO  Opening 'ltl.dsn'...
+2024-03-06 09:36:51.618 [AWT-EventQueue-0] INFO  Opening 'ltl.rules'...
+2024-03-06 09:37:03.681 [Thread-34] INFO  Starting auto-routing...
+2024-03-06 09:37:07.941 [Thread-34] INFO  Auto-routing was completed in 4,26 seconds.
+2024-03-06 09:37:08.045 [Thread-34] INFO  Starting route optimization on 1 thread...
+2024-03-06 09:37:08.047 [Thread-34] INFO  Route optimization was completed in 0,00 seconds.
+2024-03-06 09:37:13.111 [Thread-44] INFO  Starting auto-routing...
+2024-03-06 09:37:14.183 [Thread-44] WARN  There were only 2,00 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:14.944 [Thread-44] WARN  There were only 2,00 changes in the last 40 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:15.646 [Thread-44] WARN  There were only 2,00 changes in the last 60 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:16.344 [Thread-44] WARN  There were only 2,00 changes in the last 80 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:17.036 [Thread-44] WARN  There were only 2,00 changes in the last 100 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:17.753 [Thread-44] WARN  There were only 2,00 changes in the last 120 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:18.473 [Thread-44] WARN  There were only 2,00 changes in the last 140 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:19.175 [Thread-44] WARN  There were only 2,00 changes in the last 160 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:19.864 [Thread-44] WARN  There were only 2,00 changes in the last 180 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:20.556 [Thread-44] WARN  There were only 2,00 changes in the last 200 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 09:37:20.558 [Thread-44] WARN  There was so little change during the recent passes that autorouter will be stopped now.
+2024-03-06 09:37:20.559 [Thread-44] INFO  Auto-routing was completed in 7,45 seconds.
+2024-03-06 09:37:20.660 [Thread-44] INFO  Starting route optimization on 1 thread...
+2024-03-06 09:37:33.901 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.901 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.901 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.902 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.902 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.902 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.902 [Thread-44] WARN  ShapeSearchTree.overlaps_with_clearance: p_shape is not bounded
+2024-03-06 09:37:33.903 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.904 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.904 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.904 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.905 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.905 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.906 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.906 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:33.907 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.079 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.079 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.079 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.079 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.080 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.080 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.080 [Thread-44] WARN  ShapeSearchTree.overlaps_with_clearance: p_shape is not bounded
+2024-03-06 09:37:34.081 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.081 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.081 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.081 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.082 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.082 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.082 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.083 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:34.083 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.083 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.083 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.083 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.084 [Thread-44] WARN  IntPoint: p_x is out of range
+2024-03-06 09:37:34.084 [Thread-44] WARN  IntPoint: p_y is out of range
+2024-03-06 09:37:50.388 [Thread-44] INFO  Route optimization was completed in 29,73 seconds and it improved the design by ~50,73%.
+2024-03-06 11:50:38.702 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2024-03-06 11:50:38.739 [main] INFO  Settings were loaded from freerouting.json
+2024-03-06 11:50:40.155 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v1.9.0
+2024-03-06 11:50:45.700 [AWT-EventQueue-0] INFO  Opening 'ltl.dsn'...
+2024-03-06 11:50:46.695 [AWT-EventQueue-0] INFO  Opening 'ltl.rules'...
+2024-03-06 11:50:57.563 [Thread-34] INFO  Starting auto-routing...
+2024-03-06 11:51:03.246 [Thread-34] WARN  There were only 3,25 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:03.985 [Thread-34] WARN  There were only 2,17 changes in the last 40 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:04.713 [Thread-34] WARN  There were only 2,00 changes in the last 60 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:05.436 [Thread-34] WARN  There were only 2,00 changes in the last 80 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:06.135 [Thread-34] WARN  There were only 2,00 changes in the last 100 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:06.835 [Thread-34] WARN  There were only 2,00 changes in the last 120 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:07.533 [Thread-34] WARN  There were only 2,00 changes in the last 140 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:08.226 [Thread-34] WARN  There were only 2,00 changes in the last 160 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:08.918 [Thread-34] WARN  There were only 2,00 changes in the last 180 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:09.603 [Thread-34] WARN  There were only 2,00 changes in the last 200 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
+2024-03-06 11:51:09.604 [Thread-34] WARN  There was so little change during the recent passes that autorouter will be stopped now.
+2024-03-06 11:51:09.604 [Thread-34] INFO  Auto-routing was completed in 12,04 seconds.
+2024-03-06 11:51:09.710 [Thread-34] INFO  Starting route optimization on 1 thread...
+2024-03-06 11:52:30.223 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.224 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.224 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.225 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.225 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.225 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.226 [Thread-34] WARN  ShapeSearchTree.overlaps_with_clearance: p_shape is not bounded
+2024-03-06 11:52:30.226 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.227 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.227 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.227 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.227 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.228 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.229 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.229 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:52:30.230 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.230 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.230 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.230 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.231 [Thread-34] WARN  IntPoint: p_x is out of range
+2024-03-06 11:52:30.231 [Thread-34] WARN  IntPoint: p_y is out of range
+2024-03-06 11:53:49.527 [Thread-34] INFO  Route optimization was completed in 2 minute(s) 39,81 seconds and it improved the design by ~51,53%.
+2024-03-06 11:54:50.347 [Thread-55] INFO  Starting auto-routing...
+2024-03-06 11:54:50.399 [Thread-55] INFO  Auto-routing was completed in 0,05 seconds.
+2024-03-06 11:54:50.505 [Thread-55] INFO  Starting route optimization on 1 thread...
+2024-03-06 11:54:54.192 [Thread-55] INFO  Route optimization was completed in 3,69 seconds and it improved the design by ~0,01%.
+2024-03-06 11:55:43.682 [Thread-81] INFO  Starting auto-routing...
+2024-03-06 11:55:49.441 [Thread-81] INFO  Auto-routing was completed in 5,76 seconds.
+2024-03-06 11:55:49.547 [Thread-81] INFO  Starting route optimization on 1 thread...
+2024-03-06 12:02:39.206 [Thread-81] WARN  CalcFromSide: start corner was not found
+2024-03-06 12:06:27.834 [Thread-81] INFO  Route optimization was completed in 10 minute(s) 38,29 seconds and it improved the design by ~51,09%.
+2024-03-06 12:12:22.145 [AWT-EventQueue-0] INFO  Saving 'ltl.ses'...
+2024-03-06 12:12:23.985 [AWT-EventQueue-0] INFO  Saving 'ltl.rules'...
