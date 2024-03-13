@@ -447,7 +447,7 @@
         "name": "Thick",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.5,
+        "track_width": 0.75,
         "via_diameter": 0.8,
         "via_drill": 0.4,
         "wire_width": 6
@@ -470,6 +470,10 @@
       {
         "netclass": "Thick",
         "pattern": "+3V3"
+      },
+      {
+        "netclass": "Thick",
+        "pattern": "Net-(J1-Pin_2)"
       }
     ]
   },
