@@ -3656,7 +3656,7 @@
   (text_box "5m"
     (at 26.035 156.21 0) (size 21.59 3.81)
     (stroke (width 0) (type default))
-    (fill (type none))
+    (fill (type color) (color 255 0 255 0.5))
     (effects (font (size 1.524 1.524) (thickness 0.3048) bold) (justify top))
     (uuid 0d0deef7-c690-423d-8dce-be16593efab2)
   )
@@ -3691,7 +3691,7 @@
   (text_box "42.887K"
     (at 47.625 156.21 0) (size 25.4 3.81)
     (stroke (width 0) (type default))
-    (fill (type none))
+    (fill (type color) (color 255 0 255 0.5))
     (effects (font (size 1.524 1.524) (thickness 0.3048) bold) (justify top))
     (uuid 47d21cf0-efa6-4693-8a19-7847442c9ea8)
   )

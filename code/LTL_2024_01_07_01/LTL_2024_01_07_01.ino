@@ -5,7 +5,10 @@
 #include "credentials.h"
 
 // define a 3-digit room number
-const int roomNumber = 208; 
+const int roomNumber = 210; 
+
+// define voltage limit to prevent deep discharge
+const int volt_limit = 560;
 
 // Static IP configuration
 IPAddress staticIP(192, 168, 100, roomNumber); // Static IP address
@@ -60,29 +63,63 @@ void setup_wifi() {
 
 void reconnect() {
   char clientId[20];
+  // Define room number as Client ID
   sprintf(clientId, "room_%03d", roomNumber);
-  client.setServer(mqtt_server, mqtt_port);
-  while (!client.connected()) { if (client.connect(clientId)) { } else { delay(100); } }
-}
-
-void setup() {
-  WiFi.forceSleepBegin(); // Ensure WiFi is turned off to save power
-  sensors.begin();
-  pinMode(DONE, OUTPUT);
   // Format the MQTT topics
   sprintf(temp_topic, "temp_%03d", roomNumber);
   sprintf(volt_topic, "volt_%03d", roomNumber);
+
+  client.setServer(mqtt_server, mqtt_port);
+  
+  // Start timer
+  signed long startAttemptTime = millis();
+
+  while (!client.connected()) {
+    if (client.connect(clientId)) {
+      // Connected to the MQTT broker
+      break; // Exit the loop
+    } else {
+      delay(100); // Wait for a short period before retrying
+      
+      if (millis() - startAttemptTime > 5000) {
+        // If more than 5 seconds have passed without a connection,
+        // set DONE high to indicate the device should go to sleep
+        digitalWrite(DONE, HIGH);
+      }
+    }
+  }
+}
+
+void setup() {
+  // Ensure WiFi is turned off to save energy
+  WiFi.forceSleepBegin();
+  // Start sensors
+  sensors.begin();
+  // Set DONE pin to be output
+  pinMode(DONE, OUTPUT);
 }
 
 void loop() {
-  // Measure temperature and voltage first
+  // Measure voltage first
+  // if voltage is below 2.7V, go asleep to make sure
+  // the battery is not below its discharge limit
+  int adcValue = analogRead(A0);
+  if (adcValue < volt_limit) {
+    // If voltage is lower than 560, go to sleep
+    digitalWrite(DONE, HIGH);
+    return; // Stop execution here
+  }
+
+  char payload[5];
+  snprintf(payload, sizeof(payload), "%d", adcValue);
+
+  // Measure temperature
   sensors.requestTemperatures();
   float temperature = sensors.getTempCByIndex(0);
   char tempString[8];
   dtostrf(temperature, 1, 2, tempString);
-  char payload[5];
-  int adcValue = analogRead(A0);
-  snprintf(payload, sizeof(payload), "%d", adcValue);
+  
+  
   // Then turn on WiFi
   setup_wifi();
   // Ensure MQTT connection
