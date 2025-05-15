@@ -1,6 +1,9 @@
 # Long Term Environment Logger
 
-The aim of this project is to measure, store, display and evaluate the temperature in the rooms of a building over as long a period as possible (> 1 year). The sensor itself consists of 4 components:
+The aim of this project is to measure, store, display and evaluate the temperature in the rooms of a large building over an extended time period. This project has 2 main components:
+
+A. The hardware of the sensor.
+B. The server infrastructure to receive, store and display the measurements.
 
 1. A low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes for measurement.
 

@@ -5,20 +5,23 @@
 #include "credentials.h"
 
 // define a 3-digit room number
-const int roomNumber = 210; 
+const int roomNumber = 212;
 
 // define voltage limit to prevent deep discharge
 const int volt_limit = 560;
 
 // Static IP configuration
-IPAddress staticIP(192, 168, 100, roomNumber); // Static IP address
+IPAddress staticIP(192, 168, 100, roomNumber); // Assigned static IP address
 IPAddress gateway(192, 168, 100, 1);    // Gateway (usually your router IP)
 IPAddress subnet(255, 255, 255, 0);     // Subnet mask
 IPAddress dns(192, 168, 100, 1);        // DNS (can be the same as the Gateway)
 
 // Example BSSID of the WiFi network and channel
-const uint8_t wifi_bssid[6] = {0x82, 0x8A, 0x20, 0xD1, 0x77, 0x51};
-const int wifi_channel = 6;
+// BSSID for N-IOT 82:8a:20:d1:77:51
+// const uint8_t wifi_bssid[6] = {0x82, 0x8a, 0x20, 0xd1, 0x77, 0x51};
+// BSSID for HCG_IoT
+const uint8_t wifi_bssid[6] = {0xEE, 0x55, 0xA8, 0x2C, 0xA8, 0x64};
+// const int wifi_channel = 6;
 
 // MQTT Server
 const char* mqtt_server = "192.168.2.53";
@@ -49,7 +52,8 @@ void setup_wifi() {
   sprintf(hostname, "sensor_%03d", roomNumber);
   WiFi.hostname(hostname);
   WiFi.config(staticIP, gateway, subnet, dns);
-  WiFi.begin(ssid, password, wifi_channel, wifi_bssid);
+  // WiFi.begin(ssid, password, wifi_channel, wifi_bssid);
+  WiFi.begin(ssid, password);
   // Try for 5 seconds to connect to WiFi (should take about 2 seconds)
   while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 5000) {
     delay(100);
@@ -66,8 +70,8 @@ void reconnect() {
   // Define room number as Client ID
   sprintf(clientId, "room_%03d", roomNumber);
   // Format the MQTT topics
-  sprintf(temp_topic, "temp_%03d", roomNumber);
-  sprintf(volt_topic, "volt_%03d", roomNumber);
+  sprintf(temp_topic, "sensor/temp/%03d", roomNumber);
+  sprintf(volt_topic, "sensor/volt/%03d", roomNumber);
 
   client.setServer(mqtt_server, mqtt_port);
   
@@ -100,7 +104,9 @@ void setup() {
 }
 
 void loop() {
+  
   // Measure voltage first
+  
   // if voltage is below 2.7V, go asleep to make sure
   // the battery is not below its discharge limit
   int adcValue = analogRead(A0);
@@ -109,7 +115,6 @@ void loop() {
     digitalWrite(DONE, HIGH);
     return; // Stop execution here
   }
-
   char payload[5];
   snprintf(payload, sizeof(payload), "%d", adcValue);
 
@@ -126,10 +131,12 @@ void loop() {
   if (!client.connected()) { reconnect(); }
   client.loop();
   // Publish temperature and voltage
-  if (!client.publish(temp_topic, tempString)) { }
-  delay(1);
-  if (!client.publish(volt_topic, payload)) { }
-  delay(1);
+  // if (!client.publish(temp_topic, tempString)) { }
+  client.publish(temp_topic, tempString);
+  delay(100);
+  // if (!client.publish(volt_topic, payload)) { }
+  client.publish(volt_topic, payload);
+  delay(200);
   // Switch off circuit
   digitalWrite(DONE, HIGH);
 }
