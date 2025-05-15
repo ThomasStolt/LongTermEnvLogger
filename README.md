@@ -8,13 +8,15 @@ B. The server infrastructure to receive, store and display the measurements.
 
 ## The Hardware
 
-1. A low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes for measurement.
+1. An ultra-low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes for measurement.
 
 2. An LDO voltage regulator that regulates the incoming battery voltage from a LiIon battery to 3.3V
 
 3. A battery voltage sensor that sends the battery voltage to the ESP8266 ADC pin with a voltage divider so that the battery voltage can be monitored.
 
 4. The ESP8266 with a DS18B20 temperature sensor. 
+
+5. A small solar cell with a charging circuit, to keep the battery charged for as long as possible.
 
 ... and some additional mechanical and electronic components.
 
@@ -24,10 +26,10 @@ If you think about it in detail, this project is not quite as trivial as it firs
 
 * Runtime - How long does a single battery last?
 
-  * As the battery-operated temperature sensors are to be distributed throughout a building, you want the individual sensors to run for as long as possible, so that you don't have to run around the building changing or charging batteries all the time. One option is the energy-saving mode ("DeepSleep") of the microcontroller. This would reduce the current draw during deep sleep to about 14µA. However, we want to achieve single digit µA or less sleep current.
+  * As the battery-operated temperature sensors are to be distributed throughout a very large building, you want the individual sensors to run for as long as possible, so that you don't have to run around the building changing or charging batteries all the time. One option is the energy-saving mode ("DeepSleep") of the microcontroller. This would reduce the current draw during deep sleep to about 14µA. However, we want to achieve sleep current of less than 100nA! So, the normal Deep-Sleep will not do it.
 
 * Update OTA(?)
-	* It might be worth considering adding this capability. This would probably affect the runtime as well, because if we check for updates every time the circuit wakes up, it will cost runtime and energy. So, the question here is, how much runtime this would cost.
+	* It might be worth considering adding this capability. This would probably affect the runtime as well, because if we check for updates every time the circuit wakes up, it will cost runtime and energy. So, the question here is, how much runtime this would cost and is this really necessary?
 
 * WiFi Connection Time
 	* When the ESP8266 wakes up and has WiFi switched on, it draws about 70mA, which is a lot. So, all efforts need to be taken to reduce the connection time to be a short as possible.
