@@ -6,6 +6,8 @@ A. The hardware of the sensor.
 
 B. The server infrastructure to receive, store and display the measurements.
 
+## The Hardware
+
 1. A low power timer circuit that uses nano-Amps only when asleep and wakes up the entire circuit every approx. 5 minutes for measurement.
 
 2. An LDO voltage regulator that regulates the incoming battery voltage from a LiIon battery to 3.3V
