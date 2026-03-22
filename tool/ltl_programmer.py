@@ -46,6 +46,45 @@ CSV_FIELDNAMES = [
 
 # ── Pure utility functions (unit-tested in tests/test_utils.py) ──────────────
 
+def parse_serial_output(lines: list) -> dict:
+    """Parse lines from LTL_setup sketch serial output.
+
+    Returns dict with keys:
+      mac (str|None), ds18b20 (str|None), ds18b20_error (bool),
+      wifi_networks (list[dict]), wifi_none (bool), done (bool)
+    Each wifi_networks entry: {ssid, bssid, channel (int), rssi (int)}
+    """
+    result = {
+        "mac": None,
+        "ds18b20": None,
+        "ds18b20_error": False,
+        "wifi_networks": [],
+        "wifi_none": False,
+        "done": False,
+    }
+    for line in lines:
+        line = line.strip()
+        if line.startswith("MAC:"):
+            result["mac"] = line[4:]
+        elif line == "DS18B20:NOT_FOUND":
+            result["ds18b20_error"] = True
+        elif line.startswith("DS18B20:"):
+            result["ds18b20"] = line[8:]
+        elif line == "WIFI:NONE":
+            result["wifi_none"] = True
+        elif line.startswith("WIFI:"):
+            parts = line[5:].split("|", 3)  # maxsplit=3 handles SSIDs containing '|'
+            if len(parts) == 4:
+                result["wifi_networks"].append({
+                    "ssid": parts[0],
+                    "bssid": parts[1],
+                    "channel": int(parts[2]),
+                    "rssi": int(parts[3]),
+                })
+        elif line == "SETUP_DONE":
+            result["done"] = True
+    return result
+
 
 # ── arduino-cli functions ────────────────────────────────────────────────────
 
