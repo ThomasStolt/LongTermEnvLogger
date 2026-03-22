@@ -47,4 +47,103 @@ First a short diagram for an overview:
 
 ![alt text](<https://github.com/ThomasStolt/LongTermEnvLogger/blob/master/images/PrincipleArchitecture.png>)
 
+---
+
+## Programmer Tool
+
+An interactive Python tool that programs each sensor in two steps:
+1. Flashes a setup sketch that reads the DS18B20 address, MAC address, and nearby WiFi networks
+2. Flashes the optimized production firmware with all values baked in
+
+### Prerequisites
+
+- [arduino-cli](https://arduino.github.io/arduino-cli/) with the ESP8266 core installed:
+  ```bash
+  arduino-cli core install esp8266:esp8266
+  ```
+- Python 3.8+
+  ```bash
+  pip install rich pyserial
+  ```
+
+### Credentials Setup
+
+```bash
+cp credentials.example.h credentials_Home.h
+# Edit credentials_Home.h and fill in your SSID and password
+```
+
+You can have multiple credential files for different locations:
+- `credentials_Home.h`
+- `credentials_School.h`
+
+These files are gitignored — never commit real credentials.
+
+### Board Configuration
+
+Edit `tool/arduino_config.py` if needed:
+```python
+BOARD_FQBN = "esp8266:esp8266:generic"  # change for your ESP8266 variant
+```
+
+Common FQBNs:
+- `esp8266:esp8266:generic` — bare ESP-01/ESP-12 modules
+- `esp8266:esp8266:nodemcuv2` — NodeMCU v2 / Lolin
+- `esp8266:esp8266:d1_mini` — Wemos D1 Mini
+
+### Running the Tool
+
+Connect the ESP8266 via USB-TTL adapter, then:
+
+```bash
+cd tool && python3 ltl_programmer.py
+```
+
+The tool will:
+1. Show available serial ports — select your USB-TTL adapter
+2. Show available credential locations — select the right one
+3. Flash the setup sketch and read hardware info
+4. Show nearby WiFi networks — optionally pin a BSSID for faster connection
+5. Ask for the room number (1–254)
+6. Flash the production firmware with all values hardcoded
+7. Record the sensor to `tool/sensors.csv`
+
+### Manual Flash Fallback
+
+If arduino-cli is not available, you can flash manually using the Arduino IDE:
+
+1. Flash `code/LTL_setup/LTL_setup.ino` and open Serial Monitor at 115200 baud
+2. Note the MAC address, DS18B20 address, and chosen WiFi network
+3. Edit `code/LTL_sensor/LTL_sensor.ino` manually — replace the placeholder values
+4. Copy your `credentials_<location>.h` to `credentials.h` in the same folder
+5. Flash `code/LTL_sensor/LTL_sensor.ino`
+
+### Sensor Registry
+
+`tool/sensors.csv` tracks all programmed sensors:
+
+| Field | Description |
+|---|---|
+| timestamp | When the sensor was programmed |
+| room_number | Room number (also last IP octet) |
+| mac_address | ESP8266 MAC address |
+| ds18b20_address | DS18B20 OneWire address |
+| location | Credentials location used |
+| ssid | WiFi network name |
+| bssid | Pinned BSSID (empty if not pinned) |
+| channel | Pinned channel (empty if not pinned) |
+
+### Battery Life Optimization
+
+The production firmware (`code/LTL_sensor/LTL_sensor.ino`) reduces ESP8266 awake time by ~1060–1480ms per 5-minute cycle compared to the original firmware:
+
+| Optimization | Saving |
+|---|---|
+| 9-bit DS18B20 resolution (±0.5°C) + async overlap | ~750ms |
+| Hardcoded DS18B20 address (no bus scan) | ~10–30ms |
+| Post-publish delays removed | ~300ms |
+| **Total without BSSID pinning** | **~1060–1080ms** |
+| Optional BSSID/channel pinning | +~200–400ms |
+| **Total with BSSID pinning** | **~1260–1480ms** |
+
 
