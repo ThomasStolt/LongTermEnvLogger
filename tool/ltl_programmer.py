@@ -178,6 +178,78 @@ def append_csv_row(csv_path: Path, row: dict) -> None:
 
 # ── arduino-cli functions ────────────────────────────────────────────────────
 
+def _resolve_fqbn(port_fqbn: str) -> str:
+    """Return port FQBN if known, otherwise fall back to arduino_config.BOARD_FQBN."""
+    return port_fqbn if port_fqbn else BOARD_FQBN
+
+
+def flash_sketch(sketch_dir: Path, port: str, fqbn: str) -> None:
+    """Compile and upload a sketch directory via arduino-cli.
+
+    Aborts with a message if arduino-cli is not in PATH or compilation fails.
+    """
+    if not shutil.which("arduino-cli"):
+        console.print(
+            "[red]arduino-cli not found in PATH.[/red]\n"
+            "Install it from: https://arduino.github.io/arduino-cli/\n"
+            "Then install the ESP8266 core: "
+            "[cyan]arduino-cli core install esp8266:esp8266[/cyan]"
+        )
+        sys.exit(1)
+
+    with console.status(f"[cyan]Compiling {sketch_dir.name}...[/cyan]"):
+        result = subprocess.run(
+            ["arduino-cli", "compile", "--fqbn", fqbn, str(sketch_dir)],
+            capture_output=True, text=True,
+        )
+    if result.returncode != 0:
+        console.print(f"[red]Compilation failed:[/red]\n{result.stderr}")
+        sys.exit(1)
+    console.print("[green]Compilation successful.[/green]")
+
+    with console.status(f"[cyan]Uploading to {port}...[/cyan]"):
+        result = subprocess.run(
+            ["arduino-cli", "upload", "--fqbn", fqbn, "--port", port, str(sketch_dir)],
+            capture_output=True, text=True,
+        )
+    if result.returncode != 0:
+        console.print(f"[red]Upload failed:[/red]\n{result.stderr}")
+        sys.exit(1)
+    console.print("[green]Upload successful.[/green]")
+
+
+def read_setup_data(port: str) -> dict:
+    """Open serial port, read lines until SETUP_DONE or timeout.
+
+    Returns parsed result dict from parse_serial_output().
+    Aborts on timeout with a helpful error message.
+    """
+    console.print(f"[cyan]Reading setup data from {port} (timeout: {SERIAL_TIMEOUT_S}s)...[/cyan]")
+    lines = []
+    try:
+        with serial.Serial(port, BAUD_RATE, timeout=1) as ser:
+            deadline = time.time() + SERIAL_TIMEOUT_S
+            with console.status("[cyan]Waiting for SETUP_DONE...[/cyan]"):
+                while time.time() < deadline:
+                    line = ser.readline().decode("utf-8", errors="replace").strip()
+                    if line:
+                        lines.append(line)
+                    result = parse_serial_output(lines)
+                    if result["done"]:
+                        return result
+    except serial.SerialException as e:
+        console.print(f"[red]Serial error: {e}[/red]")
+        sys.exit(1)
+
+    console.print(
+        f"[red]Timeout — no SETUP_DONE received within {SERIAL_TIMEOUT_S}s.[/red]\n"
+        "Troubleshooting:\n"
+        "  • Verify baud rate is 115200 in arduino_config.py\n"
+        "  • Ensure device booted in run mode (not flash mode)\n"
+        "  • Check that the correct port was selected"
+    )
+    sys.exit(1)
+
 
 # ── UI functions ─────────────────────────────────────────────────────────────
 
