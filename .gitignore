@@ -1,3 +1,5 @@
 credentials.h
+credentials_*.h
 .DS_Store
 .worktrees/
+tool/sensors.csv
