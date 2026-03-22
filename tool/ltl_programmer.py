@@ -181,6 +181,116 @@ def append_csv_row(csv_path: Path, row: dict) -> None:
 
 # ── UI functions ─────────────────────────────────────────────────────────────
 
+def _rssi_bar(rssi: int) -> str:
+    """Render a 5-block signal strength bar with color."""
+    strength = min(max(rssi + 100, 0), 60) / 60
+    bars = max(1, int(strength * 5))
+    color = ["red", "red", "yellow", "green", "green"][min(bars - 1, 4)]
+    return f"[{color}]{'█' * bars}{'░' * (5 - bars)}[/{color}] {rssi} dBm"
+
+
+def detect_ports() -> list:
+    """Return merged list of dicts with keys: port, description, fqbn.
+
+    Runs arduino-cli board list first (gives FQBN for known boards).
+    Falls back to pyserial for unrecognised ports.
+    arduino-cli entries take precedence when a port appears in both.
+    """
+    ports_map = {}
+
+    # pyserial baseline
+    for p in serial.tools.list_ports.comports():
+        ports_map[p.device] = {"port": p.device, "description": p.description, "fqbn": None}
+
+    # arduino-cli overlay (may provide FQBN)
+    try:
+        result = subprocess.run(
+            ["arduino-cli", "board", "list"],
+            capture_output=True, text=True, timeout=10,
+        )
+        for line in result.stdout.splitlines()[1:]:  # skip header
+            parts = line.split()
+            if not parts:
+                continue
+            port = parts[0]
+            fqbn = next((p for p in parts if ":" in p and p.count(":") == 2), None)
+            if port in ports_map:
+                ports_map[port]["fqbn"] = fqbn
+            else:
+                ports_map[port] = {"port": port, "description": " ".join(parts[1:3]), "fqbn": fqbn}
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass  # arduino-cli not available — pyserial list is sufficient
+
+    return sorted(ports_map.values(), key=lambda x: x["port"])
+
+
+def select_port() -> dict:
+    """Display available serial ports and prompt user to select one.
+
+    Returns dict with keys: port (str), fqbn (str|None).
+    Aborts if no ports found.
+    """
+    ports = detect_ports()
+    if not ports:
+        console.print("[red]No serial ports found. Connect the ESP8266 via USB-TTL and retry.[/red]")
+        sys.exit(1)
+
+    table = Table(title="Available Serial Ports", border_style="blue")
+    table.add_column("#", style="bold cyan", width=4)
+    table.add_column("Port", style="white")
+    table.add_column("Description", style="dim")
+    table.add_column("Board (FQBN)", style="green")
+
+    for i, p in enumerate(ports, 1):
+        fqbn_display = p["fqbn"] or "[dim]unknown[/dim]"
+        table.add_row(str(i), p["port"], p["description"], fqbn_display)
+
+    console.print(table)
+    while True:
+        choice = IntPrompt.ask("Select port number", default=1)
+        if 1 <= choice <= len(ports):
+            break
+        console.print(f"[red]Enter a number between 1 and {len(ports)}.[/red]")
+    selected = ports[choice - 1]
+    console.print(f"[green]Selected:[/green] {selected['port']}")
+    return selected
+
+
+def select_credentials() -> tuple:
+    """Display available credentials_<location>.h files and prompt user to select.
+
+    Returns (location_name: str, file_path: Path).
+    Aborts if no credentials files found.
+    """
+    locations = find_credentials_files(PROJECT_ROOT)
+    if not locations:
+        console.print(
+            "[red]No credentials files found.[/red]\n"
+            f"Copy [cyan]credentials.example.h[/cyan] to "
+            f"[cyan]credentials_<location>.h[/cyan] in [cyan]{PROJECT_ROOT}[/cyan] "
+            "and fill in your WiFi credentials."
+        )
+        sys.exit(1)
+
+    table = Table(title="Available Credentials", border_style="blue")
+    table.add_column("#", style="bold cyan", width=4)
+    table.add_column("Location", style="white")
+    table.add_column("File", style="dim")
+
+    for i, loc in enumerate(locations, 1):
+        table.add_row(str(i), loc, f"credentials_{loc}.h")
+
+    console.print(table)
+    while True:
+        choice = IntPrompt.ask("Select location number", default=1)
+        if 1 <= choice <= len(locations):
+            break
+        console.print(f"[red]Enter a number between 1 and {len(locations)}.[/red]")
+    location = locations[choice - 1]
+    file_path = PROJECT_ROOT / f"credentials_{location}.h"
+    console.print(f"[green]Selected:[/green] {location}")
+    return location, file_path
+
 
 # ── Main workflow ─────────────────────────────────────────────────────────────
 
