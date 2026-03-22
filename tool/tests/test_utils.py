@@ -2,7 +2,12 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from ltl_programmer import parse_serial_output
+import pytest
+from ltl_programmer import (
+    parse_serial_output,
+    format_ds18b20_c_array,
+    format_bssid_c_array,
+)
 
 
 def test_parse_full_output():
@@ -48,3 +53,24 @@ def test_parse_crlf_line_endings():
     result = parse_serial_output(lines)
     assert result["mac"] == "AA:BB:CC:DD:EE:FF"
     assert result["done"] is True
+
+
+# ── Address formatter tests ───────────────────────────────────────────────────
+
+def test_format_ds18b20_c_array():
+    raw = "0x28,0xFF,0xA1,0xB2,0xC3,0xD4,0xE5,0x06"
+    assert format_ds18b20_c_array(raw) == "{ 0x28, 0xFF, 0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0x06 }"
+
+
+def test_format_ds18b20_c_array_wrong_length():
+    with pytest.raises(ValueError, match="8 bytes"):
+        format_ds18b20_c_array("0x28,0xFF,0xA1,0xB2,0xC3,0xD4,0xE5")  # only 7 bytes
+
+
+def test_format_bssid_c_array():
+    assert format_bssid_c_array("AA:BB:CC:DD:EE:FF") == "{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }"
+
+
+def test_format_bssid_c_array_lowercase():
+    """pyserial/ESP may return lowercase hex — must uppercase."""
+    assert format_bssid_c_array("aa:bb:cc:dd:ee:ff") == "{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }"

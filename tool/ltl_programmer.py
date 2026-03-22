@@ -86,6 +86,27 @@ def parse_serial_output(lines: list) -> dict:
     return result
 
 
+def format_ds18b20_c_array(raw: str) -> str:
+    """Convert DS18B20 serial format to C array literal.
+
+    '0x28,0xFF,0xA1,0xB2,0xC3,0xD4,0xE5,0x06' -> '{ 0x28, 0xFF, ... }'
+    Raises ValueError if the address does not contain exactly 8 bytes.
+    """
+    parts = [p.strip() for p in raw.split(",")]
+    if len(parts) != 8:
+        raise ValueError(f"DS18B20 address must be 8 bytes, got {len(parts)}: {raw!r}")
+    return "{ " + ", ".join(parts) + " }"
+
+
+def format_bssid_c_array(bssid: str) -> str:
+    """Convert BSSID string to C array literal.
+
+    'AA:BB:CC:DD:EE:FF' -> '{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }'
+    """
+    parts = [f"0x{b.upper()}" for b in bssid.split(":")]
+    return "{ " + ", ".join(parts) + " }"
+
+
 # ── arduino-cli functions ────────────────────────────────────────────────────
 
 
