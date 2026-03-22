@@ -14,7 +14,7 @@ B. The server infrastructure to receive, store and display the measurements.
 
 3. A battery voltage sensor that sends the battery voltage to the ESP8266 ADC pin with a voltage divider so that the battery voltage can be monitored.
 
-4. The ESP8266 with a DS18B20 temperature sensor. 
+4. The ESP8266 with a DS18B20 temperature sensor.
 
 5. A small solar cell with a charging circuit, to keep the battery charged for as long as possible.
 
@@ -51,9 +51,17 @@ First a short diagram for an overview:
 
 ## Programmer Tool
 
-An interactive Python tool that programs each sensor in two steps:
-1. Flashes a setup sketch that reads the DS18B20 address, MAC address, and nearby WiFi networks
-2. Flashes the optimized production firmware with all values baked in
+An interactive TUI (terminal user interface) that programs each sensor in two steps. Built with [Textual](https://textual.textualize.io/) for a comfortable dark-mode interface.
+
+### Features
+
+- Auto-detects USB serial ports and pre-selects the right one
+- Live hotplug detection — plug in the adapter and it appears immediately
+- Parallel background compilation while you prepare the hardware
+- Auto-selects the WiFi network from your credentials file (strongest signal)
+- Sensor registry panel showing all programmed sensors
+- Full keyboard navigation — no mouse required
+- Clean two-step workflow with progress feedback
 
 ### Prerequisites
 
@@ -61,9 +69,9 @@ An interactive Python tool that programs each sensor in two steps:
   ```bash
   arduino-cli core install esp8266:esp8266
   ```
-- Python 3.8+
+- Python 3.10+
   ```bash
-  pip install rich pyserial
+  pip install -r tool/requirements.txt
   ```
 
 ### Credentials Setup
@@ -99,28 +107,51 @@ Connect the ESP8266 via USB-TTL adapter, then:
 cd tool && python3 ltl_programmer.py
 ```
 
-The tool will:
-1. Show available serial ports — select your USB-TTL adapter
-2. Show available credential locations — select the right one
-3. Flash the setup sketch and read hardware info
-4. Show nearby WiFi networks — optionally pin a BSSID for faster connection
-5. Ask for the room number (1–254)
-6. Flash the production firmware with all values hardcoded
-7. Record the sensor to `tool/sensors.csv`
+**Keyboard shortcuts:**
+
+| Key | Action |
+|-----|--------|
+| `F` | Start flash workflow |
+| `R` | Refresh port list |
+| `Q` | Quit |
+| `Enter` | Confirm / Continue |
+
+**Workflow:**
+
+1. Select your USB-TTL adapter port (pre-selected automatically)
+2. Select the credentials location (Home, School, …)
+3. Press `F` to start — the tool guides you through:
+   - Enter flash mode (RST + FLASH button sequence)
+   - Setup sketch uploads and reads MAC address, DS18B20 address, and nearby WiFi
+   - WiFi network is auto-selected from your credentials file
+   - Enter a room number (1–254)
+   - Production firmware compiles and uploads with all values baked in
+4. Sensor is recorded in `tool/sensors.csv`
+
+### Flash Mode (ESP-12 / bare modules)
+
+Bare ESP8266 modules without an auto-reset circuit require manual flash mode entry:
+
+1. Press and hold **RST**
+2. Press and hold **FLASH**
+3. Release **RST**
+4. Release **FLASH**
+
+The tool will prompt you at the right moment.
 
 ### Manual Flash Fallback
 
 If arduino-cli is not available, you can flash manually using the Arduino IDE:
 
 1. Flash `code/LTL_setup/LTL_setup.ino` and open Serial Monitor at 115200 baud
-2. Note the MAC address, DS18B20 address, and chosen WiFi network
-3. Edit `code/LTL_sensor/LTL_sensor.ino` manually — replace the placeholder values
+2. Note the MAC address and DS18B20 address
+3. Edit `code/LTL_sensor/LTL_sensor.ino` — replace the placeholder values
 4. Copy your `credentials_<location>.h` to `credentials.h` in the same folder
 5. Flash `code/LTL_sensor/LTL_sensor.ino`
 
 ### Sensor Registry
 
-`tool/sensors.csv` tracks all programmed sensors:
+`tool/sensors.csv` tracks all programmed sensors (gitignored):
 
 | Field | Description |
 |---|---|
@@ -145,5 +176,3 @@ The production firmware (`code/LTL_sensor/LTL_sensor.ino`) reduces ESP8266 awake
 | **Total without BSSID pinning** | **~1060–1080ms** |
 | Optional BSSID/channel pinning | +~200–400ms |
 | **Total with BSSID pinning** | **~1260–1480ms** |
-
-
