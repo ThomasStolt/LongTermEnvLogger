@@ -449,13 +449,103 @@ def get_configuration(data: dict, existing_rooms: set) -> dict:
 
 # ── Main workflow ─────────────────────────────────────────────────────────────
 
+def build_and_flash_production(
+    config: dict,
+    setup_data: dict,
+    cred_path: Path,
+    port: str,
+    fqbn: str,
+) -> None:
+    """Substitute template, copy credentials, compile and upload production firmware."""
+    template_content = SENSOR_SKETCH.read_text()
+
+    ds18b20_array = format_ds18b20_c_array(setup_data["ds18b20"])
+    bssid_array = format_bssid_c_array(config["bssid"]) if config["bssid"] else None
+
+    final_content = substitute_template(
+        template_content,
+        room_number=config["room_number"],
+        ds18b20_array=ds18b20_array,
+        bssid_array=bssid_array,
+        channel=config["channel"],
+    )
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        sketch_dir = Path(tmpdir) / "LTL_sensor"
+        sketch_dir.mkdir()
+        (sketch_dir / "LTL_sensor.ino").write_text(final_content)
+        shutil.copy(cred_path, sketch_dir / "credentials.h")
+
+        console.print(Panel(
+            f"Room:     [cyan]{config['room_number']}[/cyan]\n"
+            f"DS18B20:  [cyan]{ds18b20_array}[/cyan]\n"
+            f"BSSID:    [cyan]{config['bssid'] or 'not pinned'}[/cyan]\n"
+            f"Channel:  [cyan]{config['channel'] or '—'}[/cyan]\n"
+            f"Location: [cyan]{cred_path.stem.replace('credentials_', '')}[/cyan]",
+            title="Production Firmware Configuration",
+            border_style="green",
+        ))
+
+        flash_sketch(sketch_dir, port, fqbn)
+
+    console.print(Panel(
+        f"[bold green]Sensor {config['room_number']} programmed successfully![/bold green]",
+        border_style="green",
+    ))
+
+
 def main():
     console.print(Panel.fit(
         "[bold cyan]LTL Sensor Programmer[/bold cyan]\n"
         "Two-step ESP8266 flash tool",
         border_style="cyan",
     ))
-    console.print("[yellow]Not yet implemented — run after completing all tasks.[/yellow]")
+
+    # Step 1 — Hardware selection
+    port_info = select_port()
+    fqbn = _resolve_fqbn(port_info["fqbn"])
+    port = port_info["port"]
+
+    # Step 2 — Credentials selection
+    location, cred_path = select_credentials()
+
+    # Step 3 — Flash setup sketch
+    console.rule("[bold]Step 1/2 — Setup Sketch[/bold]")
+    flash_sketch(SETUP_SKETCH_DIR, port, fqbn)
+
+    # Step 4 — Read setup data (wait for ESP8266 to boot)
+    time.sleep(BOOT_DELAY_S)
+    setup_data = read_setup_data(port)
+
+    # Step 5 — Display results and configure
+    console.rule("[bold]Configuration[/bold]")
+    display_setup_results(setup_data)
+    existing_rooms = load_csv_rooms(CSV_PATH)
+    config = get_configuration(setup_data, existing_rooms)
+
+    # Step 6 — Build and flash production firmware
+    console.rule("[bold]Step 2/2 — Production Firmware[/bold]")
+    build_and_flash_production(config, setup_data, cred_path, port, fqbn)
+
+    # Step 7 — Update CSV
+    row = {
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "room_number": str(config["room_number"]),
+        "mac_address": setup_data["mac"] or "",
+        "ds18b20_address": setup_data["ds18b20"] or "",
+        "location": location,
+        "ssid": config["ssid"] or "",
+        "bssid": config["bssid"] or "",
+        "channel": str(config["channel"]) if config["channel"] else "",
+    }
+    append_csv_row(CSV_PATH, row)
+    console.print(f"[green]Sensor registry updated:[/green] {CSV_PATH}")
+
+    console.print(Panel(
+        f"[bold green]Done![/bold green]\n"
+        f"Room [cyan]{config['room_number']}[/cyan] is ready to deploy.",
+        border_style="green",
+    ))
 
 
 if __name__ == "__main__":
