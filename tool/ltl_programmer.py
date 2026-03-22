@@ -364,6 +364,89 @@ def select_credentials() -> tuple:
     return location, file_path
 
 
+def display_setup_results(data: dict) -> None:
+    """Display MAC address, DS18B20 address, and WiFi networks from setup data."""
+    console.print(Panel(
+        f"[bold]MAC Address:[/bold] [cyan]{data['mac']}[/cyan]",
+        title="ESP8266 Hardware Info",
+        border_style="green",
+    ))
+
+    if data["ds18b20_error"]:
+        console.print(
+            "[red]DS18B20 not found on OneWire bus.[/red] "
+            "Check wiring (data wire to GPIO12, 4.7kΩ pull-up to 3.3V)."
+        )
+        sys.exit(1)
+
+    console.print(f"[bold]DS18B20 address:[/bold] [cyan]{data['ds18b20']}[/cyan]")
+
+    if data["wifi_none"]:
+        console.print("[yellow]No WiFi networks found — BSSID pinning not available.[/yellow]")
+        return
+
+    table = Table(title="Nearby WiFi Networks", border_style="blue")
+    table.add_column("#", style="bold cyan", width=4)
+    table.add_column("SSID", style="white", min_width=20)
+    table.add_column("BSSID", style="dim")
+    table.add_column("Ch", style="yellow", width=4)
+    table.add_column("Signal", min_width=18)
+
+    for i, net in enumerate(data["wifi_networks"], 1):
+        table.add_row(
+            str(i),
+            net["ssid"],
+            net["bssid"],
+            str(net["channel"]),
+            _rssi_bar(net["rssi"]),
+        )
+    console.print(table)
+
+
+def get_configuration(data: dict, existing_rooms: set) -> dict:
+    """Prompt user for room number and optional BSSID selection.
+
+    Returns dict with keys:
+      room_number (int), bssid (str|None), channel (int|None), ssid (str|None)
+    """
+    bssid = None
+    channel = None
+    ssid = None
+
+    if not data["wifi_none"] and data["wifi_networks"]:
+        console.print("\n[bold]BSSID Pinning[/bold] (optional — saves ~200–400ms per cycle)")
+        console.print("Only use this if the ESP will always connect to a single, fixed access point.")
+        raw = Prompt.ask(
+            "Select network # to pin BSSID, or press [bold]Enter[/bold] to skip",
+            default="",
+        )
+        if raw.strip().isdigit():
+            idx = int(raw.strip()) - 1
+            if 0 <= idx < len(data["wifi_networks"]):
+                net = data["wifi_networks"][idx]
+                bssid = net["bssid"]
+                channel = net["channel"]
+                ssid = net["ssid"]
+                console.print(f"[green]BSSID pinned:[/green] {bssid} (channel {channel})")
+            else:
+                console.print("[yellow]Invalid selection — skipping BSSID pinning.[/yellow]")
+        else:
+            console.print("[dim]BSSID pinning skipped.[/dim]")
+
+    while True:
+        room_number = IntPrompt.ask("\nEnter room number", default=101)
+        if not (1 <= room_number <= 254):
+            console.print("[red]Room number must be between 1 and 254.[/red]")
+            continue
+        if room_number in existing_rooms:
+            console.print(f"[yellow]Room {room_number} already exists in sensors.csv.[/yellow]")
+            if not Confirm.ask("Continue anyway?", default=False):
+                continue
+        break
+
+    return {"room_number": room_number, "bssid": bssid, "channel": channel, "ssid": ssid}
+
+
 # ── Main workflow ─────────────────────────────────────────────────────────────
 
 def main():
