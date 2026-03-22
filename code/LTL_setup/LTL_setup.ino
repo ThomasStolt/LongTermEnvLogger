@@ -15,12 +15,16 @@ void setup() {
   Serial.begin(115200);
   delay(500);  // Let serial port stabilise after boot
 
+  Serial.println("DBG:START");
+
   // MAC address
+  Serial.println("DBG:WIFI_MODE");
   WiFi.mode(WIFI_STA);
   Serial.print("MAC:");
   Serial.println(WiFi.macAddress());
 
   // DS18B20 address
+  Serial.println("DBG:DS18B20");
   sensors.begin();
   if (sensors.getDeviceCount() == 0) {
     Serial.println("DS18B20:NOT_FOUND");
@@ -38,6 +42,7 @@ void setup() {
   }
 
   // WiFi scan (no connection needed — passive scan only)
+  Serial.println("DBG:WIFI_SCAN");
   int n = WiFi.scanNetworks();
   if (n == 0) {
     Serial.println("WIFI:NONE");
