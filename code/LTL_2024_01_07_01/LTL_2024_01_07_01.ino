@@ -5,16 +5,17 @@
 #include "credentials.h"
 
 // define a 3-digit room number
-const int roomNumber = 212;
+const int roomNumber = 101;
+
 
 // define voltage limit to prevent deep discharge
 const int volt_limit = 560;
 
 // Static IP configuration
-IPAddress staticIP(192, 168, 100, roomNumber); // Assigned static IP address
-IPAddress gateway(192, 168, 100, 1);    // Gateway (usually your router IP)
+IPAddress staticIP(192, 168, 120, roomNumber); // Assigned static IP address
+IPAddress gateway(192, 168, 120, 1);    // Gateway (usually your router IP)
 IPAddress subnet(255, 255, 255, 0);     // Subnet mask
-IPAddress dns(192, 168, 100, 1);        // DNS (can be the same as the Gateway)
+IPAddress dns(192, 168, 120, 1);        // DNS (can be the same as the Gateway)
 
 // Example BSSID of the WiFi network and channel
 // BSSID for N-IOT 82:8a:20:d1:77:51
@@ -24,7 +25,7 @@ const uint8_t wifi_bssid[6] = {0xEE, 0x55, 0xA8, 0x2C, 0xA8, 0x64};
 // const int wifi_channel = 6;
 
 // MQTT Server
-const char* mqtt_server = "192.168.2.53";
+const char* mqtt_server = "192.168.120.2";
 const int mqtt_port = 1883;
 
 // Format MQTT topics to include the device number
