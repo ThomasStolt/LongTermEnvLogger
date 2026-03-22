@@ -7,6 +7,7 @@ from ltl_programmer import (
     parse_serial_output,
     format_ds18b20_c_array,
     format_bssid_c_array,
+    substitute_template,
 )
 
 
@@ -74,3 +75,64 @@ def test_format_bssid_c_array():
 def test_format_bssid_c_array_lowercase():
     """pyserial/ESP may return lowercase hex — must uppercase."""
     assert format_bssid_c_array("aa:bb:cc:dd:ee:ff") == "{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }"
+
+
+# ── Template substitution tests ───────────────────────────────────────────────
+
+TEMPLATE = """\
+const int roomNumber = /*ROOM_NUMBER*/101;
+DeviceAddress sensorAddr = /*DS18B20_ADDR*/{ 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+// #define USE_BSSID
+#ifdef USE_BSSID
+  const uint8_t wifi_bssid[6] = /*BSSID*/{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+  const int wifi_channel = /*WIFI_CHANNEL*/1;
+#endif
+"""
+
+
+def test_substitute_room_and_ds18b20():
+    result = substitute_template(
+        TEMPLATE,
+        room_number=202,
+        ds18b20_array="{ 0x28, 0xFF, 0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0x06 }",
+    )
+    assert "/*ROOM_NUMBER*/202" in result
+    assert "/*DS18B20_ADDR*/{ 0x28, 0xFF, 0xA1" in result
+    assert "// #define USE_BSSID" in result  # BSSID not selected — stays commented
+
+
+def test_substitute_with_bssid():
+    result = substitute_template(
+        TEMPLATE,
+        room_number=101,
+        ds18b20_array="{ 0x28, 0xFF, 0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0x06 }",
+        bssid_array="{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }",
+        channel=6,
+    )
+    assert "#define USE_BSSID" in result
+    assert "// #define USE_BSSID" not in result  # comment removed
+    assert "/*BSSID*/{ 0xAA, 0xBB" in result
+    assert "/*WIFI_CHANNEL*/6" in result
+
+
+def test_substitute_room_number_range():
+    """Room 1 and 254 are boundary values."""
+    for room in (1, 254):
+        result = substitute_template(
+            TEMPLATE,
+            room_number=room,
+            ds18b20_array="{ 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }",
+        )
+        assert f"/*ROOM_NUMBER*/{room}" in result
+
+
+def test_substitute_bssid_only_no_substitution():
+    """Passing bssid_array without channel leaves USE_BSSID commented out."""
+    result = substitute_template(
+        TEMPLATE,
+        room_number=101,
+        ds18b20_array="{ 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }",
+        bssid_array="{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }",
+        channel=None,  # channel missing — pinning should NOT be activated
+    )
+    assert "// #define USE_BSSID" in result  # must stay commented

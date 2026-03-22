@@ -107,6 +107,43 @@ def format_bssid_c_array(bssid: str) -> str:
     return "{ " + ", ".join(parts) + " }"
 
 
+def substitute_template(
+    content: str,
+    room_number: int,
+    ds18b20_array: str,
+    bssid_array: str = None,
+    channel: int = None,
+) -> str:
+    """Apply placeholder substitutions to LTL_sensor.ino content.
+
+    Placeholders use /*TOKEN*/default_value format so the template compiles
+    standalone. Substitution preserves the placeholder comment for readability.
+    """
+    content = re.sub(
+        r"/\*ROOM_NUMBER\*/\d+",
+        f"/*ROOM_NUMBER*/{room_number}",
+        content,
+    )
+    content = re.sub(
+        r"/\*DS18B20_ADDR\*/\{[^}]+\}",
+        f"/*DS18B20_ADDR*/{ds18b20_array}",
+        content,
+    )
+    if bssid_array is not None and channel is not None:
+        content = content.replace("// #define USE_BSSID", "#define USE_BSSID")
+        content = re.sub(
+            r"/\*BSSID\*/\{[^}]+\}",
+            f"/*BSSID*/{bssid_array}",
+            content,
+        )
+        content = re.sub(
+            r"/\*WIFI_CHANNEL\*/\d+",
+            f"/*WIFI_CHANNEL*/{channel}",
+            content,
+        )
+    return content
+
+
 # ── arduino-cli functions ────────────────────────────────────────────────────
 
 
