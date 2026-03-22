@@ -3,11 +3,17 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
+import csv
+import tempfile
 from ltl_programmer import (
     parse_serial_output,
     format_ds18b20_c_array,
     format_bssid_c_array,
     substitute_template,
+    find_credentials_files,
+    load_csv_rooms,
+    append_csv_row,
+    CSV_FIELDNAMES,
 )
 
 
@@ -136,3 +142,62 @@ def test_substitute_bssid_only_no_substitution():
         channel=None,  # channel missing — pinning should NOT be activated
     )
     assert "// #define USE_BSSID" in result  # must stay commented
+
+
+# ── CSV handler and credentials finder tests ──────────────────────────────────
+
+def test_find_credentials_files(tmp_path):
+    (tmp_path / "credentials_Home.h").write_text('const char* ssid = "x";')
+    (tmp_path / "credentials_School.h").write_text('const char* ssid = "y";')
+    (tmp_path / "credentials.example.h").write_text("example")
+    locations = find_credentials_files(tmp_path)
+    assert set(locations) == {"Home", "School"}
+    assert "example" not in locations  # example file excluded
+
+
+def test_find_credentials_files_empty(tmp_path):
+    assert find_credentials_files(tmp_path) == []
+
+
+def test_load_csv_rooms_nonexistent(tmp_path):
+    assert load_csv_rooms(tmp_path / "sensors.csv") == set()
+
+
+def test_load_csv_rooms_with_data(tmp_path):
+    csv_path = tmp_path / "sensors.csv"
+    with open(csv_path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
+        w.writeheader()
+        w.writerow({"room_number": "101", "mac_address": "AA:BB:CC:DD:EE:FF",
+                    "ds18b20_address": "", "location": "Home", "ssid": "",
+                    "bssid": "", "channel": "", "timestamp": "2026-01-01T00:00:00"})
+        w.writerow({"room_number": "202", "mac_address": "11:22:33:44:55:66",
+                    "ds18b20_address": "", "location": "School", "ssid": "",
+                    "bssid": "", "channel": "", "timestamp": "2026-01-02T00:00:00"})
+    assert load_csv_rooms(csv_path) == {101, 202}
+
+
+def test_append_csv_row_creates_file(tmp_path):
+    csv_path = tmp_path / "sensors.csv"
+    row = {"timestamp": "2026-03-22T14:30:00", "room_number": "101",
+           "mac_address": "AA:BB:CC:DD:EE:FF", "ds18b20_address": "0x28,0xFF",
+           "location": "Home", "ssid": "HomeNet", "bssid": "AA:BB:CC:DD:EE:FF", "channel": "6"}
+    append_csv_row(csv_path, row)
+    assert csv_path.exists()
+    with open(csv_path) as f:
+        lines = f.readlines()
+    assert lines[0].startswith("timestamp")  # header present
+    assert "101" in lines[1]
+
+
+def test_append_csv_row_no_duplicate_header(tmp_path):
+    csv_path = tmp_path / "sensors.csv"
+    row = {"timestamp": "t", "room_number": "1", "mac_address": "", "ds18b20_address": "",
+           "location": "", "ssid": "", "bssid": "", "channel": ""}
+    append_csv_row(csv_path, row)
+    append_csv_row(csv_path, row)
+    with open(csv_path) as f:
+        lines = [l for l in f.readlines() if l.strip()]
+    # 1 header + 2 data rows = 3 lines
+    assert len(lines) == 3
+    assert lines[0].startswith("timestamp")

@@ -144,6 +144,38 @@ def substitute_template(
     return content
 
 
+def find_credentials_files(project_root: Path) -> list:
+    """Return sorted list of location names from credentials_<location>.h files.
+
+    Excludes credentials.example.h.
+    Example: ['Home', 'School'] for credentials_Home.h, credentials_School.h
+    """
+    return sorted(
+        f.stem.replace("credentials_", "")
+        for f in project_root.glob("credentials_*.h")
+        if f.stem != "credentials_example"
+    )
+
+
+def load_csv_rooms(csv_path: Path) -> set:
+    """Return set of room numbers (int) already recorded in sensors.csv."""
+    if not csv_path.exists():
+        return set()
+    with open(csv_path, newline="") as f:
+        reader = csv.DictReader(f)
+        return {int(row["room_number"]) for row in reader if row.get("room_number")}
+
+
+def append_csv_row(csv_path: Path, row: dict) -> None:
+    """Append a row to sensors.csv, creating with header if the file is new."""
+    write_header = not csv_path.exists()
+    with open(csv_path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
+
+
 # ── arduino-cli functions ────────────────────────────────────────────────────
 
 
