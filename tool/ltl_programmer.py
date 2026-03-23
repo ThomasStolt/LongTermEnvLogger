@@ -31,7 +31,6 @@ from arduino_config import BAUD_RATE, BOARD_FQBN, BOOT_DELAY_S, SERIAL_TIMEOUT_S
 PROJECT_ROOT = Path(__file__).parent.parent
 SETUP_SKETCH_DIR = PROJECT_ROOT / "code" / "LTL_setup"
 SENSOR_SKETCH = PROJECT_ROOT / "code" / "LTL_sensor" / "LTL_sensor.ino"
-CSV_PATH = Path(__file__).parent / "sensors.csv"
 CSV_FIELDNAMES = [
     "timestamp", "room_number", "mac_address", "ds18b20_address",
     "location", "ssid", "bssid", "channel",
@@ -1263,6 +1262,15 @@ class LTLProgrammerApp(App):
         "registry": "#registry-panel",
     }
 
+    @property
+    def _csv_path(self) -> Path:
+        """Return the sensors CSV for the currently selected credentials location."""
+        table = self.query_one("#creds-table", DataTable)
+        idx = table.cursor_row
+        if self._credentials and 0 <= idx < len(self._credentials):
+            return Path(__file__).parent / f"sensors_{self._credentials[idx]}.csv"
+        return Path(__file__).parent / "sensors.csv"
+
     BINDINGS = [
         Binding("f", "flash", "F Flash"),
         Binding("e", "ctx_edit", "E Edit"),
@@ -1368,6 +1376,7 @@ class LTLProgrammerApp(App):
             info.update("[yellow]⚠ Netzwerkkonfiguration fehlt[/yellow]")
         else:
             info.update(
+                f"[#585b70]IP  [/#585b70]   {net['net_prefix']}.[bold #89b4fa]<room>[/bold #89b4fa]\n"
                 f"[#585b70]Netz[/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
                 f"[#585b70]GW  [/#585b70]   {net['gateway']}\n"
                 f"[#585b70]DNS [/#585b70]   {net['dns_server']}\n"
@@ -1378,9 +1387,9 @@ class LTLProgrammerApp(App):
         table = self.query_one("#registry-table", DataTable)
         table.clear()
         self._registry_rows = []
-        if not CSV_PATH.exists():
+        if not self._csv_path.exists():
             return
-        with open(CSV_PATH, newline="") as f:
+        with open(self._csv_path, newline="") as f:
             rows = list(csv.DictReader(f))
         display_rows = list(reversed(rows))  # newest first
         self._registry_rows = display_rows
@@ -1431,6 +1440,7 @@ class LTLProgrammerApp(App):
             if event.data_table.has_focus:
                 self._set_active_panel("creds")
             self._update_creds_info()
+            self._refresh_registry()
         elif event.data_table.id == "registry-table":
             if event.data_table.has_focus:
                 self._set_active_panel("registry")
@@ -1488,12 +1498,12 @@ class LTLProgrammerApp(App):
 
             self.push_screen(NewCredentialsModal(), _on_save)
         else:
-            existing = load_csv_rooms(CSV_PATH)
+            existing = load_csv_rooms(self._csv_path)
 
             def _on_save(new_row: dict | None) -> None:
                 if new_row is None:
                     return
-                upsert_csv_row(CSV_PATH, new_row)
+                upsert_csv_row(self._csv_path, new_row)
                 self._refresh_registry()
                 self.notify(f"Raum {new_row['room_number']} hinzugefügt.", severity="information")
 
@@ -1516,7 +1526,7 @@ class LTLProgrammerApp(App):
                 return
             room_num = _room_int(room_str)
             if room_num is not None:
-                delete_csv_row(CSV_PATH, room_num)
+                delete_csv_row(self._csv_path, room_num)
             self._refresh_registry()
             self.notify(f"Raum {room_str} gelöscht.", severity="information")
 
@@ -1530,7 +1540,7 @@ class LTLProgrammerApp(App):
         def _on_save(updated: dict | None) -> None:
             if updated is None:
                 return
-            upsert_csv_row(CSV_PATH, updated)
+            upsert_csv_row(self._csv_path, updated)
             self._refresh_registry()
             self.notify(f"Raum {updated['room_number']} aktualisiert.", severity="information")
 
@@ -1740,7 +1750,7 @@ class LTLProgrammerApp(App):
             return
 
         # ── Room number ───────────────────────────────────────────────────────
-        room_number = self._wait_modal(RoomInputModal(load_csv_rooms(CSV_PATH)))
+        room_number = self._wait_modal(RoomInputModal(load_csv_rooms(self._csv_path)))
         if room_number is None:
             self._log("[red]Flash cancelled[/red]")
             return
@@ -1806,7 +1816,7 @@ class LTLProgrammerApp(App):
         )
 
         # Step 9 — Save to CSV
-        upsert_csv_row(CSV_PATH, {
+        upsert_csv_row(self._csv_path, {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "room_number": f"{room_number:03d}",
             "mac_address": setup_data["mac"] or "",
@@ -1819,7 +1829,7 @@ class LTLProgrammerApp(App):
 
         self._clear_step()
         self._log(f"[bold green]━━ Sensor {room_number} programmed successfully! ━━[/bold green]")
-        self._log(f"[green]Registry updated: {CSV_PATH}[/green]")
+        self._log(f"[green]Registry updated: {self._csv_path}[/green]")
         self.call_from_thread(self._refresh_registry)
         self.call_from_thread(
             self.notify, f"Room {room_number} ready to deploy!", severity="information"
