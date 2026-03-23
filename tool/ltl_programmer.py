@@ -88,6 +88,11 @@ def format_ds18b20_c_array(raw: str) -> str:
     return "{ " + ", ".join(parts) + " }"
 
 
+def format_bssid_c_array(bssid: str) -> str:
+    """Convert a colon-separated BSSID string to a C array literal."""
+    parts = [f"0x{byte.upper()}" for byte in bssid.split(":")]
+    return "{ " + ", ".join(parts) + " }"
+
 
 def substitute_template(
     content: str,
@@ -141,6 +146,34 @@ def read_ssid_from_credentials(cred_path: Path) -> str | None:
         return None
 
 
+def read_network_from_credentials(cred_path: Path) -> dict | None:
+    """Parse network config from a credentials_*.h file.
+
+    Returns a dict with keys: net_prefix (str), net_mask (int),
+    mqtt_server (str), mqtt_port (int).
+    Returns None if any required field is missing or the file is unreadable.
+    """
+    try:
+        content = cred_path.read_text()
+    except OSError:
+        return None
+    octets = re.findall(r'const\s+uint8_t\s+net_([abc])\s*=\s*(\d+)', content)
+    octet_map = {k: int(v) for k, v in octets}
+    if not all(k in octet_map for k in ("a", "b", "c")):
+        return None
+    m_mask = re.search(r'const\s+uint8_t\s+net_mask\s*=\s*(\d+)', content)
+    m_server = re.search(r'const\s+char\s*\*\s*mqtt_server\s*=\s*"([^"]*)"', content)
+    m_port = re.search(r'const\s+int\s+mqtt_port\s*=\s*(\d+)', content)
+    if not all([m_mask, m_server, m_port]):
+        return None
+    return {
+        "net_prefix": f"{octet_map['a']}.{octet_map['b']}.{octet_map['c']}",
+        "net_mask": int(m_mask.group(1)),
+        "mqtt_server": m_server.group(1),
+        "mqtt_port": int(m_port.group(1)),
+    }
+
+
 def load_csv_rooms(csv_path: Path) -> set:
     """Return set of room numbers (int) already recorded in sensors.csv."""
     if not csv_path.exists():
@@ -148,6 +181,16 @@ def load_csv_rooms(csv_path: Path) -> set:
     with open(csv_path, newline="") as f:
         reader = csv.DictReader(f)
         return {int(row["room_number"]) for row in reader if row.get("room_number")}
+
+
+def append_csv_row(csv_path: Path, row: dict) -> None:
+    """Append a row to sensors.csv, writing the header if the file is new."""
+    write_header = not csv_path.exists()
+    with open(csv_path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
 
 
 def upsert_csv_row(csv_path: Path, row: dict) -> None:

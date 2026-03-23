@@ -11,8 +11,9 @@ from ltl_programmer import (
     format_bssid_c_array,
     substitute_template,
     find_credentials_files,
+    read_network_from_credentials,
     load_csv_rooms,
-    append_csv_row,
+    append_csv_row,   # keep — used by existing test_append_csv_row_* tests
     CSV_FIELDNAMES,
 )
 
@@ -201,3 +202,53 @@ def test_append_csv_row_no_duplicate_header(tmp_path):
     # 1 header + 2 data rows = 3 lines
     assert len(lines) == 3
     assert lines[0].startswith("timestamp")
+
+
+# ── read_network_from_credentials tests ───────────────────────────────────────
+
+_VALID_CREDS = """\
+const char*    ssid        = "TestNet";
+const char*    password    = "secret";
+const uint8_t  net_a       = 10;
+const uint8_t  net_b       = 0;
+const uint8_t  net_c       = 5;
+const uint8_t  net_mask    = 24;
+const char*    mqtt_server = "10.0.5.2";
+const int      mqtt_port   = 1883;
+"""
+
+
+def test_read_network_valid(tmp_path):
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS)
+    result = read_network_from_credentials(cred)
+    assert result == {
+        "net_prefix": "10.0.5",
+        "net_mask": 24,
+        "mqtt_server": "10.0.5.2",
+        "mqtt_port": 1883,
+    }
+
+
+def test_read_network_missing_net_mask(tmp_path):
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS.replace("const uint8_t  net_mask    = 24;\n", ""))
+    assert read_network_from_credentials(cred) is None
+
+
+def test_read_network_missing_mqtt_server(tmp_path):
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS.replace('const char*    mqtt_server = "10.0.5.2";\n', ""))
+    assert read_network_from_credentials(cred) is None
+
+
+def test_read_network_unreadable_file(tmp_path):
+    assert read_network_from_credentials(tmp_path / "nonexistent.h") is None
+
+
+def test_read_network_nonstandard_port(tmp_path):
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS.replace("mqtt_port   = 1883", "mqtt_port   = 8883"))
+    result = read_network_from_credentials(cred)
+    assert result is not None
+    assert result["mqtt_port"] == 8883
