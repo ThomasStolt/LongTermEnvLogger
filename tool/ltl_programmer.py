@@ -152,7 +152,8 @@ def read_network_from_credentials(cred_path: Path) -> dict | None:
     """Parse network config from a credentials_*.h file.
 
     Returns a dict with keys: net_prefix (str), net_mask (int),
-    mqtt_server (str), mqtt_port (int).
+    mqtt_server (str), mqtt_port (int), gateway (str), dns_server (str).
+    gateway and dns_server fall back to net_a.net_b.net_c.1 if not present.
     Returns None if any required field is missing or the file is unreadable.
     """
     try:
@@ -168,12 +169,119 @@ def read_network_from_credentials(cred_path: Path) -> dict | None:
     m_port = re.search(r'const\s+int\s+mqtt_port\s*=\s*(\d+)', content)
     if not all([m_mask, m_server, m_port]):
         return None
+
+    def _parse_ip(prefix: str) -> str | None:
+        """Parse gw_a/b/c/d or dns_a/b/c/d into a dotted IP string."""
+        parts = re.findall(rf'const\s+uint8_t\s+{prefix}_([abcd])\s*=\s*(\d+)', content)
+        m = {k: int(v) for k, v in parts}
+        if all(k in m for k in ("a", "b", "c", "d")):
+            return f"{m['a']}.{m['b']}.{m['c']}.{m['d']}"
+        return None
+
+    fallback = f"{octet_map['a']}.{octet_map['b']}.{octet_map['c']}.1"
     return {
         "net_prefix": f"{octet_map['a']}.{octet_map['b']}.{octet_map['c']}",
         "net_mask": int(m_mask.group(1)),
         "mqtt_server": m_server.group(1),
         "mqtt_port": int(m_port.group(1)),
+        "gateway": _parse_ip("gw") or fallback,
+        "dns_server": _parse_ip("dns") or fallback,
     }
+
+
+def write_network_to_credentials(cred_path: Path, updates: dict) -> None:
+    """Write network config back to a credentials_*.h file.
+
+    updates keys: net_prefix (str "a.b.c"), net_mask (int),
+    gateway (str "a.b.c.d"), dns_server (str "a.b.c.d"),
+    mqtt_server (str), mqtt_port (int).
+    Only the network constants are modified; ssid/password are left untouched.
+    """
+    content = cred_path.read_text()
+
+    def _set_uint8(name: str, value: int) -> None:
+        nonlocal content
+        content = re.sub(
+            rf'(const\s+uint8_t\s+{name}\s*=\s*)\d+',
+            rf'\g<1>{value}',
+            content,
+        )
+
+    def _set_int(name: str, value: int) -> None:
+        nonlocal content
+        content = re.sub(
+            rf'(const\s+int\s+{name}\s*=\s*)\d+',
+            rf'\g<1>{value}',
+            content,
+        )
+
+    def _set_str(name: str, value: str) -> None:
+        nonlocal content
+        content = re.sub(
+            rf'(const\s+char\s*\*\s*{name}\s*=\s*")[^"]*(")',
+            rf'\g<1>{value}\g<2>',
+            content,
+        )
+
+    net = [int(x) for x in updates["net_prefix"].split(".")]
+    gw  = [int(x) for x in updates["gateway"].split(".")]
+    dns = [int(x) for x in updates["dns_server"].split(".")]
+
+    _set_uint8("net_a", net[0]); _set_uint8("net_b", net[1]); _set_uint8("net_c", net[2])
+    _set_uint8("net_mask", updates["net_mask"])
+    _set_uint8("gw_a",  gw[0]);  _set_uint8("gw_b",  gw[1])
+    _set_uint8("gw_c",  gw[2]);  _set_uint8("gw_d",  gw[3])
+    _set_uint8("dns_a", dns[0]); _set_uint8("dns_b", dns[1])
+    _set_uint8("dns_c", dns[2]); _set_uint8("dns_d", dns[3])
+    _set_str("mqtt_server", updates["mqtt_server"])
+    _set_int("mqtt_port", updates["mqtt_port"])
+
+    cred_path.write_text(content)
+
+
+def write_credentials_file(cred_path: Path, fields: dict) -> None:
+    """Create a credentials_*.h file from scratch.
+
+    fields keys: location (str), ssid (str), password (str),
+    net_prefix (str "a.b.c"), net_mask (int),
+    gateway (str "a.b.c.d"), dns_server (str "a.b.c.d"),
+    mqtt_server (str), mqtt_port (int).
+    """
+    net = [int(x) for x in fields["net_prefix"].split(".")]
+    gw  = [int(x) for x in fields["gateway"].split(".")]
+    dns = [int(x) for x in fields["dns_server"].split(".")]
+    content = (
+        f"// credentials_{fields['location']}.h — created by ltl_programmer\n"
+        "// credentials_*.h files are gitignored — never commit real credentials.\n"
+        "#include <stdint.h>\n"
+        f'const char*    ssid        = "{fields["ssid"]}";\n'
+        f'const char*    password    = "{fields["password"]}";\n'
+        "\n"
+        "// Netzwerk-Präfix (erste 3 Oktette der statischen Sensor-IP)\n"
+        f"const uint8_t  net_a       = {net[0]};\n"
+        f"const uint8_t  net_b       = {net[1]};\n"
+        f"const uint8_t  net_c       = {net[2]};\n"
+        "\n"
+        "// Subnetzmaske als CIDR-Präfixlänge (1–30)\n"
+        f"const uint8_t  net_mask    = {fields['net_mask']};\n"
+        "\n"
+        "// Gateway-IP\n"
+        f"const uint8_t  gw_a        = {gw[0]};\n"
+        f"const uint8_t  gw_b        = {gw[1]};\n"
+        f"const uint8_t  gw_c        = {gw[2]};\n"
+        f"const uint8_t  gw_d        = {gw[3]};\n"
+        "\n"
+        "// DNS-Server-IP\n"
+        f"const uint8_t  dns_a       = {dns[0]};\n"
+        f"const uint8_t  dns_b       = {dns[1]};\n"
+        f"const uint8_t  dns_c       = {dns[2]};\n"
+        f"const uint8_t  dns_d       = {dns[3]};\n"
+        "\n"
+        "// MQTT-Broker\n"
+        f'const char*    mqtt_server = "{fields["mqtt_server"]}";\n'
+        f"const int      mqtt_port   = {fields['mqtt_port']};\n"
+    )
+    cred_path.write_text(content)
 
 
 def load_csv_rooms(csv_path: Path) -> set:
@@ -196,23 +304,51 @@ def append_csv_row(csv_path: Path, row: dict) -> None:
 
 
 def upsert_csv_row(csv_path: Path, row: dict) -> None:
-    """Insert or update a row in sensors.csv, keyed by room_number."""
+    """Insert or update a row in sensors.csv, keyed by room_number (numeric match)."""
     rows = []
     if csv_path.exists():
         with open(csv_path, newline="") as f:
             rows = list(csv.DictReader(f))
+    try:
+        key = int(row["room_number"])
+    except (KeyError, ValueError):
+        key = None
     updated = False
     for i, r in enumerate(rows):
-        if r.get("room_number") == row["room_number"]:
-            rows[i] = row
-            updated = True
-            break
+        try:
+            if int(r.get("room_number", "")) == key:
+                rows[i] = row
+                updated = True
+                break
+        except ValueError:
+            pass
     if not updated:
         rows.append(row)
     with open(csv_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def delete_csv_row(csv_path: Path, room_number: int) -> None:
+    """Remove the row with the given room_number from sensors.csv."""
+    if not csv_path.exists():
+        return
+    with open(csv_path, newline="") as f:
+        rows = list(csv.DictReader(f))
+    rows = [r for r in rows if _room_int(r.get("room_number", "")) != room_number]
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _room_int(value: str) -> int | None:
+    """Parse a room_number string to int, returning None on failure."""
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return None
 
 
 def detect_ports() -> list:
@@ -365,6 +501,474 @@ class RoomInputModal(ModalScreen):
         self.query_one("#room-warning").display = False
         self.query_one("#room-confirm-buttons").display = False
         self.query_one("#room-ok").display = True
+
+
+# ── Network config edit modal ─────────────────────────────────────────────────
+
+class NetworkConfigModal(ModalScreen):
+    CSS = """
+    NetworkConfigModal { align: center middle; }
+    #nc-box {
+        background: #181825;
+        border: solid #74c7ec;
+        padding: 2 4;
+        width: 60;
+        height: auto;
+    }
+    #nc-title {
+        text-style: bold;
+        color: #74c7ec;
+        margin-bottom: 1;
+        text-align: center;
+    }
+    .nc-label { color: #a6adc8; height: 1; margin-top: 1; }
+    .nc-input {
+        background: #313244;
+        border: tall #45475a;
+        color: #cdd6f4;
+        margin-bottom: 0;
+    }
+    .nc-input:focus { border: tall #74c7ec; }
+    #nc-error { color: #f38ba8; height: 1; margin-top: 1; }
+    #nc-save {
+        width: 100%;
+        margin-top: 1;
+        background: #74c7ec;
+        color: #1e1e2e;
+        text-style: bold;
+        border: none;
+    }
+    #nc-save:hover { background: #89dceb; }
+    #nc-cancel {
+        width: 100%;
+        margin-top: 1;
+        background: #313244;
+        color: #a6adc8;
+        border: none;
+    }
+    #nc-cancel:hover { background: #45475a; }
+    """
+
+    def __init__(self, net: dict):
+        super().__init__()
+        self._net = net
+
+    def compose(self) -> ComposeResult:
+        with Vertical(id="nc-box"):
+            yield Label("Netzwerkkonfiguration bearbeiten", id="nc-title")
+            yield Label("Netz-Präfix  (z.B. 192.168.2)", classes="nc-label")
+            yield Input(value=self._net["net_prefix"], id="nc-net-prefix", classes="nc-input")
+            yield Label("Subnetz-Maske  (CIDR, z.B. 24)", classes="nc-label")
+            yield Input(value=str(self._net["net_mask"]), id="nc-net-mask", classes="nc-input", type="integer")
+            yield Label("Gateway  (z.B. 192.168.2.1)", classes="nc-label")
+            yield Input(value=self._net["gateway"], id="nc-gateway", classes="nc-input")
+            yield Label("DNS-Server  (z.B. 8.8.8.8)", classes="nc-label")
+            yield Input(value=self._net["dns_server"], id="nc-dns", classes="nc-input")
+            yield Label("MQTT-Server  (IP-Adresse)", classes="nc-label")
+            yield Input(value=self._net["mqtt_server"], id="nc-mqtt-server", classes="nc-input")
+            yield Label("MQTT-Port", classes="nc-label")
+            yield Input(value=str(self._net["mqtt_port"]), id="nc-mqtt-port", classes="nc-input", type="integer")
+            yield Label("", id="nc-error")
+            yield Button("Speichern", id="nc-save")
+            yield Button("Abbrechen", id="nc-cancel")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "nc-save":
+            self._try_save()
+        elif event.button.id == "nc-cancel":
+            self.dismiss(None)
+
+    def on_input_submitted(self, _: Input.Submitted) -> None:
+        self._try_save()
+
+    def _try_save(self) -> None:
+        error = self.query_one("#nc-error", Label)
+
+        def _get(id_: str) -> str:
+            return self.query_one(f"#{id_}", Input).value.strip()
+
+        def _valid_ip4(s: str) -> bool:
+            parts = s.split(".")
+            if len(parts) != 4:
+                return False
+            return all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
+        def _valid_ip3(s: str) -> bool:
+            parts = s.split(".")
+            if len(parts) != 3:
+                return False
+            return all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
+        net_prefix  = _get("nc-net-prefix")
+        net_mask    = _get("nc-net-mask")
+        gateway     = _get("nc-gateway")
+        dns_server  = _get("nc-dns")
+        mqtt_server = _get("nc-mqtt-server")
+        mqtt_port   = _get("nc-mqtt-port")
+
+        if not _valid_ip3(net_prefix):
+            error.update("Netz-Präfix ungültig (z.B. 192.168.2)")
+            return
+        if not net_mask.isdigit() or not (1 <= int(net_mask) <= 30):
+            error.update("Subnetz-Maske muss 1–30 sein")
+            return
+        if not _valid_ip4(gateway):
+            error.update("Gateway-IP ungültig (z.B. 192.168.2.1)")
+            return
+        if not _valid_ip4(dns_server):
+            error.update("DNS-IP ungültig (z.B. 8.8.8.8)")
+            return
+        if not mqtt_server:
+            error.update("MQTT-Server darf nicht leer sein")
+            return
+        if not mqtt_port.isdigit() or not (1 <= int(mqtt_port) <= 65535):
+            error.update("MQTT-Port muss 1–65535 sein")
+            return
+
+        self.dismiss({
+            "net_prefix":   net_prefix,
+            "net_mask":     int(net_mask),
+            "gateway":      gateway,
+            "dns_server":   dns_server,
+            "mqtt_server":  mqtt_server,
+            "mqtt_port":    int(mqtt_port),
+        })
+
+
+# ── New credentials modal ────────────────────────────────────────────────────
+
+class NewCredentialsModal(ModalScreen):
+    CSS = """
+    NewCredentialsModal { align: center middle; }
+    #ncf-box {
+        background: #181825;
+        border: solid #74c7ec;
+        padding: 2 4;
+        width: 62;
+        height: auto;
+    }
+    #ncf-title {
+        text-style: bold;
+        color: #74c7ec;
+        margin-bottom: 1;
+        text-align: center;
+    }
+    .ncf-label { color: #a6adc8; height: 1; margin-top: 1; }
+    .ncf-input {
+        background: #313244;
+        border: tall #45475a;
+        color: #cdd6f4;
+    }
+    .ncf-input:focus { border: tall #74c7ec; }
+    #ncf-pw-row { height: 3; }
+    #ncf-password { width: 1fr; }
+    #ncf-reveal {
+        width: 14;
+        margin-left: 1;
+        background: #45475a;
+        color: #cdd6f4;
+        border: none;
+        min-width: 14;
+    }
+    #ncf-reveal:hover { background: #585b70; }
+    #ncf-error { color: #f38ba8; height: 1; margin-top: 1; }
+    #ncf-save {
+        width: 100%;
+        margin-top: 1;
+        background: #74c7ec;
+        color: #1e1e2e;
+        text-style: bold;
+        border: none;
+    }
+    #ncf-save:hover { background: #89dceb; }
+    #ncf-cancel {
+        width: 100%;
+        margin-top: 1;
+        background: #313244;
+        color: #a6adc8;
+        border: none;
+    }
+    #ncf-cancel:hover { background: #45475a; }
+    """
+
+    def compose(self) -> ComposeResult:
+        with Vertical(id="ncf-box"):
+            yield Label("Neue Netzwerkkonfiguration", id="ncf-title")
+            yield Label("Standort-Name  (z.B. Home, School)", classes="ncf-label")
+            yield Input(id="ncf-location", classes="ncf-input")
+            yield Label("WLAN SSID", classes="ncf-label")
+            yield Input(id="ncf-ssid", classes="ncf-input", password=True)
+            yield Label("WLAN Passwort", classes="ncf-label")
+            with Horizontal(id="ncf-pw-row"):
+                yield Input(id="ncf-password", classes="ncf-input", password=True)
+                yield Button("[R] Anzeigen", id="ncf-reveal")
+            yield Label("Netz-Präfix  (z.B. 192.168.2)", classes="ncf-label")
+            yield Input(id="ncf-net-prefix", classes="ncf-input")
+            yield Label("Subnetz-Maske  (CIDR, z.B. 24)", classes="ncf-label")
+            yield Input(value="24", id="ncf-net-mask", classes="ncf-input", type="integer")
+            yield Label("Gateway  (z.B. 192.168.2.1)", classes="ncf-label")
+            yield Input(id="ncf-gateway", classes="ncf-input")
+            yield Label("DNS-Server  (z.B. 8.8.8.8)", classes="ncf-label")
+            yield Input(id="ncf-dns", classes="ncf-input")
+            yield Label("MQTT-Server  (IP-Adresse)", classes="ncf-label")
+            yield Input(id="ncf-mqtt-server", classes="ncf-input")
+            yield Label("MQTT-Port", classes="ncf-label")
+            yield Input(value="1883", id="ncf-mqtt-port", classes="ncf-input", type="integer")
+            yield Label("", id="ncf-error")
+            yield Button("Speichern", id="ncf-save")
+            yield Button("Abbrechen", id="ncf-cancel")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "ncf-reveal":
+            pw = self.query_one("#ncf-password", Input)
+            ssid = self.query_one("#ncf-ssid", Input)
+            revealing = pw.password  # currently masked → about to reveal
+            pw.password = not revealing
+            ssid.password = not revealing
+            event.button.label = "[R] Verstecken" if revealing else "[R] Anzeigen"
+        elif event.button.id == "ncf-save":
+            self._try_save()
+        elif event.button.id == "ncf-cancel":
+            self.dismiss(None)
+
+    def on_key(self, event) -> None:
+        if event.key == "escape":
+            self.dismiss(None)
+
+    def _try_save(self) -> None:
+        error = self.query_one("#ncf-error", Label)
+
+        def _get(id_: str) -> str:
+            return self.query_one(f"#{id_}", Input).value.strip()
+
+        def _valid_ip4(s: str) -> bool:
+            parts = s.split(".")
+            return len(parts) == 4 and all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
+        def _valid_ip3(s: str) -> bool:
+            parts = s.split(".")
+            return len(parts) == 3 and all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
+        location    = _get("ncf-location")
+        ssid        = _get("ncf-ssid")
+        password    = _get("ncf-password")
+        net_prefix  = _get("ncf-net-prefix")
+        net_mask    = _get("ncf-net-mask")
+        gateway     = _get("ncf-gateway")
+        dns_server  = _get("ncf-dns")
+        mqtt_server = _get("ncf-mqtt-server")
+        mqtt_port   = _get("ncf-mqtt-port")
+
+        if not location or not location.replace("_", "").replace("-", "").isalnum():
+            error.update("Standort-Name darf nur Buchstaben, Zahlen, - und _ enthalten.")
+            return
+        if not ssid:
+            error.update("SSID darf nicht leer sein.")
+            return
+        if not _valid_ip3(net_prefix):
+            error.update("Netz-Präfix ungültig  (z.B. 192.168.2)")
+            return
+        if not net_mask.isdigit() or not (1 <= int(net_mask) <= 30):
+            error.update("Subnetz-Maske muss 1–30 sein.")
+            return
+        if not _valid_ip4(gateway):
+            error.update("Gateway-IP ungültig  (z.B. 192.168.2.1)")
+            return
+        if not _valid_ip4(dns_server):
+            error.update("DNS-IP ungültig  (z.B. 8.8.8.8)")
+            return
+        if not mqtt_server:
+            error.update("MQTT-Server darf nicht leer sein.")
+            return
+        if not mqtt_port.isdigit() or not (1 <= int(mqtt_port) <= 65535):
+            error.update("MQTT-Port muss 1–65535 sein.")
+            return
+
+        self.dismiss({
+            "location":    location,
+            "ssid":        ssid,
+            "password":    password,
+            "net_prefix":  net_prefix,
+            "net_mask":    int(net_mask),
+            "gateway":     gateway,
+            "dns_server":  dns_server,
+            "mqtt_server": mqtt_server,
+            "mqtt_port":   int(mqtt_port),
+        })
+
+
+# ── Confirm modal ─────────────────────────────────────────────────────────────
+
+class ConfirmModal(ModalScreen):
+    CSS = """
+    ConfirmModal { align: center middle; }
+    #confirm-box {
+        background: #181825;
+        border: solid #f38ba8;
+        padding: 2 4;
+        width: 54;
+        height: auto;
+    }
+    #confirm-msg {
+        color: #cdd6f4;
+        margin-bottom: 2;
+        text-align: center;
+    }
+    #confirm-yes {
+        width: 1fr;
+        background: #f38ba8;
+        color: #1e1e2e;
+        text-style: bold;
+        border: none;
+    }
+    #confirm-yes:hover { background: #eba0ac; }
+    #confirm-no {
+        width: 1fr;
+        margin-left: 1;
+        background: #313244;
+        color: #a6adc8;
+        border: none;
+    }
+    #confirm-no:hover { background: #45475a; }
+    """
+
+    def __init__(self, message: str):
+        super().__init__()
+        self._message = message
+
+    def compose(self) -> ComposeResult:
+        with Vertical(id="confirm-box"):
+            yield Label(self._message, id="confirm-msg")
+            with Horizontal():
+                yield Button("Ja, löschen", id="confirm-yes")
+                yield Button("Abbrechen", id="confirm-no")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        self.dismiss(event.button.id == "confirm-yes")
+
+    def on_key(self, event) -> None:
+        if event.key == "escape":
+            self.dismiss(False)
+
+
+# ── Registry entry edit modal ──────────────────────────────────────────────────
+
+class RegistryEntryModal(ModalScreen):
+    CSS = """
+    RegistryEntryModal { align: center middle; }
+    #re-box {
+        background: #181825;
+        border: solid #cba6f7;
+        padding: 2 4;
+        width: 60;
+        height: auto;
+    }
+    #re-title {
+        text-style: bold;
+        color: #cba6f7;
+        margin-bottom: 1;
+        text-align: center;
+    }
+    .re-label { color: #a6adc8; height: 1; margin-top: 1; }
+    .re-input {
+        background: #313244;
+        border: tall #45475a;
+        color: #cdd6f4;
+        margin-bottom: 0;
+    }
+    .re-input:focus { border: tall #cba6f7; }
+    .re-input.-disabled { color: #585b70; }
+    #re-error { color: #f38ba8; height: 1; margin-top: 1; }
+    #re-save {
+        width: 100%;
+        margin-top: 1;
+        background: #cba6f7;
+        color: #1e1e2e;
+        text-style: bold;
+        border: none;
+    }
+    #re-save:hover { background: #b4befe; }
+    #re-cancel {
+        width: 100%;
+        margin-top: 1;
+        background: #313244;
+        color: #a6adc8;
+        border: none;
+    }
+    #re-cancel:hover { background: #45475a; }
+    """
+
+    def __init__(self, row: dict | None = None, existing_rooms: set | None = None):
+        """row=None → add mode; row=dict → edit mode."""
+        super().__init__()
+        self._row = row or {}
+        self._edit_mode = row is not None
+        self._existing_rooms = existing_rooms or set()
+
+    def compose(self) -> ComposeResult:
+        title = "Eintrag bearbeiten" if self._edit_mode else "Neuer Eintrag"
+        room_val = self._row.get("room_number", "")
+        with Vertical(id="re-box"):
+            yield Label(title, id="re-title")
+            yield Label("Raumnummer (1–254)", classes="re-label")
+            yield Input(
+                value=room_val,
+                id="re-room",
+                classes="re-input",
+                type="integer",
+                disabled=self._edit_mode,
+            )
+            yield Label("Standort", classes="re-label")
+            yield Input(value=self._row.get("location", ""), id="re-location", classes="re-input")
+            yield Label("MAC-Adresse", classes="re-label")
+            yield Input(value=self._row.get("mac_address", ""), id="re-mac", classes="re-input")
+            yield Label("DS18B20-Adresse", classes="re-label")
+            yield Input(value=self._row.get("ds18b20_address", ""), id="re-ds18b20", classes="re-input")
+            yield Label("", id="re-error")
+            yield Button("Speichern", id="re-save")
+            yield Button("Abbrechen", id="re-cancel")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "re-save":
+            self._try_save()
+        elif event.button.id == "re-cancel":
+            self.dismiss(None)
+
+    def on_key(self, event) -> None:
+        if event.key == "escape":
+            self.dismiss(None)
+
+    def on_input_submitted(self, _: Input.Submitted) -> None:
+        self._try_save()
+
+    def _try_save(self) -> None:
+        error = self.query_one("#re-error", Label)
+
+        if self._edit_mode:
+            room_num = _room_int(self._row.get("room_number", ""))
+        else:
+            try:
+                room_num = int(self.query_one("#re-room", Input).value)
+            except ValueError:
+                error.update("Raumnummer muss eine Zahl sein.")
+                return
+            if not (1 <= room_num <= 254):
+                error.update("Raumnummer muss zwischen 1 und 254 liegen.")
+                return
+            if room_num in self._existing_rooms:
+                error.update(f"Raum {room_num:03d} existiert bereits.")
+                return
+
+        self.dismiss({
+            "timestamp":      datetime.now().isoformat(timespec="seconds"),
+            "room_number":    f"{room_num:03d}",
+            "location":       self.query_one("#re-location", Input).value.strip(),
+            "mac_address":    self.query_one("#re-mac", Input).value.strip(),
+            "ds18b20_address": self.query_one("#re-ds18b20", Input).value.strip(),
+            "ssid":           self._row.get("ssid", ""),
+            "bssid":          self._row.get("bssid", ""),
+            "channel":        self._row.get("channel", ""),
+        })
 
 
 # ── Flash progress overlay ────────────────────────────────────────────────────
@@ -534,6 +1138,8 @@ class LTLProgrammerApp(App):
         background: #181825;
         color: #89b4fa;
         text-style: bold;
+        border: double #89b4fa;
+        height: 3;
     }
     Footer {
         background: #181825;
@@ -553,23 +1159,27 @@ class LTLProgrammerApp(App):
         width: 2fr;
         background: #181825;
         border: solid #89b4fa;
-        padding: 0 1;
+        padding: 0 0;
     }
     #creds-panel {
-        width: 1fr;
+        width: 2fr;
         background: #181825;
-        border: solid #74c7ec;
-        padding: 0 1;
+        border: solid #89b4fa;
+        padding: 0 0;
     }
     #ports-title {
+        background: #181825;
         color: #89b4fa;
         text-style: bold;
-        padding: 0 0 0 1;
+        text-align: center;
+        width: 100%;
     }
     #creds-title {
-        color: #74c7ec;
+        background: #181825;
+        color: #89b4fa;
         text-style: bold;
-        padding: 0 0 0 1;
+        text-align: center;
+        width: 100%;
     }
     #creds-info {
         color: #cdd6f4;
@@ -581,24 +1191,28 @@ class LTLProgrammerApp(App):
     #status-panel {
         width: 2fr;
         background: #181825;
-        border: solid #a6e3a1;
-        padding: 0 1;
+        border: solid #89b4fa;
+        padding: 0 0;
     }
     #status-title {
-        color: #a6e3a1;
+        background: #181825;
+        color: #89b4fa;
         text-style: bold;
-        padding: 0 0 0 1;
+        text-align: center;
+        width: 100%;
     }
     #registry-panel {
-        width: 1fr;
+        width: 2fr;
         background: #181825;
-        border: solid #cba6f7;
-        padding: 0 1;
+        border: solid #89b4fa;
+        padding: 0 0;
     }
     #registry-title {
-        color: #cba6f7;
+        background: #181825;
+        color: #89b4fa;
         text-style: bold;
-        padding: 0 0 0 1;
+        text-align: center;
+        width: 100%;
     }
 
     /* ── DataTable ── */
@@ -619,7 +1233,17 @@ class LTLProgrammerApp(App):
     DataTable > .datatable--hover {
         background: #313244;
     }
-    #registry-table DataTable > .datatable--header { color: #cba6f7; }
+    #registry-table DataTable > .datatable--header { color: #89b4fa; }
+
+    /* ── Active panel highlight ── */
+    #ports-panel.panel-active,
+    #creds-panel.panel-active,
+    #status-panel.panel-active,
+    #registry-panel.panel-active  { border: heavy #ffff00; }
+    .panel-active #ports-title,
+    .panel-active #creds-title,
+    .panel-active #status-title,
+    .panel-active #registry-title { background: #89b4fa; color: #1e1e2e; }
 
     /* ── Log ── */
     #log {
@@ -632,8 +1256,18 @@ class LTLProgrammerApp(App):
 
     """
 
+    _PANEL_IDS = {
+        "ports":    "#ports-panel",
+        "creds":    "#creds-panel",
+        "status":   "#status-panel",
+        "registry": "#registry-panel",
+    }
+
     BINDINGS = [
         Binding("f", "flash", "F Flash"),
+        Binding("e", "ctx_edit", "E Edit"),
+        Binding("n", "ctx_new", "N New"),
+        Binding("d", "ctx_delete", "D Delete"),
         Binding("r", "refresh_ports", "R Refresh"),
         Binding("q", "quit", "Q Quit"),
     ]
@@ -642,6 +1276,8 @@ class LTLProgrammerApp(App):
         super().__init__()
         self._ports: list = []
         self._credentials: list = []
+        self._registry_rows: list[dict] = []
+        self._active_panel: str = "creds"
         self._flashing = False
         self._quit_event = threading.Event()
 
@@ -649,18 +1285,18 @@ class LTLProgrammerApp(App):
         yield Header(show_clock=True)
         with Horizontal(id="top-panels"):
             with Vertical(id="ports-panel"):
-                yield Label(" ⬡  Serial Ports", id="ports-title")
+                yield Label("Serial Ports", id="ports-title")
                 yield DataTable(id="ports-table", cursor_type="row")
             with Vertical(id="creds-panel"):
-                yield Label(" ✦  Credentials", id="creds-title")
+                yield Label("Credentials", id="creds-title")
                 yield DataTable(id="creds-table", cursor_type="row")
                 yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
-                yield Label(" ◈  Status", id="status-title")
+                yield Label("Status", id="status-title")
                 yield RichLog(id="log", auto_scroll=True, markup=True)
             with Vertical(id="registry-panel"):
-                yield Label(" ◉  Sensor Registry", id="registry-title")
+                yield Label("Sensor Registry", id="registry-title")
                 yield DataTable(id="registry-table", cursor_type="row")
         yield FlashOverlay(id="flash-overlay")
         yield Footer()
@@ -669,10 +1305,11 @@ class LTLProgrammerApp(App):
         self.query_one("#ports-table", DataTable).add_columns("Port", "Description", "FQBN")
         self.query_one("#creds-table", DataTable).add_columns("Location", "File")
         reg = self.query_one("#registry-table", DataTable)
-        reg.add_columns("Room", "Location", "MAC", "Flashed at")
+        reg.add_columns("Room", "Location", "MAC", "DS18B20", "Flashed at")
         self._do_refresh()
         self._refresh_registry()
         self.set_interval(2.0, self._do_refresh)
+        self.call_after_refresh(self._set_active_panel, "ports")
 
     def _do_refresh(self) -> None:
         """Kick off a background port scan — never blocks the UI thread."""
@@ -732,19 +1369,23 @@ class LTLProgrammerApp(App):
         else:
             info.update(
                 f"[#585b70]Netz[/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
+                f"[#585b70]GW  [/#585b70]   {net['gateway']}\n"
+                f"[#585b70]DNS [/#585b70]   {net['dns_server']}\n"
                 f"[#585b70]MQTT[/#585b70]   {net['mqtt_server']}:{net['mqtt_port']}"
             )
 
     def _refresh_registry(self) -> None:
         table = self.query_one("#registry-table", DataTable)
         table.clear()
+        self._registry_rows = []
         if not CSV_PATH.exists():
             return
         with open(CSV_PATH, newline="") as f:
             rows = list(csv.DictReader(f))
-        for row in reversed(rows):  # newest first
+        display_rows = list(reversed(rows))  # newest first
+        self._registry_rows = display_rows
+        for row in display_rows:
             ts = row.get("timestamp", "")
-            # Format: 2026-03-22T21:30:00 → 22.03. 21:30
             try:
                 dt = datetime.fromisoformat(ts)
                 ts_display = dt.strftime("%d.%m. %H:%M")
@@ -754,6 +1395,7 @@ class LTLProgrammerApp(App):
                 row.get("room_number", ""),
                 row.get("location", ""),
                 row.get("mac_address", ""),
+                row.get("ds18b20_address", ""),
                 ts_display,
             )
 
@@ -765,9 +1407,38 @@ class LTLProgrammerApp(App):
                 if not btn.disabled:
                     overlay._continue_event.set()
 
+    def _set_active_panel(self, panel: str) -> None:
+        if self._active_panel == panel:
+            return
+        self._active_panel = panel
+        for pid in self._PANEL_IDS.values():
+            self.query_one(pid).remove_class("panel-active")
+        self.query_one(self._PANEL_IDS[panel]).add_class("panel-active")
+
+    def on_descendant_focus(self, event) -> None:
+        widget_id = getattr(event.widget, "id", None)
+        if widget_id == "ports-table":
+            self._set_active_panel("ports")
+        elif widget_id == "creds-table":
+            self._set_active_panel("creds")
+        elif widget_id == "log":
+            self._set_active_panel("status")
+        elif widget_id == "registry-table":
+            self._set_active_panel("registry")
+
     def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
         if event.data_table.id == "creds-table":
+            if event.data_table.has_focus:
+                self._set_active_panel("creds")
             self._update_creds_info()
+        elif event.data_table.id == "registry-table":
+            if event.data_table.has_focus:
+                self._set_active_panel("registry")
+
+    def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
+        if event.data_table.id == "registry-table":
+            self._set_active_panel("registry")
+            self._open_registry_edit(event.cursor_row)
 
     def action_quit(self) -> None:
         self._quit_event.set()
@@ -775,6 +1446,95 @@ class LTLProgrammerApp(App):
 
     def action_refresh_ports(self) -> None:
         self._do_refresh()
+
+    def action_ctx_edit(self) -> None:
+        if self._active_panel == "creds":
+            if not self._credentials:
+                self.notify("Keine Credentials-Datei ausgewählt.", severity="warning")
+                return
+            idx = self.query_one("#creds-table", DataTable).cursor_row
+            if idx < 0 or idx >= len(self._credentials):
+                return
+            location = self._credentials[idx]
+            cred_path = PROJECT_ROOT / f"credentials_{location}.h"
+            net = read_network_from_credentials(cred_path)
+            if net is None:
+                self.notify("Netzwerkkonfiguration fehlt in der Datei.", severity="error")
+                return
+
+            def _on_save(updates: dict | None) -> None:
+                if updates is None:
+                    return
+                write_network_to_credentials(cred_path, updates)
+                self._update_creds_info()
+                self.notify(f"Gespeichert: credentials_{location}.h", severity="information")
+
+            self.push_screen(NetworkConfigModal(net), _on_save)
+        else:
+            self._open_registry_edit(self.query_one("#registry-table", DataTable).cursor_row)
+
+    def action_ctx_new(self) -> None:
+        if self._active_panel == "creds":
+            def _on_save(fields: dict | None) -> None:
+                if fields is None:
+                    return
+                cred_path = PROJECT_ROOT / f"credentials_{fields['location']}.h"
+                if cred_path.exists():
+                    self.notify(f"credentials_{fields['location']}.h existiert bereits.", severity="warning")
+                    return
+                write_credentials_file(cred_path, fields)
+                self._do_refresh()
+                self.notify(f"credentials_{fields['location']}.h erstellt.", severity="information")
+
+            self.push_screen(NewCredentialsModal(), _on_save)
+        else:
+            existing = load_csv_rooms(CSV_PATH)
+
+            def _on_save(new_row: dict | None) -> None:
+                if new_row is None:
+                    return
+                upsert_csv_row(CSV_PATH, new_row)
+                self._refresh_registry()
+                self.notify(f"Raum {new_row['room_number']} hinzugefügt.", severity="information")
+
+            self.push_screen(RegistryEntryModal(existing_rooms=existing), _on_save)
+
+    def action_ctx_delete(self) -> None:
+        if self._active_panel != "registry":
+            self.notify("Löschen ist nur in der Registry möglich.", severity="warning")
+            return
+        table = self.query_one("#registry-table", DataTable)
+        idx = table.cursor_row
+        if idx < 0 or idx >= len(self._registry_rows):
+            self.notify("Kein Eintrag ausgewählt.", severity="warning")
+            return
+        row = self._registry_rows[idx]
+        room_str = row.get("room_number", "?")
+
+        def _on_confirm(confirmed: bool) -> None:
+            if not confirmed:
+                return
+            room_num = _room_int(room_str)
+            if room_num is not None:
+                delete_csv_row(CSV_PATH, room_num)
+            self._refresh_registry()
+            self.notify(f"Raum {room_str} gelöscht.", severity="information")
+
+        self.push_screen(ConfirmModal(f"Raum {room_str} wirklich löschen?"), _on_confirm)
+
+    def _open_registry_edit(self, row_idx: int) -> None:
+        if row_idx < 0 or row_idx >= len(self._registry_rows):
+            return
+        row = self._registry_rows[row_idx]
+
+        def _on_save(updated: dict | None) -> None:
+            if updated is None:
+                return
+            upsert_csv_row(CSV_PATH, updated)
+            self._refresh_registry()
+            self.notify(f"Raum {updated['room_number']} aktualisiert.", severity="information")
+
+        self.push_screen(RegistryEntryModal(row=row), _on_save)
 
     def action_flash(self) -> None:
         if self._flashing:
@@ -1048,7 +1808,7 @@ class LTLProgrammerApp(App):
         # Step 9 — Save to CSV
         upsert_csv_row(CSV_PATH, {
             "timestamp": datetime.now().isoformat(timespec="seconds"),
-            "room_number": str(room_number),
+            "room_number": f"{room_number:03d}",
             "mac_address": setup_data["mac"] or "",
             "ds18b20_address": setup_data["ds18b20"] or "",
             "location": location,

@@ -7,7 +7,6 @@ const char*    password    = "YOUR_PASSWORD_HERE";
 
 // Netzwerk-Präfix (erste 3 Oktette der statischen Sensor-IP)
 // Statische IP wird zu net_a.net_b.net_c.<Raumnummer>
-// Gateway und DNS werden als net_a.net_b.net_c.1 abgeleitet
 const uint8_t  net_a       = 192;
 const uint8_t  net_b       = 168;
 const uint8_t  net_c       = 120;
@@ -17,6 +16,18 @@ const uint8_t  net_c       = 120;
 // 16 → 255.255.0.0    (Class B)
 //  8 → 255.0.0.0      (Class A)
 const uint8_t  net_mask    = 24;
+
+// Gateway-IP (typisch der Router, z.B. 192.168.120.1)
+const uint8_t  gw_a        = 192;
+const uint8_t  gw_b        = 168;
+const uint8_t  gw_c        = 120;
+const uint8_t  gw_d        = 1;
+
+// DNS-Server-IP (oft identisch mit Gateway, oder z.B. 8.8.8.8)
+const uint8_t  dns_a       = 192;
+const uint8_t  dns_b       = 168;
+const uint8_t  dns_c       = 120;
+const uint8_t  dns_d       = 1;
 
 // MQTT-Broker (IP-Adresse als String; Hostname wird nicht unterstützt)
 const char*    mqtt_server = "192.168.120.2";

@@ -24,10 +24,10 @@ const int volt_limit = 560;
 
 // Static IP (last octet = room number) — prefix from credentials.h
 IPAddress staticIP(net_a, net_b, net_c, roomNumber);
-IPAddress gateway (net_a, net_b, net_c, 1);
+IPAddress gateway (gw_a,  gw_b,  gw_c,  gw_d);
 IPAddress subnet  ((_subnet_bits>>24)&0xFF, (_subnet_bits>>16)&0xFF,
                    (_subnet_bits>>8)&0xFF,   _subnet_bits&0xFF);
-IPAddress dns     (net_a, net_b, net_c, 1);
+IPAddress dns     (dns_a, dns_b, dns_c, dns_d);
 
 // Optional BSSID/channel pinning — saves ~200-400ms per cycle by skipping WiFi channel scan.
 // Only reliable with a single fixed access point on a manually configured fixed channel.

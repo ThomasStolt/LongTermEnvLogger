@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [2026-03-23] — TUI Panel Highlight & Network Config
+
+### Changed
+
+- **`tool/ltl_programmer.py`** — Visual improvements to panel selection
+  - All four panels unified to the same blue (`#89b4fa`) border and title colour
+  - Active panel highlighted with a heavy neon-yellow (`#ffff00`) border and filled blue title
+  - Initial active panel correctly set to Serial Ports (matching Textual's default focus)
+  - Fixed: programmatic `move_cursor()` calls no longer steal the active highlight from the focused panel
+  - `_set_active_panel` short-circuits when the panel hasn't changed (eliminates 5 redundant DOM queries per focus event)
+  - Panel ID mapping extracted to a class-level constant `_PANEL_IDS`
+  - App header styled with a double blue frame and increased height
+
+- **`tool/ltl_programmer.py`** — Network config write-back
+  - `write_network_to_credentials()` — writes gateway, DNS, MQTT, and subnet back to `credentials_*.h`
+  - Network edit dialog (`NetworkConfigScreen`) for editing config in-TUI
+
+- **`credentials.example.h`** — Gateway and DNS now explicit fields instead of derived from `net_prefix.1`
+
+- **`code/LTL_sensor/LTL_sensor.ino`** — Uses explicit `gw_*` / `dns_*` constants from credentials
+
 ## [2026-03-23] — Battery Optimization & Programmer Tool
 
 ### Added

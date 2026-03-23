@@ -12,8 +12,13 @@ from ltl_programmer import (
     substitute_template,
     find_credentials_files,
     read_network_from_credentials,
+    write_network_to_credentials,
+    write_credentials_file,
     load_csv_rooms,
     append_csv_row,   # keep — used by existing test_append_csv_row_* tests
+    upsert_csv_row,
+    delete_csv_row,
+    _room_int,
     CSV_FIELDNAMES,
 )
 
@@ -218,6 +223,14 @@ const uint8_t  net_a       = 10;
 const uint8_t  net_b       = 0;
 const uint8_t  net_c       = 5;
 const uint8_t  net_mask    = 24;
+const uint8_t  gw_a        = 10;
+const uint8_t  gw_b        = 0;
+const uint8_t  gw_c        = 5;
+const uint8_t  gw_d        = 1;
+const uint8_t  dns_a       = 8;
+const uint8_t  dns_b       = 8;
+const uint8_t  dns_c       = 8;
+const uint8_t  dns_d       = 8;
 const char*    mqtt_server = "10.0.5.2";
 const int      mqtt_port   = 1883;
 """
@@ -232,7 +245,22 @@ def test_read_network_valid(tmp_path):
         "net_mask": 24,
         "mqtt_server": "10.0.5.2",
         "mqtt_port": 1883,
+        "gateway": "10.0.5.1",
+        "dns_server": "8.8.8.8",
     }
+
+
+def test_read_network_gateway_dns_fallback(tmp_path):
+    """Without gw_*/dns_* fields, gateway and dns fall back to net_a.net_b.net_c.1."""
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text("\n".join(
+        line for line in _VALID_CREDS.splitlines()
+        if not line.startswith("const uint8_t  gw_") and not line.startswith("const uint8_t  dns_")
+    ))
+    result = read_network_from_credentials(cred)
+    assert result is not None
+    assert result["gateway"] == "10.0.5.1"
+    assert result["dns_server"] == "10.0.5.1"
 
 
 def test_read_network_missing_net_mask(tmp_path):
@@ -257,3 +285,153 @@ def test_read_network_nonstandard_port(tmp_path):
     result = read_network_from_credentials(cred)
     assert result is not None
     assert result["mqtt_port"] == 8883
+
+
+# ── write_network_to_credentials tests ────────────────────────────────────────
+
+def test_write_network_roundtrip(tmp_path):
+    """Writing then reading back should return the same values."""
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS)
+    updates = {
+        "net_prefix":  "172.16.0",
+        "net_mask":    16,
+        "gateway":     "172.16.0.1",
+        "dns_server":  "8.8.4.4",
+        "mqtt_server": "172.16.0.10",
+        "mqtt_port":   8883,
+    }
+    write_network_to_credentials(cred, updates)
+    result = read_network_from_credentials(cred)
+    assert result["net_prefix"]  == "172.16.0"
+    assert result["net_mask"]    == 16
+    assert result["gateway"]     == "172.16.0.1"
+    assert result["dns_server"]  == "8.8.4.4"
+    assert result["mqtt_server"] == "172.16.0.10"
+    assert result["mqtt_port"]   == 8883
+
+
+def test_write_network_preserves_ssid(tmp_path):
+    """ssid and password must not be modified."""
+    cred = tmp_path / "credentials_Test.h"
+    cred.write_text(_VALID_CREDS)
+    updates = {
+        "net_prefix":  "10.0.5",
+        "net_mask":    24,
+        "gateway":     "10.0.5.1",
+        "dns_server":  "10.0.5.1",
+        "mqtt_server": "10.0.5.2",
+        "mqtt_port":   1883,
+    }
+    write_network_to_credentials(cred, updates)
+    content = cred.read_text()
+    assert 'ssid        = "TestNet"' in content
+    assert 'password    = "secret"' in content
+
+
+# ── upsert / delete / _room_int tests ─────────────────────────────────────────
+
+def _make_csv(path, rows):
+    with open(path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=CSV_FIELDNAMES)
+        w.writeheader()
+        w.writerows(rows)
+
+
+def _read_csv(path):
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def test_room_int_valid():
+    assert _room_int("040") == 40
+    assert _room_int("101") == 101
+
+
+def test_room_int_invalid():
+    assert _room_int("") is None
+    assert _room_int("abc") is None
+
+
+def test_upsert_numeric_match(tmp_path):
+    """upsert should match '40' and '040' as the same room."""
+    csv_path = tmp_path / "sensors.csv"
+    _make_csv(csv_path, [
+        {f: "" for f in CSV_FIELDNAMES} | {"room_number": "40", "location": "old"},
+    ])
+    upsert_csv_row(csv_path, {f: "" for f in CSV_FIELDNAMES} | {"room_number": "040", "location": "new"})
+    rows = _read_csv(csv_path)
+    assert len(rows) == 1
+    assert rows[0]["location"] == "new"
+    assert rows[0]["room_number"] == "040"
+
+
+def test_upsert_adds_new_room(tmp_path):
+    csv_path = tmp_path / "sensors.csv"
+    _make_csv(csv_path, [
+        {f: "" for f in CSV_FIELDNAMES} | {"room_number": "101"},
+    ])
+    upsert_csv_row(csv_path, {f: "" for f in CSV_FIELDNAMES} | {"room_number": "040"})
+    rows = _read_csv(csv_path)
+    assert len(rows) == 2
+
+
+def test_delete_csv_row(tmp_path):
+    csv_path = tmp_path / "sensors.csv"
+    _make_csv(csv_path, [
+        {f: "" for f in CSV_FIELDNAMES} | {"room_number": "040"},
+        {f: "" for f in CSV_FIELDNAMES} | {"room_number": "101"},
+    ])
+    delete_csv_row(csv_path, 40)
+    rows = _read_csv(csv_path)
+    assert len(rows) == 1
+    assert rows[0]["room_number"] == "101"
+
+
+def test_delete_csv_row_nonexistent(tmp_path):
+    """Deleting a room that doesn't exist should not raise and leave file intact."""
+    csv_path = tmp_path / "sensors.csv"
+    _make_csv(csv_path, [
+        {f: "" for f in CSV_FIELDNAMES} | {"room_number": "101"},
+    ])
+    delete_csv_row(csv_path, 999)
+    assert len(_read_csv(csv_path)) == 1
+
+
+# ── write_credentials_file tests ──────────────────────────────────────────────
+
+def test_write_credentials_file_roundtrip(tmp_path):
+    """A newly created credentials file can be read back by read_network_from_credentials."""
+    cred = tmp_path / "credentials_Test.h"
+    write_credentials_file(cred, {
+        "location":    "Test",
+        "ssid":        "MyNet",
+        "password":    "secret",
+        "net_prefix":  "10.0.1",
+        "net_mask":    24,
+        "gateway":     "10.0.1.1",
+        "dns_server":  "8.8.8.8",
+        "mqtt_server": "10.0.1.5",
+        "mqtt_port":   1883,
+    })
+    result = read_network_from_credentials(cred)
+    assert result is not None
+    assert result["net_prefix"]  == "10.0.1"
+    assert result["net_mask"]    == 24
+    assert result["gateway"]     == "10.0.1.1"
+    assert result["dns_server"]  == "8.8.8.8"
+    assert result["mqtt_server"] == "10.0.1.5"
+    assert result["mqtt_port"]   == 1883
+
+
+def test_write_credentials_file_contains_ssid(tmp_path):
+    cred = tmp_path / "credentials_Home.h"
+    write_credentials_file(cred, {
+        "location": "Home", "ssid": "HomeNet", "password": "pw123",
+        "net_prefix": "192.168.1", "net_mask": 24,
+        "gateway": "192.168.1.1", "dns_server": "192.168.1.1",
+        "mqtt_server": "192.168.1.10", "mqtt_port": 1883,
+    })
+    content = cred.read_text()
+    assert 'ssid        = "HomeNet"' in content
+    assert 'password    = "pw123"' in content
