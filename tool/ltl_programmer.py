@@ -48,6 +48,8 @@ def parse_serial_output(lines: list) -> dict:
         "ds18b20_error": False,
         "wifi_networks": [],
         "wifi_none": False,
+        "wifi_ok": False,
+        "wifi_fail": False,
         "done": False,
     }
     for line in lines:
@@ -69,6 +71,10 @@ def parse_serial_output(lines: list) -> dict:
                     "channel": int(parts[2]),
                     "rssi": int(parts[3]),
                 })
+        elif line == "WIFI_OK":
+            result["wifi_ok"] = True
+        elif line == "WIFI_FAIL":
+            result["wifi_fail"] = True
         elif line == "SETUP_DONE":
             result["done"] = True
     return result
@@ -823,6 +829,10 @@ class LTLProgrammerApp(App):
         self._log(f"Port: [cyan]{port}[/cyan]   Location: [cyan]{location}[/cyan]")
 
         # ── Phase 1: compile setup sketch IN BACKGROUND while user prepares hardware ──
+        # Copy credentials so the setup sketch can attempt a WiFi connection test
+        setup_cred = SETUP_SKETCH_DIR / "credentials.h"
+        shutil.copy(cred_path, setup_cred)
+
         self._log("[yellow]► Compiling setup sketch in background...[/yellow]")
         compile1_result: list = [None]
         compile1_done = threading.Event()
@@ -875,6 +885,9 @@ class LTLProgrammerApp(App):
             self._log(f"[red]Serial error: {exc}[/red]")
             return
 
+        # Clean up temporary credentials.h from setup sketch dir
+        setup_cred.unlink(missing_ok=True)
+
         if not setup_data:
             self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
             return
@@ -885,6 +898,12 @@ class LTLProgrammerApp(App):
             return
         self._log(f"[green]✓ DS18B20: {setup_data['ds18b20']}[/green]")
         self._log(f"[green]✓ WiFi networks: {len(setup_data['wifi_networks'])}[/green]")
+
+        if setup_data["wifi_ok"]:
+            self._log("[green]✓ WiFi connection OK[/green]")
+        elif setup_data["wifi_fail"]:
+            self._log("[red]✗ WiFi connection failed — check SSID and password in credentials file[/red]")
+            return
 
         # ── BSSID auto-selection (best signal for credentials SSID) ──────────
         selected_net = None

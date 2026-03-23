@@ -1,9 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "credentials.h"
 
 // LTL Setup Sketch
 // Flash once to discover DS18B20 address, ESP MAC address, and nearby WiFi networks.
+// Also verifies WiFi credentials by attempting a real connection.
 // Output is read by ltl_programmer.py to configure the production firmware.
 // Serial: 115200 baud. Output ends with SETUP_DONE.
 
@@ -41,7 +43,7 @@ void setup() {
     Serial.println();
   }
 
-  // WiFi scan (no connection needed — passive scan only)
+  // WiFi scan (passive scan — no connection yet)
   Serial.println("DBG:WIFI_SCAN");
   int n = WiFi.scanNetworks();
   if (n == 0) {
@@ -59,6 +61,20 @@ void setup() {
       Serial.println(WiFi.RSSI(i));
     }
   }
+
+  // WiFi connection test using credentials from credentials.h
+  Serial.println("DBG:WIFI_CONNECT");
+  WiFi.begin(ssid, password);
+  unsigned long start = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - start < 15000) {
+    delay(100);
+  }
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("WIFI_OK");
+  } else {
+    Serial.println("WIFI_FAIL");
+  }
+  WiFi.disconnect(true);
 
   Serial.println("SETUP_DONE");
 }
