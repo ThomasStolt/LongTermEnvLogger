@@ -571,6 +571,11 @@ class LTLProgrammerApp(App):
         text-style: bold;
         padding: 0 0 0 1;
     }
+    #creds-info {
+        color: #cdd6f4;
+        padding: 0 1;
+        height: auto;
+    }
 
     /* ── Bottom panels ── */
     #status-panel {
@@ -649,6 +654,7 @@ class LTLProgrammerApp(App):
             with Vertical(id="creds-panel"):
                 yield Label(" ✦  Credentials", id="creds-title")
                 yield DataTable(id="creds-table", cursor_type="row")
+                yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
                 yield Label(" ◈  Status", id="status-title")
@@ -704,6 +710,30 @@ class LTLProgrammerApp(App):
             for loc in creds:
                 table.add_row(loc, f"credentials_{loc}.h")
             self._credentials = creds
+            table.move_cursor(row=0)
+            self._update_creds_info()
+
+    def _update_creds_info(self) -> None:
+        """Refresh the network info block for the currently selected credentials row."""
+        info = self.query_one("#creds-info", Static)
+        if not self._credentials:
+            info.update("")
+            return
+        table = self.query_one("#creds-table", DataTable)
+        idx = table.cursor_row
+        if idx < 0 or idx >= len(self._credentials):
+            info.update("")
+            return
+        location = self._credentials[idx]
+        cred_path = PROJECT_ROOT / f"credentials_{location}.h"
+        net = read_network_from_credentials(cred_path)
+        if net is None:
+            info.update("[yellow]⚠ Netzwerkkonfiguration fehlt[/yellow]")
+        else:
+            info.update(
+                f"[#585b70]Netz[/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
+                f"[#585b70]MQTT[/#585b70]   {net['mqtt_server']}:{net['mqtt_port']}"
+            )
 
     def _refresh_registry(self) -> None:
         table = self.query_one("#registry-table", DataTable)
@@ -734,6 +764,10 @@ class LTLProgrammerApp(App):
                 btn = overlay.query_one("#fo-continue-btn", Button)
                 if not btn.disabled:
                     overlay._continue_event.set()
+
+    def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
+        if event.data_table.id == "creds-table":
+            self._update_creds_info()
 
     def action_quit(self) -> None:
         self._quit_event.set()
