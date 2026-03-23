@@ -1,6 +1,7 @@
 // Copy this file to credentials_<location>.h (e.g. credentials_Home.h)
 // and fill in your WiFi credentials and network configuration.
 // credentials_*.h files are gitignored — never commit real credentials.
+#include <stdint.h>  // uint8_t — already available via Arduino.h in sketch context
 const char*    ssid        = "YOUR_SSID_HERE";
 const char*    password    = "YOUR_PASSWORD_HERE";
 
