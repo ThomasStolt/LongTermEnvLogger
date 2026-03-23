@@ -89,9 +89,11 @@ def format_ds18b20_c_array(raw: str) -> str:
 
 
 def format_bssid_c_array(bssid: str) -> str:
-    """Convert a colon-separated BSSID string to a C array literal."""
-    parts = [f"0x{byte.upper()}" for byte in bssid.split(":")]
-    return "{ " + ", ".join(parts) + " }"
+    """Convert BSSID string (AA:BB:CC:DD:EE:FF) to C array literal."""
+    parts = [p.strip() for p in bssid.split(":")]
+    if len(parts) != 6:
+        raise ValueError(f"BSSID must be 6 bytes, got {len(parts)}: {bssid!r}")
+    return "{ " + ", ".join(f"0x{p.upper()}" for p in parts) + " }"
 
 
 def substitute_template(

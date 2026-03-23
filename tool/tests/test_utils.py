@@ -84,6 +84,11 @@ def test_format_bssid_c_array_lowercase():
     assert format_bssid_c_array("aa:bb:cc:dd:ee:ff") == "{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }"
 
 
+def test_format_bssid_c_array_wrong_length():
+    with pytest.raises(ValueError, match="6 bytes"):
+        format_bssid_c_array("AA:BB:CC:DD:EE")  # only 5 bytes
+
+
 # ── Template substitution tests ───────────────────────────────────────────────
 
 TEMPLATE = """\
