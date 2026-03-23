@@ -1388,7 +1388,8 @@ class LTLProgrammerApp(App):
         table.clear()
         self._registry_rows = []
         if not self._csv_path.exists():
-            return
+            with open(self._csv_path, "w", newline="") as f:
+                csv.DictWriter(f, fieldnames=CSV_FIELDNAMES).writeheader()
         with open(self._csv_path, newline="") as f:
             rows = list(csv.DictReader(f))
         display_rows = list(reversed(rows))  # newest first
