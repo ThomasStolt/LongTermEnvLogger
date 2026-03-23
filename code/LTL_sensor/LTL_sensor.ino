@@ -4,6 +4,14 @@
 #include <DallasTemperature.h>
 #include "credentials.h"
 
+static_assert(net_mask >= 1 && net_mask <= 30,
+    "net_mask in credentials.h must be between 1 and 30 (e.g. 24 for /24)");
+
+// Convert CIDR prefix length to 4-octet subnet mask.
+// net_mask is guaranteed 1–30 by static_assert above, so the shift is always defined.
+// _subnet_bits must be declared here (global scope, before the IPAddress objects below).
+constexpr uint32_t _subnet_bits = 0xFFFFFFFFu << (32 - net_mask);
+
 // Room number — substituted by ltl_programmer.py (must be 1–254, used as IP last octet)
 const int roomNumber = /*ROOM_NUMBER*/101;
 
@@ -14,11 +22,12 @@ DeviceAddress sensorAddr = /*DS18B20_ADDR*/{ 0x28, 0x00, 0x00, 0x00, 0x00, 0x00,
 // Voltage limit (~2.7V) — prevents LiIon deep discharge
 const int volt_limit = 560;
 
-// Static IP (last octet = room number)
-IPAddress staticIP(192, 168, 120, roomNumber);
-IPAddress gateway(192, 168, 120, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress dns(192, 168, 120, 1);
+// Static IP (last octet = room number) — prefix from credentials.h
+IPAddress staticIP(net_a, net_b, net_c, roomNumber);
+IPAddress gateway (net_a, net_b, net_c, 1);
+IPAddress subnet  ((_subnet_bits>>24)&0xFF, (_subnet_bits>>16)&0xFF,
+                   (_subnet_bits>>8)&0xFF,   _subnet_bits&0xFF);
+IPAddress dns     (net_a, net_b, net_c, 1);
 
 // Optional BSSID/channel pinning — saves ~200-400ms per cycle by skipping WiFi channel scan.
 // Only reliable with a single fixed access point on a manually configured fixed channel.
@@ -29,8 +38,6 @@ IPAddress dns(192, 168, 120, 1);
   const int wifi_channel = /*WIFI_CHANNEL*/1;
 #endif
 
-const char* mqtt_server = "192.168.120.2";
-const int mqtt_port = 1883;
 char temp_topic[30];
 char volt_topic[30];
 
@@ -121,9 +128,9 @@ void loop() {
   dtostrf(temperature, 1, 2, tempString);
 
   client.publish(temp_topic, tempString);
-  // delay(100);  // original delay — purpose unknown; re-enable if publish reliability issues occur
   client.publish(volt_topic, voltPayload);
-  // delay(200);  // original delay — purpose unknown; re-enable if publish reliability issues occur
+  client.loop();  // flush send buffer
+  delay(200);     // allow lwIP TCP stack to transmit before power is cut
 
   // Cut power to the entire circuit
   digitalWrite(DONE, HIGH);
