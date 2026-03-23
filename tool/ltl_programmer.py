@@ -88,11 +88,6 @@ def format_ds18b20_c_array(raw: str) -> str:
     return "{ " + ", ".join(parts) + " }"
 
 
-def format_bssid_c_array(bssid: str) -> str:
-    """Convert BSSID string to C array literal."""
-    parts = [f"0x{b.upper()}" for b in bssid.split(":")]
-    return "{ " + ", ".join(parts) + " }"
-
 
 def substitute_template(
     content: str,
@@ -905,20 +900,6 @@ class LTLProgrammerApp(App):
             self._log("[red]✗ WiFi connection failed — check SSID and password in credentials file[/red]")
             return
 
-        # ── BSSID auto-selection (best signal for credentials SSID) ──────────
-        selected_net = None
-        if setup_data["wifi_networks"]:
-            preselect_ssid = read_ssid_from_credentials(cred_path)
-            candidates = [n for n in setup_data["wifi_networks"] if n["ssid"] == preselect_ssid]
-            if candidates:
-                selected_net = max(candidates, key=lambda n: n["rssi"])
-                self._log(
-                    f"[green]✓ BSSID pinned: {selected_net['bssid']} "
-                    f"ch {selected_net['channel']} ({selected_net['rssi']} dBm)[/green]"
-                )
-            else:
-                self._log("[dim]No matching network found — BSSID pinning skipped[/dim]")
-
         # ── Room number ───────────────────────────────────────────────────────
         room_number = self._wait_modal(RoomInputModal(load_csv_rooms(CSV_PATH)))
         if room_number is None:
@@ -928,16 +909,11 @@ class LTLProgrammerApp(App):
 
         # ── Phase 2: build production firmware content ────────────────────────
         ds18b20_array = format_ds18b20_c_array(setup_data["ds18b20"])
-        bssid_array = format_bssid_c_array(selected_net["bssid"]) if selected_net else None
-        channel = selected_net["channel"] if selected_net else None
-        ssid = selected_net["ssid"] if selected_net else None
 
         final_content = substitute_template(
             SENSOR_SKETCH.read_text(),
             room_number=room_number,
             ds18b20_array=ds18b20_array,
-            bssid_array=bssid_array,
-            channel=channel,
         )
 
         # Use a manually managed temp dir so it stays alive until upload is done
@@ -997,9 +973,9 @@ class LTLProgrammerApp(App):
             "mac_address": setup_data["mac"] or "",
             "ds18b20_address": setup_data["ds18b20"] or "",
             "location": location,
-            "ssid": ssid or "",
-            "bssid": selected_net["bssid"] if selected_net else "",
-            "channel": str(channel) if channel else "",
+            "ssid": read_ssid_from_credentials(cred_path) or "",
+            "bssid": "",
+            "channel": "",
         })
 
         self._clear_step()
