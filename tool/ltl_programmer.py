@@ -1803,7 +1803,7 @@ class LTLProgrammerApp(App):
                 break
 
             self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
-            self._wait_step(
+            self._show_flash_instructions(
                 title="Serial Read Timeout",
                 step_label=self._STEP_LABELS[0],
                 instructions=(
