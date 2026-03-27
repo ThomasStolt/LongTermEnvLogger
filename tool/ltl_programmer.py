@@ -362,7 +362,7 @@ def detect_ports() -> list:
         )
         for line in result.stdout.splitlines()[1:]:
             parts = line.split()
-            if not parts:
+            if not parts or (len(parts) > 1 and parts[1] == "network"):
                 continue
             port = parts[0]
             fqbn = next((p for p in parts if ":" in p and p.count(":") == 2), None)
