@@ -1253,6 +1253,30 @@ class LTLProgrammerApp(App):
         scrollbar-background: #181825;
     }
 
+    /* ── Debug panel ── */
+    #debug-panel {
+        height: 12;
+        background: #181825;
+        border: solid #89b4fa;
+        display: none;
+    }
+    #debug-panel.panel-active { border: heavy #ffff00; }
+    #debug-title {
+        background: #181825;
+        color: #89b4fa;
+        text-style: bold;
+        text-align: center;
+        width: 100%;
+    }
+    .panel-active #debug-title { background: #89b4fa; color: #1e1e2e; }
+    #debug-log {
+        height: 1fr;
+        background: #11111b;
+        color: #a6e3a1;
+        scrollbar-color: #45475a;
+        scrollbar-background: #181825;
+    }
+
     """
 
     _PANEL_IDS = {
@@ -1260,6 +1284,7 @@ class LTLProgrammerApp(App):
         "creds":    "#creds-panel",
         "status":   "#status-panel",
         "registry": "#registry-panel",
+        "debug":    "#debug-panel",
     }
 
     @property
@@ -1277,6 +1302,7 @@ class LTLProgrammerApp(App):
         Binding("n", "ctx_new", "N New"),
         Binding("d", "ctx_delete", "D Delete"),
         Binding("r", "refresh_ports", "R Refresh"),
+        Binding("t", "toggle_debug", "T Debug"),
         Binding("q", "quit", "Q Quit"),
     ]
 
@@ -1306,6 +1332,9 @@ class LTLProgrammerApp(App):
             with Vertical(id="registry-panel"):
                 yield Label("Sensor Registry", id="registry-title")
                 yield DataTable(id="registry-table", cursor_type="row")
+        with Vertical(id="debug-panel"):
+            yield Label("Serial Debug", id="debug-title")
+            yield RichLog(id="debug-log", auto_scroll=True, markup=False)
         yield FlashOverlay(id="flash-overlay")
         yield Footer()
 
@@ -1458,6 +1487,13 @@ class LTLProgrammerApp(App):
     def action_refresh_ports(self) -> None:
         self._do_refresh()
 
+    def action_toggle_debug(self) -> None:
+        panel = self.query_one("#debug-panel")
+        panel.display = not panel.display
+        if panel.display:
+            self.query_one("#debug-log", RichLog).clear()
+            self._set_active_panel("debug")
+
     def action_ctx_edit(self) -> None:
         if self._active_panel == "creds":
             if not self._credentials:
@@ -1568,6 +1604,9 @@ class LTLProgrammerApp(App):
 
     def _log(self, msg: str) -> None:
         self.call_from_thread(self.query_one("#log", RichLog).write, msg)
+
+    def _debug_line(self, line: str) -> None:
+        self.call_from_thread(self.query_one("#debug-log", RichLog).write, line)
 
     _STEP_LABELS = [
         "[#a6e3a1]◉ Step 1/2: Setup Sketch[/#a6e3a1]     [#585b70]◯ Step 2/2: Production Firmware[/#585b70]",
@@ -1722,6 +1761,7 @@ class LTLProgrammerApp(App):
                     raw = ser.readline().decode("utf-8", errors="replace").strip()
                     if raw:
                         lines.append(raw)
+                        self._debug_line(raw)
                     parsed = parse_serial_output(lines)
                     if parsed["done"]:
                         setup_data = parsed
