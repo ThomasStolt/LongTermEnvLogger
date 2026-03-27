@@ -20,7 +20,7 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import (
-    Button, DataTable, Footer, Header, Input, Label, ProgressBar, RichLog, Static,
+    Button, DataTable, Footer, Header, Input, Label, ProgressBar, RichLog, Select, Static,
 )
 from textual.widget import Widget
 
@@ -1016,6 +1016,19 @@ class FlashOverlay(Widget):
         margin-bottom: 1;
         padding: 0 2;
     }
+    #fo-baud-row {
+        height: auto;
+        margin-bottom: 1;
+    }
+    #fo-baud-label {
+        width: auto;
+        color: #585b70;
+        padding: 0 1 0 0;
+    }
+    #fo-baud-select {
+        width: 1fr;
+        border: tall #45475a;
+    }
     #fo-continue-btn {
         width: 100%;
         background: #f9e2af;
@@ -1054,9 +1067,15 @@ class FlashOverlay(Widget):
     }
     """
 
+    _BAUD_OPTIONS = [9600, 74880, 115200, 230400, 460800]
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._continue_event: threading.Event | None = None
+
+    @property
+    def baud_rate(self) -> int:
+        return self.query_one("#fo-baud-select", Select).value or BAUD_RATE
 
     def compose(self) -> ComposeResult:
         with Vertical(id="fo-box"):
@@ -1064,6 +1083,14 @@ class FlashOverlay(Widget):
             yield Static("", id="fo-steps")
             with Vertical(id="fo-instr"):
                 yield Static("", id="fo-instr-text")
+                with Horizontal(id="fo-baud-row"):
+                    yield Label("Baud rate:", id="fo-baud-label")
+                    yield Select(
+                        [(str(b), b) for b in self._BAUD_OPTIONS],
+                        value=BAUD_RATE,
+                        id="fo-baud-select",
+                        allow_blank=False,
+                    )
                 yield Button("Continue →", id="fo-continue-btn")
             with Vertical(id="fo-progress"):
                 yield Static("", id="fo-label")
@@ -1597,8 +1624,9 @@ class LTLProgrammerApp(App):
         location = self._credentials[self.query_one("#creds-table", DataTable).cursor_row]
         cred_path = PROJECT_ROOT / f"credentials_{location}.h"
         fqbn = port_info["fqbn"] or BOARD_FQBN
+        baud = self.query_one("#flash-overlay", FlashOverlay).baud_rate
         self._flashing = True
-        self._flash_worker(port_info["port"], fqbn, location, cred_path)
+        self._flash_worker(port_info["port"], fqbn, location, cred_path, baud)
 
     # ── helpers callable from worker thread ───────────────────────────────────
 
@@ -1674,9 +1702,9 @@ class LTLProgrammerApp(App):
     # ── flash workflow (runs in background thread) ────────────────────────────
 
     @work(thread=True, exclusive=True)
-    def _flash_worker(self, port: str, fqbn: str, location: str, cred_path: Path) -> None:
+    def _flash_worker(self, port: str, fqbn: str, location: str, cred_path: Path, baud: int) -> None:
         try:
-            self._run_workflow(port, fqbn, location, cred_path)
+            self._run_workflow(port, fqbn, location, cred_path, baud)
         except Exception as exc:
             self._log(f"[red]Unexpected error: {exc}[/red]")
         finally:
@@ -1708,7 +1736,7 @@ class LTLProgrammerApp(App):
             capture_output=True, text=True,
         )
 
-    def _run_workflow(self, port: str, fqbn: str, location: str, cred_path: Path) -> None:
+    def _run_workflow(self, port: str, fqbn: str, location: str, cred_path: Path, baud: int) -> None:
         self._log(f"[bold cyan]━━ Flash workflow started ━━[/bold cyan]")
         self._log(f"Port: [cyan]{port}[/cyan]   Location: [cyan]{location}[/cyan]")
 
@@ -1755,7 +1783,7 @@ class LTLProgrammerApp(App):
         lines = []
         setup_data = None
         try:
-            with serial.Serial(port, BAUD_RATE, timeout=1) as ser:
+            with serial.Serial(port, baud, timeout=1) as ser:
                 deadline = time.time() + SERIAL_TIMEOUT_S
                 while time.time() < deadline:
                     raw = ser.readline().decode("utf-8", errors="replace").strip()
