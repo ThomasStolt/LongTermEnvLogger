@@ -1816,6 +1816,7 @@ class LTLProgrammerApp(App):
             )
             overlay = self.query_one("#flash-overlay", FlashOverlay)
             baud = overlay.baud_rate
+            self._clear_step()
             self._log(f"[yellow]► Retrying at {baud} baud...[/yellow]")
 
         # Clean up temporary credentials.h from setup sketch dir
