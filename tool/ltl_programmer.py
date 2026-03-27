@@ -1780,29 +1780,48 @@ class LTLProgrammerApp(App):
 
         self._log("[yellow]► Reading setup data from ESP...[/yellow]")
         time.sleep(BOOT_DELAY_S)
-        lines = []
         setup_data = None
-        try:
-            with serial.Serial(port, baud, timeout=1) as ser:
-                deadline = time.time() + SERIAL_TIMEOUT_S
-                while time.time() < deadline:
-                    raw = ser.readline().decode("utf-8", errors="replace").strip()
-                    if raw:
-                        lines.append(raw)
-                        self._debug_line(raw)
-                    parsed = parse_serial_output(lines)
-                    if parsed["done"]:
-                        setup_data = parsed
-                        break
-        except serial.SerialException as exc:
-            self._log(f"[red]Serial error: {exc}[/red]")
-            return
+        while not self._quit_event.is_set():
+            lines = []
+            try:
+                with serial.Serial(port, baud, timeout=1) as ser:
+                    deadline = time.time() + SERIAL_TIMEOUT_S
+                    while time.time() < deadline and not self._quit_event.is_set():
+                        raw = ser.readline().decode("utf-8", errors="replace").strip()
+                        if raw:
+                            lines.append(raw)
+                            self._debug_line(raw)
+                        parsed = parse_serial_output(lines)
+                        if parsed["done"]:
+                            setup_data = parsed
+                            break
+            except serial.SerialException as exc:
+                self._log(f"[red]Serial error: {exc}[/red]")
+                return
+
+            if setup_data or self._quit_event.is_set():
+                break
+
+            self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
+            self._wait_step(
+                title="Serial Read Timeout",
+                step_label=self._STEP_LABELS[0],
+                instructions=(
+                    f"No valid data received at [bold]{baud}[/bold] baud.\n\n"
+                    "• Try [bold]74880[/bold] if you see garbled output (ROM bootloader)\n"
+                    "• Power-cycle the ESP, then click Retry\n\n"
+                    "Adjust the baud rate below, then click Retry."
+                ),
+                button_label="Retry →",
+            )
+            overlay = self.query_one("#flash-overlay", FlashOverlay)
+            baud = overlay.baud_rate
+            self._log(f"[yellow]► Retrying at {baud} baud...[/yellow]")
 
         # Clean up temporary credentials.h from setup sketch dir
         setup_cred.unlink(missing_ok=True)
 
         if not setup_data:
-            self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
             return
 
         self._log(f"[green]✓ MAC: {setup_data['mac']}[/green]")
