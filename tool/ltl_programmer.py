@@ -1248,15 +1248,15 @@ class LTLProgrammerApp(App):
         padding: 0 0;
     }
     #ports-title {
-        background: #181825;
-        color: #89b4fa;
+        background: #89b4fa;
+        color: #1e1e2e;
         text-style: bold;
         text-align: center;
         width: 100%;
     }
     #creds-title {
-        background: #181825;
-        color: #89b4fa;
+        background: #89b4fa;
+        color: #1e1e2e;
         text-style: bold;
         text-align: center;
         width: 100%;
@@ -1306,8 +1306,8 @@ class LTLProgrammerApp(App):
         padding: 0 0;
     }
     #status-title {
-        background: #181825;
-        color: #89b4fa;
+        background: #89b4fa;
+        color: #1e1e2e;
         text-style: bold;
         text-align: center;
         width: 100%;
@@ -1319,8 +1319,8 @@ class LTLProgrammerApp(App):
         padding: 0 0;
     }
     #registry-title {
-        background: #181825;
-        color: #89b4fa;
+        background: #89b4fa;
+        color: #1e1e2e;
         text-style: bold;
         text-align: center;
         width: 100%;
@@ -1354,7 +1354,7 @@ class LTLProgrammerApp(App):
     .panel-active #ports-title,
     .panel-active #creds-title,
     .panel-active #status-title,
-    .panel-active #registry-title { background: #89b4fa; color: #1e1e2e; }
+    .panel-active #registry-title { background: #ffff00; color: #1e1e2e; }
 
     /* ── Log ── */
     #log {
@@ -1371,15 +1371,13 @@ class LTLProgrammerApp(App):
         background: #181825;
         border: solid #89b4fa;
     }
-    #debug-panel.panel-active { border: heavy #ffff00; }
     #debug-title {
-        background: #181825;
-        color: #89b4fa;
+        background: #89b4fa;
+        color: #1e1e2e;
         text-style: bold;
         text-align: center;
         width: 100%;
     }
-    .panel-active #debug-title { background: #89b4fa; color: #1e1e2e; }
     #debug-log {
         height: 1fr;
         background: #11111b;
@@ -1395,7 +1393,6 @@ class LTLProgrammerApp(App):
         "creds":    "#creds-panel",
         "status":   "#status-panel",
         "registry": "#registry-panel",
-        "debug":    "#debug-panel",
     }
 
     @property
@@ -1459,6 +1456,7 @@ class LTLProgrammerApp(App):
         self._do_refresh()
         self._refresh_registry()
         self.set_interval(2.0, self._do_refresh)
+        self.query_one("#debug-log", RichLog).can_focus = False
         self.call_after_refresh(self._set_active_panel, "ports")
 
     def _do_refresh(self) -> None:
