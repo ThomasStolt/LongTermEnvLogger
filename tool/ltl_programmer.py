@@ -554,22 +554,22 @@ class NetworkConfigModal(ModalScreen):
 
     def compose(self) -> ComposeResult:
         with Vertical(id="nc-box"):
-            yield Label("Netzwerkkonfiguration bearbeiten", id="nc-title")
-            yield Label("Netz-Präfix  (z.B. 192.168.2)", classes="nc-label")
+            yield Label("Edit Network Configuration", id="nc-title")
+            yield Label("Network prefix  (e.g. 192.168.2)", classes="nc-label")
             yield Input(value=self._net["net_prefix"], id="nc-net-prefix", classes="nc-input")
-            yield Label("Subnetz-Maske  (CIDR, z.B. 24)", classes="nc-label")
+            yield Label("Subnet mask  (CIDR, e.g. 24)", classes="nc-label")
             yield Input(value=str(self._net["net_mask"]), id="nc-net-mask", classes="nc-input", type="integer")
-            yield Label("Gateway  (z.B. 192.168.2.1)", classes="nc-label")
+            yield Label("Gateway  (e.g. 192.168.2.1)", classes="nc-label")
             yield Input(value=self._net["gateway"], id="nc-gateway", classes="nc-input")
-            yield Label("DNS-Server  (z.B. 8.8.8.8)", classes="nc-label")
+            yield Label("DNS  (e.g. 8.8.8.8)", classes="nc-label")
             yield Input(value=self._net["dns_server"], id="nc-dns", classes="nc-input")
-            yield Label("MQTT-Server  (IP-Adresse)", classes="nc-label")
+            yield Label("MQTT Broker  (IP address)", classes="nc-label")
             yield Input(value=self._net["mqtt_server"], id="nc-mqtt-server", classes="nc-input")
-            yield Label("MQTT-Port", classes="nc-label")
+            yield Label("MQTT Port", classes="nc-label")
             yield Input(value=str(self._net["mqtt_port"]), id="nc-mqtt-port", classes="nc-input", type="integer")
             yield Label("", id="nc-error")
-            yield Button("Speichern", id="nc-save")
-            yield Button("Abbrechen", id="nc-cancel")
+            yield Button("Save", id="nc-save")
+            yield Button("Cancel", id="nc-cancel")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "nc-save":
@@ -606,22 +606,22 @@ class NetworkConfigModal(ModalScreen):
         mqtt_port   = _get("nc-mqtt-port")
 
         if not _valid_ip3(net_prefix):
-            error.update("Netz-Präfix ungültig (z.B. 192.168.2)")
+            error.update("Invalid network prefix (e.g. 192.168.2)")
             return
         if not net_mask.isdigit() or not (1 <= int(net_mask) <= 30):
-            error.update("Subnetz-Maske muss 1–30 sein")
+            error.update("Subnet mask must be 1–30")
             return
         if not _valid_ip4(gateway):
-            error.update("Gateway-IP ungültig (z.B. 192.168.2.1)")
+            error.update("Invalid gateway IP (e.g. 192.168.2.1)")
             return
         if not _valid_ip4(dns_server):
-            error.update("DNS-IP ungültig (z.B. 8.8.8.8)")
+            error.update("Invalid DNS IP (e.g. 8.8.8.8)")
             return
         if not mqtt_server:
-            error.update("MQTT-Server darf nicht leer sein")
+            error.update("MQTT Broker address must not be empty")
             return
         if not mqtt_port.isdigit() or not (1 <= int(mqtt_port) <= 65535):
-            error.update("MQTT-Port muss 1–65535 sein")
+            error.update("MQTT Port must be 1–65535")
             return
 
         self.dismiss({
@@ -1427,14 +1427,15 @@ class LTLProgrammerApp(App):
         cred_path = PROJECT_ROOT / f"credentials_{location}.h"
         net = read_network_from_credentials(cred_path)
         if net is None:
-            info.update("[yellow]⚠ Netzwerkkonfiguration fehlt[/yellow]")
+            info.update("[yellow]⚠ Network configuration missing[/yellow]")
         else:
             info.update(
-                f"[#585b70]IP  [/#585b70]   {net['net_prefix']}.[bold #89b4fa]<room>[/bold #89b4fa]\n"
-                f"[#585b70]Netz[/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
-                f"[#585b70]GW  [/#585b70]   {net['gateway']}\n"
-                f"[#585b70]DNS [/#585b70]   {net['dns_server']}\n"
-                f"[#585b70]MQTT[/#585b70]   {net['mqtt_server']}:{net['mqtt_port']}"
+                f"[#585b70]IP         [/#585b70]   {net['net_prefix']}.[bold #89b4fa]<room>[/bold #89b4fa]\n"
+                f"[#585b70]Network    [/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
+                f"[#585b70]Gateway    [/#585b70]   {net['gateway']}\n"
+                f"[#585b70]DNS        [/#585b70]   {net['dns_server']}\n"
+                f"[#585b70]MQTT Broker[/#585b70]   {net['mqtt_server']}:{net['mqtt_port']}\n"
+                f"[#585b70]           [/#585b70]   [#585b70]E to edit[/#585b70]"
             )
 
     def _refresh_registry(self) -> None:
@@ -1515,7 +1516,7 @@ class LTLProgrammerApp(App):
     def action_ctx_edit(self) -> None:
         if self._active_panel == "creds":
             if not self._credentials:
-                self.notify("Keine Credentials-Datei ausgewählt.", severity="warning")
+                self.notify("No credentials file selected.", severity="warning")
                 return
             idx = self.query_one("#creds-table", DataTable).cursor_row
             if idx < 0 or idx >= len(self._credentials):
@@ -1524,7 +1525,7 @@ class LTLProgrammerApp(App):
             cred_path = PROJECT_ROOT / f"credentials_{location}.h"
             net = read_network_from_credentials(cred_path)
             if net is None:
-                self.notify("Netzwerkkonfiguration fehlt in der Datei.", severity="error")
+                self.notify("Network configuration missing in credentials file.", severity="error")
                 return
 
             def _on_save(updates: dict | None) -> None:
@@ -1532,7 +1533,7 @@ class LTLProgrammerApp(App):
                     return
                 write_network_to_credentials(cred_path, updates)
                 self._update_creds_info()
-                self.notify(f"Gespeichert: credentials_{location}.h", severity="information")
+                self.notify(f"Saved: credentials_{location}.h", severity="information")
 
             self.push_screen(NetworkConfigModal(net), _on_save)
         else:
