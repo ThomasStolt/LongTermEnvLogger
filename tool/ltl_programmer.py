@@ -20,7 +20,7 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import (
-    Button, DataTable, Footer, Header, Input, Label, ProgressBar, RichLog, Select, Static,
+    Button, DataTable, Footer, Header, Input, Label, ProgressBar, RichLog, Rule, Select, Static,
 )
 from textual.widget import Widget
 
@@ -1207,6 +1207,7 @@ class LTLProgrammerApp(App):
         text-align: center;
         width: 100%;
     }
+    #creds-divider { margin: 0 1; }
     #creds-info {
         color: #cdd6f4;
         padding: 0 1;
@@ -1349,6 +1350,7 @@ class LTLProgrammerApp(App):
             with Vertical(id="creds-panel"):
                 yield Label("Credentials", id="creds-title")
                 yield DataTable(id="creds-table", cursor_type="row")
+                yield Rule(id="creds-divider")
                 yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
