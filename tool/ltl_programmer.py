@@ -1273,6 +1273,8 @@ class LTLProgrammerApp(App):
     #creds-list-title {
         color: #89b4fa;
         padding: 0 1;
+        text-align: center;
+        width: 100%;
         border-bottom: solid #313244;
     }
     #creds-list {
@@ -1499,11 +1501,11 @@ class LTLProgrammerApp(App):
             info.update("[yellow]⚠ Network configuration missing[/yellow]")
         else:
             info.update(
-                f"[#585b70]IP         [/#585b70]   {net['net_prefix']}.[bold #89b4fa]<room>[/bold #89b4fa]\n"
-                f"[#585b70]Network    [/#585b70]   {net['net_prefix']}.0/{net['net_mask']}\n"
-                f"[#585b70]Gateway    [/#585b70]   {net['gateway']}\n"
-                f"[#585b70]DNS        [/#585b70]   {net['dns_server']}\n"
-                f"[#585b70]MQTT Broker[/#585b70]   {net['mqtt_server']}:{net['mqtt_port']}\n"
+                f"[white]IP         [/white]   {net['net_prefix']}.[bold #89b4fa]<room>[/bold #89b4fa]\n"
+                f"[white]Network    [/white]   {net['net_prefix']}.0/{net['net_mask']}\n"
+                f"[white]Gateway    [/white]   {net['gateway']}\n"
+                f"[white]DNS        [/white]   {net['dns_server']}\n"
+                f"[white]MQTT Broker[/white]   {net['mqtt_server']}:{net['mqtt_port']}\n"
                 f"[#585b70]           [/#585b70]   [#585b70]E to edit[/#585b70]"
             )
 
