@@ -1281,6 +1281,16 @@ class LTLProgrammerApp(App):
         width: 1fr;
         padding: 0 1;
     }
+    #creds-info-col {
+        width: 1fr;
+    }
+    #creds-info-title {
+        color: #89b4fa;
+        padding: 0 1;
+        text-align: center;
+        width: 100%;
+        border-bottom: solid #313244;
+    }
     #creds-info {
         width: 1fr;
         color: #cdd6f4;
@@ -1426,7 +1436,9 @@ class LTLProgrammerApp(App):
                     with Vertical(id="creds-list-col"):
                         yield Label("Location / File", id="creds-list-title")
                         yield CredsList(id="creds-list")
-                    yield Static("", id="creds-info")
+                    with Vertical(id="creds-info-col"):
+                        yield Label("Contents", id="creds-info-title")
+                        yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
                 yield Label("Status", id="status-title")
