@@ -1285,7 +1285,6 @@ class LTLProgrammerApp(App):
         height: 12;
         background: #181825;
         border: solid #89b4fa;
-        display: none;
     }
     #debug-panel.panel-active { border: heavy #ffff00; }
     #debug-title {
@@ -1329,7 +1328,6 @@ class LTLProgrammerApp(App):
         Binding("n", "ctx_new", "N New"),
         Binding("d", "ctx_delete", "D Delete"),
         Binding("r", "refresh_ports", "R Refresh"),
-        Binding("t", "toggle_debug", "T Debug"),
         Binding("q", "quit", "Q Quit"),
     ]
 
@@ -1513,13 +1511,6 @@ class LTLProgrammerApp(App):
 
     def action_refresh_ports(self) -> None:
         self._do_refresh()
-
-    def action_toggle_debug(self) -> None:
-        panel = self.query_one("#debug-panel")
-        panel.display = not panel.display
-        if panel.display:
-            self.query_one("#debug-log", RichLog).clear()
-            self._set_active_panel("debug")
 
     def action_ctx_edit(self) -> None:
         if self._active_panel == "creds":
