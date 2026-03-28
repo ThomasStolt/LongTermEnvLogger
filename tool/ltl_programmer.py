@@ -1438,7 +1438,7 @@ class LTLProgrammerApp(App):
                         yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
-                yield Label("Status", id="status-title")
+                yield Label("System Log", id="status-title")
                 yield RichLog(id="log", auto_scroll=True, markup=True)
             with Vertical(id="registry-panel"):
                 yield Label("Sensor Registry", id="registry-title")
