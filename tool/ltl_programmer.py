@@ -20,7 +20,8 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import (
-    Button, DataTable, Footer, Header, Input, Label, ProgressBar, RichLog, Rule, Select, Static,
+    Button, DataTable, Footer, Header, Input, Label, ListView, ListItem,
+    ProgressBar, RichLog, Rule, Select, Static,
 )
 from textual.widget import Widget
 
@@ -1207,6 +1208,23 @@ class LTLProgrammerApp(App):
         text-align: center;
         width: 100%;
     }
+    #creds-list {
+        height: auto;
+        background: #181825;
+        border: none;
+        padding: 0;
+    }
+    #creds-list > ListItem {
+        background: #181825;
+        color: #585b70;
+        padding: 0 1;
+    }
+    #creds-list > ListItem.--highlight {
+        background: #181825;
+        border-left: tall #ffff00;
+        color: #ffff00;
+        text-style: bold;
+    }
     #creds-divider { margin: 0 1; }
     #creds-info {
         color: #cdd6f4;
@@ -1317,8 +1335,7 @@ class LTLProgrammerApp(App):
     @property
     def _csv_path(self) -> Path:
         """Return the sensors CSV for the currently selected credentials location."""
-        table = self.query_one("#creds-table", DataTable)
-        idx = table.cursor_row
+        idx = self.query_one("#creds-list", ListView).index or 0
         if self._credentials and 0 <= idx < len(self._credentials):
             return Path(__file__).parent / f"sensors_{self._credentials[idx]}.csv"
         return Path(__file__).parent / "sensors.csv"
@@ -1349,7 +1366,7 @@ class LTLProgrammerApp(App):
                 yield DataTable(id="ports-table", cursor_type="row")
             with Vertical(id="creds-panel"):
                 yield Label("Credentials", id="creds-title")
-                yield DataTable(id="creds-table", cursor_type="row")
+                yield ListView(id="creds-list")
                 yield Rule(id="creds-divider")
                 yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
@@ -1367,7 +1384,6 @@ class LTLProgrammerApp(App):
 
     def on_mount(self) -> None:
         self.query_one("#ports-table", DataTable).add_columns("Port", "Description", "FQBN")
-        self.query_one("#creds-table", DataTable).add_columns("Location", "File")
         reg = self.query_one("#registry-table", DataTable)
         reg.add_columns("Room", "Location", "MAC", "DS18B20", "Flashed at")
         self._do_refresh()
@@ -1406,12 +1422,11 @@ class LTLProgrammerApp(App):
             self._ports = ports
 
         if creds != self._credentials:
-            table = self.query_one("#creds-table", DataTable)
-            table.clear()
+            lv = self.query_one("#creds-list", ListView)
+            lv.clear()
             for loc in creds:
-                table.add_row(loc, f"credentials_{loc}.h")
+                lv.append(ListItem(Label(f"{loc}   credentials_{loc}.h")))
             self._credentials = creds
-            table.move_cursor(row=0)
             self._update_creds_info()
 
     def _update_creds_info(self) -> None:
@@ -1420,8 +1435,7 @@ class LTLProgrammerApp(App):
         if not self._credentials:
             info.update("")
             return
-        table = self.query_one("#creds-table", DataTable)
-        idx = table.cursor_row
+        idx = self.query_one("#creds-list", ListView).index or 0
         if idx < 0 or idx >= len(self._credentials):
             info.update("")
             return
@@ -1486,20 +1500,22 @@ class LTLProgrammerApp(App):
         widget_id = getattr(event.widget, "id", None)
         if widget_id == "ports-table":
             self._set_active_panel("ports")
-        elif widget_id == "creds-table":
+        elif widget_id == "creds-list":
             self._set_active_panel("creds")
         elif widget_id == "log":
             self._set_active_panel("status")
         elif widget_id == "registry-table":
             self._set_active_panel("registry")
 
-    def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
-        if event.data_table.id == "creds-table":
-            if event.data_table.has_focus:
+    def on_list_view_highlighted(self, event: ListView.Highlighted) -> None:
+        if event.list_view.id == "creds-list":
+            if event.list_view.has_focus:
                 self._set_active_panel("creds")
             self._update_creds_info()
             self._refresh_registry()
-        elif event.data_table.id == "registry-table":
+
+    def on_data_table_row_highlighted(self, event: DataTable.RowHighlighted) -> None:
+        if event.data_table.id == "registry-table":
             if event.data_table.has_focus:
                 self._set_active_panel("registry")
 
@@ -1520,7 +1536,7 @@ class LTLProgrammerApp(App):
             if not self._credentials:
                 self.notify("No credentials file selected.", severity="warning")
                 return
-            idx = self.query_one("#creds-table", DataTable).cursor_row
+            idx = self.query_one("#creds-list", ListView).index or 0
             if idx < 0 or idx >= len(self._credentials):
                 return
             location = self._credentials[idx]
@@ -1615,7 +1631,7 @@ class LTLProgrammerApp(App):
             self.notify("No credentials file found!", severity="error")
             return
         port_info = self._ports[self.query_one("#ports-table", DataTable).cursor_row]
-        location = self._credentials[self.query_one("#creds-table", DataTable).cursor_row]
+        location = self._credentials[self.query_one("#creds-list", ListView).index or 0]
         cred_path = PROJECT_ROOT / f"credentials_{location}.h"
         fqbn = port_info["fqbn"] or BOARD_FQBN
         baud = self.query_one("#flash-overlay", FlashOverlay).baud_rate
