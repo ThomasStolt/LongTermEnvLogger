@@ -998,7 +998,7 @@ class CredsList(Widget):
         self.refresh()
 
     def render(self) -> Text:
-        text = Text()
+        text = Text(no_wrap=True, overflow="ellipsis")
         for i, loc in enumerate(self._items):
             if i > 0:
                 text.append("\n")
@@ -1264,14 +1264,21 @@ class LTLProgrammerApp(App):
     #creds-cols {
         height: 1fr;
     }
-    #creds-list {
-        width: auto;
-        min-width: 28;
+    #creds-list-col {
+        width: 44;
         background: #181825;
         border-right: solid #313244;
+    }
+    #creds-list-col:focus-within { border-right: solid #89b4fa; }
+    #creds-list-title {
+        color: #89b4fa;
+        padding: 0 1;
+        border-bottom: solid #313244;
+    }
+    #creds-list {
+        width: 1fr;
         padding: 0 1;
     }
-    #creds-list:focus { border-right: solid #89b4fa; }
     #creds-info {
         width: 1fr;
         color: #cdd6f4;
@@ -1414,7 +1421,9 @@ class LTLProgrammerApp(App):
             with Vertical(id="creds-panel"):
                 yield Label("Credentials", id="creds-title")
                 with Horizontal(id="creds-cols"):
-                    yield CredsList(id="creds-list")
+                    with Vertical(id="creds-list-col"):
+                        yield Label("Location / File", id="creds-list-title")
+                        yield CredsList(id="creds-list")
                     yield Static("", id="creds-info")
         with Horizontal(id="bottom-panels"):
             with Vertical(id="status-panel"):
