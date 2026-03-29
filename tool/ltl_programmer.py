@@ -68,12 +68,15 @@ def parse_serial_output(lines: list) -> dict:
         elif line.startswith("WIFI:"):
             parts = line[5:].split("|", 3)
             if len(parts) == 4:
-                result["wifi_networks"].append({
-                    "ssid": parts[0],
-                    "bssid": parts[1],
-                    "channel": int(parts[2]),
-                    "rssi": int(parts[3]),
-                })
+                try:
+                    result["wifi_networks"].append({
+                        "ssid": parts[0],
+                        "bssid": parts[1],
+                        "channel": int(parts[2]),
+                        "rssi": int(parts[3]),
+                    })
+                except ValueError:
+                    pass
         elif line == "WIFI_OK":
             result["wifi_ok"] = True
         elif line == "WIFI_FAIL":
@@ -230,6 +233,9 @@ def write_network_to_credentials(cred_path: Path, updates: dict) -> None:
     gw  = [int(x) for x in updates["gateway"].split(".")]
     dns = [int(x) for x in updates["dns_server"].split(".")]
 
+    if len(net) != 3 or len(gw) != 4 or len(dns) != 4:
+        raise ValueError("Invalid IP segment count in network config")
+
     _set_uint8("net_a", net[0]); _set_uint8("net_b", net[1]); _set_uint8("net_c", net[2])
     _set_uint8("net_mask", updates["net_mask"])
     _set_uint8("gw_a",  gw[0]);  _set_uint8("gw_b",  gw[1])
@@ -253,6 +259,10 @@ def write_credentials_file(cred_path: Path, fields: dict) -> None:
     net = [int(x) for x in fields["net_prefix"].split(".")]
     gw  = [int(x) for x in fields["gateway"].split(".")]
     dns = [int(x) for x in fields["dns_server"].split(".")]
+
+    if len(net) != 3 or len(gw) != 4 or len(dns) != 4:
+        raise ValueError("Invalid IP segment count in credentials fields")
+
     content = (
         f"// credentials_{fields['location']}.h — created by ltl_programmer\n"
         "// credentials_*.h files are gitignored — never commit real credentials.\n"
@@ -260,27 +270,27 @@ def write_credentials_file(cred_path: Path, fields: dict) -> None:
         f'const char*    ssid        = "{fields["ssid"]}";\n'
         f'const char*    password    = "{fields["password"]}";\n'
         "\n"
-        "// Netzwerk-Präfix (erste 3 Oktette der statischen Sensor-IP)\n"
+        "// Network prefix (first 3 octets of static sensor IP)\n"
         f"const uint8_t  net_a       = {net[0]};\n"
         f"const uint8_t  net_b       = {net[1]};\n"
         f"const uint8_t  net_c       = {net[2]};\n"
         "\n"
-        "// Subnetzmaske als CIDR-Präfixlänge (1–30)\n"
+        "// Subnet mask as CIDR prefix length (1–30)\n"
         f"const uint8_t  net_mask    = {fields['net_mask']};\n"
         "\n"
-        "// Gateway-IP\n"
+        "// Gateway IP\n"
         f"const uint8_t  gw_a        = {gw[0]};\n"
         f"const uint8_t  gw_b        = {gw[1]};\n"
         f"const uint8_t  gw_c        = {gw[2]};\n"
         f"const uint8_t  gw_d        = {gw[3]};\n"
         "\n"
-        "// DNS-Server-IP\n"
+        "// DNS server IP\n"
         f"const uint8_t  dns_a       = {dns[0]};\n"
         f"const uint8_t  dns_b       = {dns[1]};\n"
         f"const uint8_t  dns_c       = {dns[2]};\n"
         f"const uint8_t  dns_d       = {dns[3]};\n"
         "\n"
-        "// MQTT-Broker\n"
+        "// MQTT broker\n"
         f'const char*    mqtt_server = "{fields["mqtt_server"]}";\n'
         f"const int      mqtt_port   = {fields['mqtt_port']};\n"
     )
@@ -293,7 +303,10 @@ def load_csv_rooms(csv_path: Path) -> set:
         return set()
     with open(csv_path, newline="") as f:
         reader = csv.DictReader(f)
-        return {int(row["room_number"]) for row in reader if row.get("room_number")}
+        return {
+            n for row in reader
+            if (n := _room_int(row.get("room_number", ""))) is not None
+        }
 
 
 def append_csv_row(csv_path: Path, row: dict) -> None:
@@ -374,10 +387,16 @@ def detect_ports() -> list:
                 ports_map[port]["fqbn"] = fqbn
             else:
                 ports_map[port] = {"port": port, "description": " ".join(parts[1:3]), "fqbn": fqbn}
-    except (FileNotFoundError, subprocess.TimeoutExpired):
+    except Exception:
         pass
     return sorted(ports_map.values(), key=lambda x: x["port"])
 
+
+def _compile_sketch(fqbn: str, sketch_dir: Path) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["arduino-cli", "compile", "--fqbn", fqbn, str(sketch_dir)],
+        capture_output=True, text=True,
+    )
 
 
 # ── GPIO instruction strings ───────────────────────────────────────────────────
@@ -696,30 +715,30 @@ class NewCredentialsModal(ModalScreen):
 
     def compose(self) -> ComposeResult:
         with Vertical(id="ncf-box"):
-            yield Label("Neue Netzwerkkonfiguration", id="ncf-title")
-            yield Label("Standort-Name  (z.B. Home, School)", classes="ncf-label")
+            yield Label("New Network Configuration", id="ncf-title")
+            yield Label("Location name  (e.g. home, school)", classes="ncf-label")
             yield Input(id="ncf-location", classes="ncf-input")
-            yield Label("WLAN SSID", classes="ncf-label")
+            yield Label("WiFi SSID", classes="ncf-label")
             yield Input(id="ncf-ssid", classes="ncf-input", password=True)
-            yield Label("WLAN Passwort", classes="ncf-label")
+            yield Label("WiFi Password", classes="ncf-label")
             with Horizontal(id="ncf-pw-row"):
                 yield Input(id="ncf-password", classes="ncf-input", password=True)
-                yield Button("[R] Anzeigen", id="ncf-reveal")
-            yield Label("Netz-Präfix  (z.B. 192.168.2)", classes="ncf-label")
+                yield Button("[R] Show", id="ncf-reveal")
+            yield Label("Network prefix  (e.g. 192.168.2)", classes="ncf-label")
             yield Input(id="ncf-net-prefix", classes="ncf-input")
-            yield Label("Subnetz-Maske  (CIDR, z.B. 24)", classes="ncf-label")
+            yield Label("Subnet mask  (CIDR, e.g. 24)", classes="ncf-label")
             yield Input(value="24", id="ncf-net-mask", classes="ncf-input", type="integer")
-            yield Label("Gateway  (z.B. 192.168.2.1)", classes="ncf-label")
+            yield Label("Gateway  (e.g. 192.168.2.1)", classes="ncf-label")
             yield Input(id="ncf-gateway", classes="ncf-input")
-            yield Label("DNS-Server  (z.B. 8.8.8.8)", classes="ncf-label")
+            yield Label("DNS server  (e.g. 8.8.8.8)", classes="ncf-label")
             yield Input(id="ncf-dns", classes="ncf-input")
-            yield Label("MQTT-Server  (IP-Adresse)", classes="ncf-label")
+            yield Label("MQTT Broker  (IP address)", classes="ncf-label")
             yield Input(id="ncf-mqtt-server", classes="ncf-input")
-            yield Label("MQTT-Port", classes="ncf-label")
+            yield Label("MQTT Port", classes="ncf-label")
             yield Input(value="1883", id="ncf-mqtt-port", classes="ncf-input", type="integer")
             yield Label("", id="ncf-error")
-            yield Button("Speichern", id="ncf-save")
-            yield Button("Abbrechen", id="ncf-cancel")
+            yield Button("Save", id="ncf-save")
+            yield Button("Cancel", id="ncf-cancel")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "ncf-reveal":
@@ -728,7 +747,7 @@ class NewCredentialsModal(ModalScreen):
             revealing = pw.password  # currently masked → about to reveal
             pw.password = not revealing
             ssid.password = not revealing
-            event.button.label = "[R] Verstecken" if revealing else "[R] Anzeigen"
+            event.button.label = "[R] Hide" if revealing else "[R] Show"
         elif event.button.id == "ncf-save":
             self._try_save()
         elif event.button.id == "ncf-cancel":
@@ -763,28 +782,31 @@ class NewCredentialsModal(ModalScreen):
         mqtt_port   = _get("ncf-mqtt-port")
 
         if not location or not location.replace("_", "").replace("-", "").isalnum():
-            error.update("Standort-Name darf nur Buchstaben, Zahlen, - und _ enthalten.")
+            error.update("Location name may only contain letters, numbers, hyphens, and underscores.")
             return
         if not ssid:
-            error.update("SSID darf nicht leer sein.")
+            error.update("SSID must not be empty.")
+            return
+        if '"' in ssid or '"' in password:
+            error.update('SSID and password must not contain double-quote characters.')
             return
         if not _valid_ip3(net_prefix):
-            error.update("Netz-Präfix ungültig  (z.B. 192.168.2)")
+            error.update("Invalid network prefix  (e.g. 192.168.2)")
             return
         if not net_mask.isdigit() or not (1 <= int(net_mask) <= 30):
-            error.update("Subnetz-Maske muss 1–30 sein.")
+            error.update("Subnet mask must be 1–30.")
             return
         if not _valid_ip4(gateway):
-            error.update("Gateway-IP ungültig  (z.B. 192.168.2.1)")
+            error.update("Invalid gateway IP  (e.g. 192.168.2.1)")
             return
         if not _valid_ip4(dns_server):
-            error.update("DNS-IP ungültig  (z.B. 8.8.8.8)")
+            error.update("Invalid DNS IP  (e.g. 8.8.8.8)")
             return
         if not mqtt_server:
-            error.update("MQTT-Server darf nicht leer sein.")
+            error.update("MQTT Broker address must not be empty.")
             return
         if not mqtt_port.isdigit() or not (1 <= int(mqtt_port) <= 65535):
-            error.update("MQTT-Port muss 1–65535 sein.")
+            error.update("MQTT Port must be 1–65535.")
             return
 
         self.dismiss({
@@ -843,8 +865,8 @@ class ConfirmModal(ModalScreen):
         with Vertical(id="confirm-box"):
             yield Label(self._message, id="confirm-msg")
             with Horizontal():
-                yield Button("Ja, löschen", id="confirm-yes")
-                yield Button("Abbrechen", id="confirm-no")
+                yield Button("Yes, delete", id="confirm-yes")
+                yield Button("Cancel", id="confirm-no")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         self.dismiss(event.button.id == "confirm-yes")
@@ -909,11 +931,11 @@ class RegistryEntryModal(ModalScreen):
         self._existing_rooms = existing_rooms or set()
 
     def compose(self) -> ComposeResult:
-        title = "Eintrag bearbeiten" if self._edit_mode else "Neuer Eintrag"
+        title = "Edit Entry" if self._edit_mode else "New Entry"
         room_val = self._row.get("room_number", "")
         with Vertical(id="re-box"):
             yield Label(title, id="re-title")
-            yield Label("Raumnummer (1–254)", classes="re-label")
+            yield Label("Room number (1–254)", classes="re-label")
             yield Input(
                 value=room_val,
                 id="re-room",
@@ -921,15 +943,15 @@ class RegistryEntryModal(ModalScreen):
                 type="integer",
                 disabled=self._edit_mode,
             )
-            yield Label("Standort", classes="re-label")
+            yield Label("Location", classes="re-label")
             yield Input(value=self._row.get("location", ""), id="re-location", classes="re-input")
-            yield Label("MAC-Adresse", classes="re-label")
+            yield Label("MAC address", classes="re-label")
             yield Input(value=self._row.get("mac_address", ""), id="re-mac", classes="re-input")
-            yield Label("DS18B20-Adresse", classes="re-label")
+            yield Label("DS18B20 address", classes="re-label")
             yield Input(value=self._row.get("ds18b20_address", ""), id="re-ds18b20", classes="re-input")
             yield Label("", id="re-error")
-            yield Button("Speichern", id="re-save")
-            yield Button("Abbrechen", id="re-cancel")
+            yield Button("Save", id="re-save")
+            yield Button("Cancel", id="re-cancel")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "re-save":
@@ -953,13 +975,13 @@ class RegistryEntryModal(ModalScreen):
             try:
                 room_num = int(self.query_one("#re-room", Input).value)
             except ValueError:
-                error.update("Raumnummer muss eine Zahl sein.")
+                error.update("Room number must be a number.")
                 return
             if not (1 <= room_num <= 254):
-                error.update("Raumnummer muss zwischen 1 und 254 liegen.")
+                error.update("Room number must be between 1 and 254.")
                 return
             if room_num in self._existing_rooms:
-                error.update(f"Raum {room_num:03d} existiert bereits.")
+                error.update(f"Room {room_num:03d} already exists.")
                 return
 
         self.dismiss({
@@ -1159,12 +1181,16 @@ class FlashOverlay(Widget):
         if event.key == "enter" and self._continue_event:
             self._continue_event.set()
 
+    def trigger_continue(self) -> None:
+        """Signal the continue event if one is active and the button is enabled."""
+        if self._continue_event and not self.query_one("#fo-continue-btn", Button).disabled:
+            self._continue_event.set()
+
     def show_instructions(self, title: str, step_label: str, instructions: str,
                           event: threading.Event,
                           button_label: str = "Continue →",
                           ready: bool = True) -> None:
         self._continue_event = event
-        self._button_label = button_label
         self.query_one("#fo-title", Label).update(title)
         self.query_one("#fo-steps", Static).update(step_label)
         self.query_one("#fo-instr-text", Static).update(instructions)
@@ -1548,10 +1574,8 @@ class LTLProgrammerApp(App):
     def on_key(self, event) -> None:
         if event.key == "enter":
             overlay = self.query_one("#flash-overlay", FlashOverlay)
-            if overlay.display and overlay._continue_event:
-                btn = overlay.query_one("#fo-continue-btn", Button)
-                if not btn.disabled:
-                    overlay._continue_event.set()
+            if overlay.display:
+                overlay.trigger_continue()
 
     def _set_active_panel(self, panel: str) -> None:
         if self._active_panel == panel:
@@ -1680,7 +1704,7 @@ class LTLProgrammerApp(App):
                 return
             upsert_csv_row(self._csv_path, updated)
             self._refresh_registry()
-            self.notify(f"Raum {updated['room_number']} aktualisiert.", severity="information")
+            self.notify(f"Room {updated['room_number']} updated.", severity="information")
 
         self.push_screen(RegistryEntryModal(row=row), _on_save)
 
@@ -1709,6 +1733,17 @@ class LTLProgrammerApp(App):
 
     def _debug_line(self, line: str) -> None:
         self.call_from_thread(self.query_one("#debug-log", RichLog).write, line)
+
+    def _get_baud_rate(self) -> int:
+        """Read the baud rate selection from the UI thread (safe to call from a worker)."""
+        result: list = [BAUD_RATE]
+        done = threading.Event()
+        def _read():
+            result[0] = self.query_one("#flash-overlay", FlashOverlay).baud_rate
+            done.set()
+        self.call_from_thread(_read)
+        done.wait()
+        return result[0]
 
     _STEP_LABELS = [
         "[#a6e3a1]◉ Step 1/2: Setup Sketch[/#a6e3a1]     [#585b70]◯ Step 2/2: Production Firmware[/#585b70]",
@@ -1803,13 +1838,6 @@ class LTLProgrammerApp(App):
         self._hide_progress()
         return proc.returncode == 0
 
-    @staticmethod
-    def _compile(fqbn: str, sketch_dir: Path) -> subprocess.CompletedProcess:
-        return subprocess.run(
-            ["arduino-cli", "compile", "--fqbn", fqbn, str(sketch_dir)],
-            capture_output=True, text=True,
-        )
-
     def _run_workflow(self, port: str, fqbn: str, location: str, cred_path: Path, baud: int) -> None:
         self._log(f"[bold cyan]━━ Flash workflow started ━━[/bold cyan]")
         self._log(f"Port: [cyan]{port}[/cyan]   Location: [cyan]{location}[/cyan]")
@@ -1818,83 +1846,83 @@ class LTLProgrammerApp(App):
         # Copy credentials so the setup sketch can attempt a WiFi connection test
         setup_cred = SETUP_SKETCH_DIR / "credentials.h"
         shutil.copy(cred_path, setup_cred)
+        try:
+            self._log("[yellow]► Compiling setup sketch in background...[/yellow]")
+            compile1_result: list = [None]
+            compile1_done = threading.Event()
 
-        self._log("[yellow]► Compiling setup sketch in background...[/yellow]")
-        compile1_result: list = [None]
-        compile1_done = threading.Event()
+            def _compile_setup():
+                compile1_result[0] = _compile_sketch(fqbn, SETUP_SKETCH_DIR)
+                compile1_done.set()
 
-        def _compile_setup():
-            compile1_result[0] = self._compile(fqbn, SETUP_SKETCH_DIR)
-            compile1_done.set()
+            threading.Thread(target=_compile_setup, daemon=True).start()
 
-        threading.Thread(target=_compile_setup, daemon=True).start()
-
-        # Show combined flash+run instructions — Continue unlocks when compiler finishes
-        self._show_flash_instructions(
-            "⚡  Enter Flash Mode  —  Step 1 / 2",
-            self._STEP_LABELS[0],
-            _FLASH_AND_RUN_INSTRUCTIONS,
-            ready_event=compile1_done,
-        )
-
-        # Compiler is guaranteed done here (Continue was only enabled after it finished)
-        compile1_done.wait()
-        if compile1_result[0].returncode != 0:
-            self._log(f"[red]✗ Setup sketch compilation failed:[/red] {compile1_result[0].stderr.strip()}")
-            return
-        self._log("[green]✓ Setup sketch compiled[/green]")
-
-        # ── Upload setup sketch ───────────────────────────────────────────────
-        self._log("[yellow]► Uploading setup sketch...[/yellow]")
-        if not self._upload(SETUP_SKETCH_DIR, port, fqbn, "Step 1/2 — Writing setup sketch…"):
-            self._log("[red]✗ Upload failed — repeat: RST+FLASH sequence[/red]")
-            return
-        self._log("[green]✓ Setup sketch uploaded[/green]")
-        self._clear_step()
-
-        self._log("[yellow]► Reading setup data from ESP...[/yellow]")
-        time.sleep(BOOT_DELAY_S)
-        setup_data = None
-        while not self._quit_event.is_set():
-            lines = []
-            try:
-                with serial.Serial(port, baud, timeout=1) as ser:
-                    deadline = time.time() + SERIAL_TIMEOUT_S
-                    while time.time() < deadline and not self._quit_event.is_set():
-                        raw = ser.readline().decode("utf-8", errors="replace").strip()
-                        if raw:
-                            lines.append(raw)
-                            self._debug_line(raw)
-                        parsed = parse_serial_output(lines)
-                        if parsed["done"]:
-                            setup_data = parsed
-                            break
-            except serial.SerialException as exc:
-                self._log(f"[red]Serial error: {exc}[/red]")
-                return
-
-            if setup_data or self._quit_event.is_set():
-                break
-
-            self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
+            # Show combined flash+run instructions — Continue unlocks when compiler finishes
             self._show_flash_instructions(
-                title="Serial Read Timeout",
-                step_label=self._STEP_LABELS[0],
-                instructions=(
-                    f"No valid data received at [bold]{baud}[/bold] baud.\n\n"
-                    "• Try [bold]74880[/bold] if you see garbled output (ROM bootloader)\n"
-                    "• Power-cycle the ESP, then click Retry\n\n"
-                    "Adjust the baud rate below, then click Retry."
-                ),
-                button_label="Retry →",
+                "⚡  Enter Flash Mode  —  Step 1 / 2",
+                self._STEP_LABELS[0],
+                _FLASH_AND_RUN_INSTRUCTIONS,
+                ready_event=compile1_done,
             )
-            overlay = self.query_one("#flash-overlay", FlashOverlay)
-            baud = overlay.baud_rate
-            self._clear_step()
-            self._log(f"[yellow]► Retrying at {baud} baud...[/yellow]")
 
-        # Clean up temporary credentials.h from setup sketch dir
-        setup_cred.unlink(missing_ok=True)
+            # Compiler is guaranteed done here (Continue was only enabled after it finished)
+            compile1_done.wait()
+            if compile1_result[0].returncode != 0:
+                stderr = compile1_result[0].stderr.strip()
+                stdout = compile1_result[0].stdout.strip()
+                self._log(f"[red]✗ Setup sketch compilation failed:[/red] {stderr or stdout}")
+                return
+            self._log("[green]✓ Setup sketch compiled[/green]")
+
+            # ── Upload setup sketch ───────────────────────────────────────────────
+            self._log("[yellow]► Uploading setup sketch...[/yellow]")
+            if not self._upload(SETUP_SKETCH_DIR, port, fqbn, "Step 1/2 — Writing setup sketch…"):
+                self._log("[red]✗ Upload failed — repeat: RST+FLASH sequence[/red]")
+                return
+            self._log("[green]✓ Setup sketch uploaded[/green]")
+            self._clear_step()
+
+            self._log("[yellow]► Reading setup data from ESP...[/yellow]")
+            time.sleep(BOOT_DELAY_S)
+            setup_data = None
+            while not self._quit_event.is_set():
+                lines = []
+                try:
+                    with serial.Serial(port, baud, timeout=1) as ser:
+                        deadline = time.time() + SERIAL_TIMEOUT_S
+                        while time.time() < deadline and not self._quit_event.is_set():
+                            raw = ser.readline().decode("utf-8", errors="replace").strip()
+                            if raw:
+                                lines.append(raw)
+                                self._debug_line(raw)
+                            parsed = parse_serial_output(lines)
+                            if parsed["done"]:
+                                setup_data = parsed
+                                break
+                except serial.SerialException as exc:
+                    self._log(f"[red]Serial error: {exc}[/red]")
+                    return
+
+                if setup_data or self._quit_event.is_set():
+                    break
+
+                self._log(f"[red]✗ Timeout — no SETUP_DONE within {SERIAL_TIMEOUT_S}s[/red]")
+                self._show_flash_instructions(
+                    title="Serial Read Timeout",
+                    step_label=self._STEP_LABELS[0],
+                    instructions=(
+                        f"No valid data received at [bold]{baud}[/bold] baud.\n\n"
+                        "• Try [bold]74880[/bold] if you see garbled output (ROM bootloader)\n"
+                        "• Power-cycle the ESP, then click Retry\n\n"
+                        "Adjust the baud rate below, then click Retry."
+                    ),
+                    button_label="Retry →",
+                )
+                baud = self._get_baud_rate()
+                self._clear_step()
+                self._log(f"[yellow]► Retrying at {baud} baud...[/yellow]")
+        finally:
+            setup_cred.unlink(missing_ok=True)
 
         if not setup_data:
             return
@@ -1928,44 +1956,43 @@ class LTLProgrammerApp(App):
             ds18b20_array=ds18b20_array,
         )
 
-        # Use a manually managed temp dir so it stays alive until upload is done
-        tmpdir_obj = tempfile.TemporaryDirectory()
-        tmpdir = Path(tmpdir_obj.name)
-        sketch_dir = tmpdir / "LTL_sensor"
-        sketch_dir.mkdir()
-        (sketch_dir / "LTL_sensor.ino").write_text(final_content)
-        shutil.copy(cred_path, sketch_dir / "credentials.h")
+        with tempfile.TemporaryDirectory() as tmpdir_name:
+            tmpdir = Path(tmpdir_name)
+            sketch_dir = tmpdir / "LTL_sensor"
+            sketch_dir.mkdir()
+            (sketch_dir / "LTL_sensor.ino").write_text(final_content)
+            shutil.copy(cred_path, sketch_dir / "credentials.h")
 
-        # ── Compile production firmware IN BACKGROUND while user prepares hardware ──
-        self._log("[yellow]► Compiling production firmware in background...[/yellow]")
-        compile2_result: list = [None]
-        compile2_done = threading.Event()
+            # ── Compile production firmware IN BACKGROUND while user prepares hardware ──
+            self._log("[yellow]► Compiling production firmware in background...[/yellow]")
+            compile2_result: list = [None]
+            compile2_done = threading.Event()
 
-        def _compile_production():
-            compile2_result[0] = self._compile(fqbn, sketch_dir)
-            compile2_done.set()
+            def _compile_production():
+                compile2_result[0] = _compile_sketch(fqbn, sketch_dir)
+                compile2_done.set()
 
-        threading.Thread(target=_compile_production, daemon=True).start()
+            threading.Thread(target=_compile_production, daemon=True).start()
 
-        # Show flash instructions — Continue button unlocks when compiler finishes
-        self._show_flash_instructions(
-            "⚡  Enter Flash Mode  —  Step 2 / 2",
-            self._STEP_LABELS[1],
-            _FLASH_INSTRUCTIONS,
-            ready_event=compile2_done,
-        )
+            # Show flash instructions — Continue button unlocks when compiler finishes
+            self._show_flash_instructions(
+                "⚡  Enter Flash Mode  —  Step 2 / 2",
+                self._STEP_LABELS[1],
+                _FLASH_INSTRUCTIONS,
+                ready_event=compile2_done,
+            )
 
-        compile2_done.wait()
-        if compile2_result[0].returncode != 0:
-            self._log(f"[red]✗ Production firmware compilation failed:[/red] {compile2_result[0].stderr.strip()}")
-            tmpdir_obj.cleanup()
-            return
-        self._log("[green]✓ Production firmware compiled[/green]")
+            compile2_done.wait()
+            if compile2_result[0].returncode != 0:
+                stderr = compile2_result[0].stderr.strip()
+                stdout = compile2_result[0].stdout.strip()
+                self._log(f"[red]✗ Production firmware compilation failed:[/red] {stderr or stdout}")
+                return
+            self._log("[green]✓ Production firmware compiled[/green]")
 
-        # ── Upload production firmware ────────────────────────────────────────
-        self._log("[yellow]► Uploading production firmware...[/yellow]")
-        upload_ok = self._upload(sketch_dir, port, fqbn, "Step 2/2 — Writing production firmware…")
-        tmpdir_obj.cleanup()
+            # ── Upload production firmware ────────────────────────────────────────
+            self._log("[yellow]► Uploading production firmware...[/yellow]")
+            upload_ok = self._upload(sketch_dir, port, fqbn, "Step 2/2 — Writing production firmware…")
         if not upload_ok:
             self._log("[red]✗ Upload failed[/red]")
             return
