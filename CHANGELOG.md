@@ -2,7 +2,62 @@
 
 ## [Unreleased]
 
-## [2026-03-23] — TUI Panel Highlight & Network Config
+## [1.2.0] — 2026-03-29 — Credentials UX, Debug Panel & Code Quality
+
+### Added
+
+- **`tool/ltl_programmer.py`** — Per-location sensor registry
+  - Separate `sensors_<location>.csv` per credentials file (e.g. `sensors_home.csv`, `sensors_school.csv`)
+  - Auto-creates the CSV when switching credentials if none exists yet
+  - Switching credentials in the panel immediately reloads the matching registry
+
+- **`tool/ltl_programmer.py`** — Always-visible Serial Debug panel
+  - Dedicated `RichLog` strip at the bottom showing every raw line received from the ESP during setup-sketch read
+  - Non-focusable (excluded from Tab order and active-panel highlighting)
+
+- **`tool/ltl_programmer.py`** — Baud rate selector and serial retry loop
+  - `Select` widget in the flash overlay lets the user pick 9600 / 74880 / 115200 / 230400 / 460800 baud before flashing
+  - On serial read timeout, the overlay re-appears with a "Retry →" button; user can change baud and retry without reflashing
+
+- **`tool/ltl_programmer.py`** — Two-column credentials panel
+  - Left column: scrollable file list with `>` indicator and bright-green highlight on selected file; blue "Location / File" sub-header
+  - Right column: network info (IP, Network, Gateway, DNS, MQTT Broker) with blue "Contents" sub-header
+  - `CredsList` custom widget renders with Rich `Text` (no-wrap, ellipsis overflow)
+
+### Changed
+
+- **`tool/ltl_programmer.py`** — Panel title styling
+  - All panel titles always shown with inverted colours (blue background, dark text)
+  - Active panel title highlighted in neon yellow (`#ffff00`) matching the active frame border
+  - "Status" panel renamed to "System Log"
+
+- **`tool/ltl_programmer.py`** — OTA port filtering
+  - `detect_ports()` skips ports where `arduino-cli board list` reports `protocol == "network"`, eliminating OTA device noise from the Serial Ports panel
+
+- **`tool/ltl_programmer.py`** — All UI strings now English
+  - Modals (`NewCredentialsModal`, `ConfirmModal`, `RegistryEntryModal`) previously used German labels, buttons, and error messages — all translated
+  - Inline comments in `write_credentials_file` translated
+
+### Fixed
+
+- **`tool/ltl_programmer.py`** — Thread safety: `baud_rate` is now read via `_get_baud_rate()` which schedules a `call_from_thread` read, eliminating the DOM race condition in the serial retry worker
+- **`tool/ltl_programmer.py`** — `TemporaryDirectory` for production firmware now uses a `with` block — guaranteed cleanup even if compilation or upload raises
+- **`tool/ltl_programmer.py`** — `credentials.h` copy in setup sketch directory is now always removed via `try/finally`, even on early-exit compile/upload failures
+- **`tool/ltl_programmer.py`** — `write_network_to_credentials` and `write_credentials_file` raise `ValueError` on malformed IP segment counts instead of `IndexError`
+- **`tool/ltl_programmer.py`** — `NewCredentialsModal` rejects SSID/password containing `"` to prevent C-string injection in generated `.h` files
+- **`tool/ltl_programmer.py`** — Compile error log now shows `stdout` when `stderr` is empty (`arduino-cli` writes error detail to `stdout` in some failure modes)
+- **`tool/ltl_programmer.py`** — `detect_ports` now catches all exceptions (not just `FileNotFoundError` and `TimeoutExpired`)
+- **`tool/ltl_programmer.py`** — `load_csv_rooms` uses `_room_int` helper — no `ValueError` crash on manually-edited CSVs with non-integer room numbers
+- **`tool/ltl_programmer.py`** — `parse_serial_output` guards `int()` conversion on WIFI `channel`/`rssi` fields — malformed ESP lines are silently skipped
+
+### Refactored
+
+- **`tool/ltl_programmer.py`** — `_compile` promoted to module-level `_compile_sketch()` — independently unit-testable, no class dependency
+- **`tool/ltl_programmer.py`** — `FlashOverlay` exposes `trigger_continue()` public method; `LTLProgrammerApp.on_key` no longer accesses private `_continue_event` directly
+- **`tool/ltl_programmer.py`** — `_PANEL_IDS` no longer includes the debug panel; active-panel CSS for debug removed
+- **`tool/ltl_programmer.py`** — Dead attribute `self._button_label` removed from `FlashOverlay.show_instructions`
+
+## [1.1.0] — 2026-03-23 — TUI Panel Highlight & Network Config
 
 ### Changed
 
@@ -23,7 +78,7 @@
 
 - **`code/LTL_sensor/LTL_sensor.ino`** — Uses explicit `gw_*` / `dns_*` constants from credentials
 
-## [2026-03-23] — Battery Optimization & Programmer Tool
+## [1.0.0] — 2026-03-23 — Battery Optimization & Programmer Tool
 
 ### Added
 
@@ -64,12 +119,12 @@
 
 ---
 
-## [2024-03-08] — Hardware Prototyping
+## [0.2.0] — 2024-03-08 — Hardware Prototyping
 
 - KiCad schematic and PCB layout for sensor hardware
 - LiIon battery circuit with protection and solar charging
 
-## [2024-03-06] — Initial Firmware
+## [0.1.0] — 2024-03-06 — Initial Firmware
 
 - First working ESP8266 sketch with DS18B20 and MQTT
 - WiFi credentials moved to separate `credentials.h` (gitignored)

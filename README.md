@@ -55,11 +55,14 @@ An interactive TUI (terminal user interface) that programs each sensor in two st
 
 ### Features
 
-- Auto-detects USB serial ports and pre-selects the right one
+- Auto-detects USB serial ports (OTA/network ports filtered out) and pre-selects the right one
 - Live hotplug detection — plug in the adapter and it appears immediately
 - Parallel background compilation while you prepare the hardware
 - Auto-selects the WiFi network from your credentials file (strongest signal)
-- Sensor registry panel showing all programmed sensors
+- Two-column credentials panel — file list on the left, network config on the right; press `E` to edit
+- Per-location sensor registry (`sensors_home.csv`, `sensors_school.csv`, …) — switches automatically with the selected credentials file
+- Always-visible Serial Debug panel showing raw ESP output during setup-sketch read
+- Adjustable baud rate selector and automatic retry loop on serial read timeout
 - Full keyboard navigation — no mouse required
 - Clean two-step workflow with progress feedback
 
@@ -113,6 +116,7 @@ cd tool && python3 ltl_programmer.py
 |-----|--------|
 | `F` | Start flash workflow |
 | `R` | Refresh port list |
+| `E` | Edit network config for selected credentials |
 | `Q` | Quit |
 | `Enter` | Confirm / Continue |
 
@@ -126,7 +130,7 @@ cd tool && python3 ltl_programmer.py
    - WiFi network is auto-selected from your credentials file
    - Enter a room number (1–254)
    - Production firmware compiles and uploads with all values baked in
-4. Sensor is recorded in `tool/sensors.csv`
+4. Sensor is recorded in `tool/sensors_<location>.csv` (one file per credentials location)
 
 ### Flash Mode (ESP-12 / bare modules)
 
@@ -151,7 +155,7 @@ If arduino-cli is not available, you can flash manually using the Arduino IDE:
 
 ### Sensor Registry
 
-`tool/sensors.csv` tracks all programmed sensors (gitignored):
+`tool/sensors_<location>.csv` tracks all programmed sensors per location (gitignored). For example, `sensors_home.csv` and `sensors_school.csv` are created automatically when you first flash a sensor using that credentials file.
 
 | Field | Description |
 |---|---|

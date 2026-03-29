@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """LTL Sensor Programmer — TUI-based two-step ESP8266 flash tool."""
 
+__version__ = "1.2.0"
+
 import csv
 import re
 import shutil
