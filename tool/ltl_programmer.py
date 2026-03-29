@@ -1233,7 +1233,7 @@ class FlashOverlay(Widget):
 
 class LTLProgrammerApp(App):
     TITLE = "LTL Sensor Programmer"
-    SUB_TITLE = "Two-step ESP8266 flash tool"
+    SUB_TITLE = f"Two-step ESP8266 flash tool  v{__version__}"
 
     CSS = """
     /* ── Base ── */
